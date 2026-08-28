@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Office Kids - Petualangan Agen Kantoran Cilik</title>
+  <meta name="description"
+    content="Game interaktif seru untuk anak-anak bertema petualangan agen kantoran cilik dengan misi seru, lencana, dan profil agen!">
+
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Floating Background Decorative Elements -->
+  <div class="bg-decorations" aria-hidden="true">
+    <div class="floating-icon icon-1">🏢</div>
+    <div class="floating-icon icon-2">📋</div>
+    <div class="floating-icon icon-3">⭐</div>
+    <div class="floating-icon icon-4">☕</div>
+    <div class="floating-icon icon-5">📎</div>
+    <div class="floating-icon icon-6">✨</div>
+    <div class="floating-icon icon-7">🖨️</div>
+    <div class="floating-icon icon-8">🚀</div>
+  </div>
+
+  <!-- Main Game Card Application Container -->
+  <main id="app-container" class="game-container">
+
+    <!-- Global Top Bar (Visible on all slides) -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <div class="profile-chip" aria-label="Profil Agen">
+          <div class="avatar-ring">
+            <span id="top-avatar-display" class="avatar-icon">👦🏻</span>
+          </div>
+          <div class="profile-chip-info">
+            <span id="top-name-display" class="profile-name">Agen Cilik</span>
+            <span id="top-rank-display" class="profile-rank">Magang Baru ⭐</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-bar-right">
+        <div class="coin-chip" id="top-coin-chip" aria-label="Saldo Koin" title="Saldo Koin Kantor">
+          <span class="coin-icon">🪙</span>
+          <span id="top-coin-count" class="coin-count">500</span>
+        </div>
+        <div class="badge-chip" aria-label="Jumlah Lencana">
+          <span class="badge-icon">🏆</span>
+          <span id="top-badge-count">1/8</span>
+        </div>
+        <button id="btn-top-sound" class="icon-action-btn" title="Nyalakan/Matikan Suara">
+          <span id="top-sound-icon">🔊</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Slide Viewport (Houses all slides) -->
+    <div class="slides-viewport">
+
+      <!-- =========================================================
+           SLIDE 1: MAIN MENU
+           ========================================================= -->
+      <section id="slide-1" class="game-slide active">
+        <div class="menu-hero">
+          <div class="logo-wrapper">
+            <div class="logo-badge">🏢</div>
+            <h1 class="game-title">OFFICE KIDS</h1>
+            <p class="game-subtitle">Petualangan Seru Agen Kantoran Cilik! ✨</p>
+          </div>
+        </div>
+
+        <nav class="main-menu-nav" aria-label="Menu Utama">
+          <button id="btn-nav-mission" class="menu-btn btn-primary" data-target="slide-5">
+            <span class="btn-icon">🚀</span>
+            <div class="btn-text-group">
+              <span class="btn-title">Story Mode/Lanjutkan</span>
+              <span class="btn-desc">Mulai petualangan kantor seru!</span>
+            </div>
+            <span class="btn-arrow">➔</span>
+          </button>
+
+          <div class="menu-grid-secondary">
+            <button id="btn-nav-customizer" class="menu-btn btn-secondary btn-customizer-nav" data-target="slide-6">
+              <span class="btn-icon">🛋️</span>
+              <span class="btn-title">Ruang Kerja & Toko</span>
+            </button>
+
+            <button id="btn-nav-gallery" class="menu-btn btn-secondary" data-target="slide-3">
+              <span class="btn-icon">🏆</span>
+              <span class="btn-title">Galeri Lencana</span>
+            </button>
+
+            <button id="btn-nav-profile" class="menu-btn btn-secondary" data-target="slide-4">
+              <span class="btn-icon">👤</span>
+              <span class="btn-title">Profil Agen</span>
+            </button>
+
+            <button id="btn-nav-settings" class="menu-btn btn-secondary" data-target="slide-2">
+              <span class="btn-icon">⚙️</span>
+              <span class="btn-title">Pengaturan</span>
+            </button>
+          </div>
+        </nav>
+
+        <footer class="slide-footer">
+          <p>Office Kids v1.0 • Edisi Kantor Impian Cilik 🌟</p>
+        </footer>
+      </section>
+
+
+      <!-- =========================================================
+           SLIDE 2: SETTINGS
+           ========================================================= -->
+      <section id="slide-2" class="game-slide">
+        <div class="slide-header">
+          <button class="btn-back" data-target="slide-1" title="Kembali ke Menu Utama">
+            <span>←</span> Menu
+          </button>
+          <h2 class="slide-title">⚙️ Pengaturan</h2>
+          <div class="header-placeholder"></div>
+        </div>
+
+        <div class="settings-content">
+          <div class="settings-group">
+            <h3 class="group-heading">🎵 Audio & Musik</h3>
+
+            <div class="setting-card">
+              <div class="setting-info">
+                <span class="setting-label">Musik Latar (BGM)</span>
+                <span class="setting-subtext">Putar melodi ceria di dalam kantor</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="setting-bgm-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-card">
+              <div class="setting-info">
+                <span class="setting-label">Efek Suara (SFX)</span>
+                <span class="setting-subtext">Suara tombol, reward, dan efek klik</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="setting-sfx-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <h3 class="group-heading">💡 Bantuan & Panduan</h3>
+
+            <div class="setting-card">
+              <div class="setting-info">
+                <span class="setting-label">Petunjuk Otomatis</span>
+                <span class="setting-subtext">Tampilkan tips saat menjalankan misi</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="setting-hints-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="setting-card">
+              <div class="setting-info">
+                <span class="setting-label">Animasi & Getar Visual</span>
+                <span class="setting-subtext">Efek animasi ceria pada kartu</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="setting-anim-toggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-group danger-zone">
+            <h3 class="group-heading">⚠️ Data Game</h3>
+            <button id="btn-reset-data" class="btn-outline-danger">
+              <span>🔄</span> Reset Semua Progres Game
+            </button>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- =========================================================
+           SLIDE 3: BADGE GALLERY
+           ========================================================= -->
+      <section id="slide-3" class="game-slide">
+        <div class="slide-header">
+          <button class="btn-back" data-target="slide-1" title="Kembali ke Menu Utama">
+            <span>←</span> Menu
+          </button>
+          <h2 class="slide-title">🏆 Galeri Lencana</h2>
+          <div class="header-placeholder"></div>
+        </div>
+
+        <div class="gallery-content">
+          <!-- Progress banner -->
+          <div class="gallery-progress-box">
+            <div class="progress-info">
+              <span>Koleksi Lencana Agen:</span>
+              <strong id="gallery-progress-text">1 dari 8 Terkumpul (12%)</strong>
+            </div>
+            <div class="progress-bar-bg">
+              <div id="gallery-progress-fill" class="progress-bar-fill" style="width: 12.5%;"></div>
+            </div>
+          </div>
+
+          <!-- Badges Grid Container -->
+          <div id="badges-grid" class="badges-grid">
+            <!-- Rendered dynamically by script.js -->
+          </div>
+        </div>
+      </section>
+
+
+      <!-- =========================================================
+           SLIDE 4: PROFILE
+           ========================================================= -->
+      <section id="slide-4" class="game-slide">
+        <div class="slide-header">
+          <button class="btn-back" data-target="slide-1" title="Kembali ke Menu Utama">
+            <span>←</span> Menu
+          </button>
+          <h2 class="slide-title">👤 Profil Agen</h2>
+          <div class="header-placeholder"></div>
+        </div>
+
+        <div class="profile-content">
+          <!-- Official Kid Agent ID Card -->
+          <div class="agent-id-card">
+            <div class="id-card-header">
+              <span class="id-card-org">🏢 KANTOR PUSAT OFFICE KIDS</span>
+              <span class="id-card-code" id="id-card-code-display">OK-2026-01</span>
+            </div>
+            <div class="id-card-body">
+              <div class="id-card-avatar-wrap">
+                <div class="id-card-avatar" id="id-card-avatar-display">👦🏻</div>
+                <div class="id-card-badge-pill">AGEN RESMI</div>
+              </div>
+              <div class="id-card-details">
+                <div class="id-field">
+                  <span class="id-label">NAMA AGEN</span>
+                  <span class="id-val" id="id-card-name-display">Agen Cilik</span>
+                </div>
+                <div class="id-field">
+                  <span class="id-label">PANGKAT / STATUS</span>
+                  <span class="id-val highlight" id="id-card-rank-display">Magang Baru ⭐</span>
+                </div>
+                <div class="id-field">
+                  <span class="id-label">STATUS TUGAS</span>
+                  <span class="id-val text-green" id="id-card-task-status">Siap Bertugas! 🚀</span>
+                </div>
+              </div>
+            </div>
+            <div class="id-card-footer">
+              <span>★ KARTU IDENTITAS PEGAWAI CILIK BERBAKAT ★</span>
+            </div>
+          </div>
+
+          <!-- Profile Customizer Form -->
+          <form id="profile-form" class="profile-edit-box" onsubmit="return false;">
+            <div class="form-group">
+              <label for="input-agent-name" class="form-label">Nama Panggilan Agen:</label>
+              <div class="input-with-icon">
+                <span class="input-icon">✏️</span>
+                <input type="text" id="input-agent-name" class="form-input" maxlength="20"
+                  placeholder="Ketik nama agen..." value="Agen Cilik" required autocomplete="off">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Pilih Avatar Agen Favorit:</label>
+              <div class="avatar-selection-grid" id="avatar-selection-grid">
+                <!-- 6 Avatar Options -->
+                <button type="button" class="avatar-option active" data-avatar="👦🏻" data-name="Daffa (Sigap)">
+                  <span class="avatar-emoji">👦🏻</span>
+                  <span class="avatar-title">Daffa</span>
+                </button>
+                <button type="button" class="avatar-option" data-avatar="👧🏻" data-name="Nia (Teliti)">
+                  <span class="avatar-emoji">👧🏻</span>
+                  <span class="avatar-title">Nia</span>
+                </button>
+                <button type="button" class="avatar-option" data-avatar="🧒🏽" data-name="Budi (Cepat)">
+                  <span class="avatar-emoji">🧒🏽</span>
+                  <span class="avatar-title">Budi</span>
+                </button>
+                <button type="button" class="avatar-option" data-avatar="👧🏼" data-name="Sarah (Kreatif)">
+                  <span class="avatar-emoji">👧🏼</span>
+                  <span class="avatar-title">Sarah</span>
+                </button>
+                <button type="button" class="avatar-option" data-avatar="🧑🏾" data-name="Kenzo (Detektif)">
+                  <span class="avatar-emoji">🧑🏾</span>
+                  <span class="avatar-title">Kenzo</span>
+                </button>
+                <button type="button" class="avatar-option" data-avatar="👧🏾" data-name="Maya (Manajer)">
+                  <span class="avatar-emoji">👧🏾</span>
+                  <span class="avatar-title">Maya</span>
+                </button>
+              </div>
+            </div>
+
+            <button type="button" id="btn-save-profile" class="btn-save-primary">
+              <span>💾</span> Simpan Profil Agen
+            </button>
+          </form>
+        </div>
+      </section>
+
+
+      <!-- =========================================================
+           SLIDE 5: CHAPTER SELECT
+           ========================================================= -->
+      <section id="slide-5" class="game-slide">
+        <div class="slide-header">
+          <button class="btn-back" data-target="slide-1" title="Kembali ke Menu Utama">
+            <span>←</span> Menu
+          </button>
+          <h2 class="slide-title">🗺️ Pilihan Misi</h2>
+          <div class="header-placeholder"></div>
+        </div>
+
+        <div class="chapter-content">
+          <div class="chapter-intro">
+            <p>Pilih chapter petualangan untuk mulai bertugas di kantor!</p>
+          </div>
+
+          <!-- ─── KOTAK 1: CERITA UTAMA ─── -->
+          <div class="mission-category-box">
+            <div class="mission-category-header">
+              <span class="mission-category-icon">🚀</span>
+              <div class="mission-category-title-group">
+                <h3 class="mission-category-title">Cerita Utama</h3>
+                <span class="mission-category-sub">Selesaikan semua chapter untuk naik pangkat!</span>
+              </div>
+            </div>
+
+            <!-- Chapters Container (4 Chapters) -->
+            <div id="chapters-list" class="chapters-grid">
+              <!-- Rendered dynamically by script.js -->
+            </div>
+
+            <!-- Demo Utility Controls -->
+            <div class="demo-controls-box">
+              <span class="demo-label">🛠️ Alat Uji Coba:</span>
+              <button id="btn-unlock-all" class="btn-chip-action">🔓 Buka Semua Chapter</button>
+              <button id="btn-reset-chapters" class="btn-chip-action">🔄 Kunci Kembali</button>
+            </div>
+          </div>
+
+          <!-- ─── KOTAK 2: CERITA SPESIAL ─── -->
+          <div class="mission-category-box special-box">
+            <div class="mission-category-header">
+              <span class="mission-category-icon">⭐</span>
+              <div class="mission-category-title-group">
+                <h3 class="mission-category-title">Cerita Spesial</h3>
+                <span class="mission-category-sub">Tantangan eksklusif untuk agen terpilih!</span>
+              </div>
+              <span class="special-box-badge">🔮 EKSKLUSIF</span>
+            </div>
+
+            <!-- Coming Soon Placeholder -->
+            <div class="special-coming-soon">
+              <div class="coming-soon-glow-ring">⭐</div>
+              <span class="coming-soon-label">🔒 COMING SOON</span>
+              <p class="coming-soon-desc">Konten Misi Spesial Akan Hadir Pada Update Mendatang</p>
+              <div class="coming-soon-dots">
+                <span class="cs-dot"></span>
+                <span class="cs-dot"></span>
+                <span class="cs-dot"></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SLIDE 6: OFFICE LAYOUT CUSTOMIZER & DECORATION SHOP (PILAR 4)
+           ========================================================= -->
+      <section id="slide-6" class="game-slide">
+        <div class="slide-header">
+          <button class="btn-back" data-target="slide-1" title="Kembali ke Menu Utama">
+            <span>←</span> Menu
+          </button>
+          <div class="customizer-header-title">
+            <h2 class="slide-title">🛋️ Ruang Kerja & Toko</h2>
+            <span class="customizer-sub-badge">Pilar 4: Customizer</span>
+          </div>
+          <div class="coin-chip customizer-coin-chip" title="Saldo Koin">
+            <span class="coin-icon">🪙</span>
+            <span class="coin-count" id="customizer-coin-display">500</span>
+          </div>
+        </div>
+
+        <div class="customizer-content">
+          <!-- 1. Mini Office Room Visualizer (Ruang Kerja Mini) -->
+          <div class="office-room-section">
+            <div class="room-section-header">
+              <span class="room-badge">🏢 Ruang Kerja Mini</span>
+              <span class="room-hint">Ketuk barang untuk memasang atau melepas dekorasi</span>
+            </div>
+
+            <!-- Virtual 2.5D Office Room Canvas -->
+            <div class="office-room-stage" id="office-room-stage">
+              <!-- Wall Clock Slot -->
+              <div class="room-slot slot-clock" id="room-slot-clock" data-category="clock" title="Slot Jam Dinding">
+                <div class="slot-placeholder" id="placeholder-clock">
+                  <span class="slot-icon-ghost">⏰</span>
+                  <span class="slot-tag">Pasang Jam</span>
+                </div>
+                <div class="slot-content" id="content-clock" style="display: none;">
+                  <span class="placed-item-icon" id="placed-clock-icon">⏰</span>
+                  <button class="btn-unequip-mini" data-action-unequip="clock" title="Lepas Jam Dinding">✕</button>
+                </div>
+              </div>
+
+              <!-- Filing Cabinet Slot -->
+              <div class="room-slot slot-cabinet" id="room-slot-cabinet" data-category="cabinet" title="Slot Rak Arsip">
+                <div class="slot-placeholder" id="placeholder-cabinet">
+                  <span class="slot-icon-ghost">📁</span>
+                  <span class="slot-tag">Pasang Rak Arsip</span>
+                </div>
+                <div class="slot-content" id="content-cabinet" style="display: none;">
+                  <span class="placed-item-icon" id="placed-cabinet-icon">🗄️</span>
+                  <button class="btn-unequip-mini" data-action-unequip="cabinet" title="Lepas Rak Arsip">✕</button>
+                </div>
+              </div>
+
+              <!-- Main Desk Slot + Player Avatar -->
+              <div class="room-slot slot-desk" id="room-slot-desk" data-category="desk" title="Slot Meja Kerja">
+                <!-- Seated Avatar -->
+                <div class="room-agent-character" id="room-agent-character">
+                  <span class="room-avatar-emoji" id="room-agent-avatar">👦🏻</span>
+                  <span class="room-avatar-name" id="room-agent-name">Agen Cilik</span>
+                </div>
+
+                <div class="slot-placeholder" id="placeholder-desk">
+                  <span class="slot-icon-ghost">🪑</span>
+                  <span class="slot-tag">Pasang Meja Kerja</span>
+                </div>
+                <div class="slot-content" id="content-desk" style="display: none;">
+                  <span class="placed-item-icon" id="placed-desk-icon">🪑</span>
+                  <button class="btn-unequip-mini" data-action-unequip="desk" title="Lepas Meja Kerja">✕</button>
+                </div>
+              </div>
+
+              <!-- Houseplant Slot -->
+              <div class="room-slot slot-plant" id="room-slot-plant" data-category="plant" title="Slot Tanaman Hias">
+                <div class="slot-placeholder" id="placeholder-plant">
+                  <span class="slot-icon-ghost">🪴</span>
+                  <span class="slot-tag">Pasang Tanaman</span>
+                </div>
+                <div class="slot-content" id="content-plant" style="display: none;">
+                  <span class="placed-item-icon" id="placed-plant-icon">🪴</span>
+                  <button class="btn-unequip-mini" data-action-unequip="plant" title="Lepas Tanaman">✕</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Installed Summary Bar -->
+            <div class="installed-summary-bar" id="installed-summary-bar">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- 2. Decoration Shop Panel (Toko Dekorasi - Pilar 4) -->
+          <div class="decoration-shop-section">
+            <div class="shop-header-row">
+              <div class="shop-title-wrap">
+                <h3 class="shop-heading">🛍️ Toko Dekorasi Kantor</h3>
+                <p class="shop-subheading">Beli furniture keren untuk menghias ruang kerja idamanmu!</p>
+              </div>
+            </div>
+
+            <!-- Shop Category Filter Tabs -->
+            <div class="shop-category-tabs" id="shop-category-tabs">
+              <button class="shop-tab active" data-filter="all">🌟 Semua</button>
+              <button class="shop-tab" data-filter="desk">🪑 Meja Kerja</button>
+              <button class="shop-tab" data-filter="cabinet">📁 Rak Arsip</button>
+              <button class="shop-tab" data-filter="plant">🪴 Tanaman Hias</button>
+              <button class="shop-tab" data-filter="clock">⏰ Jam Dinding</button>
+            </div>
+
+            <!-- Shop Items Grid -->
+            <div class="shop-grid" id="shop-items-grid">
+              <!-- Rendered dynamically by script.js -->
+            </div>
+
+            <!-- Helpful Kid-Friendly Earning Note -->
+            <div class="shop-earning-note">
+              <span class="note-icon">💡</span>
+              <span class="note-text">
+                Butuh koin tambahan? Selesaikan episode cerita dan misi petualangan kantor untuk mengumpulkan hadiah
+                koin!
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- =========================================================
+       MODALS & DIALOGS
+       ========================================================= -->
+
+  <!-- Modal: Detail Lencana -->
+  <div id="badge-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="btn-close-badge-modal" title="Tutup Modal">&times;</button>
+      <div class="badge-modal-icon-wrap" id="badge-modal-icon">🏆</div>
+      <h3 class="modal-title" id="badge-modal-title">Nama Lencana</h3>
+      <div class="badge-modal-status" id="badge-modal-status">TERBUKA</div>
+      <p class="modal-desc" id="badge-modal-desc">Deskripsi cara mendapatkan lencana ini di kantor cilik.</p>
+      <button class="btn-modal-action" id="btn-ok-badge-modal">Keren! 👍</button>
+    </div>
+  </div>
+
+  <!-- Modal: Pilihan Episode Chapter 1 -->
+  <div id="episode-select-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card episode-modal-card">
+      <button class="modal-close" id="btn-close-episode-modal" title="Tutup Modal">&times;</button>
+      <div class="modal-header-badge">
+        <span class="chapter-tag" id="episode-modal-chapter-tag">🏢 CHAPTER 1</span>
+        <h3 class="modal-title" id="episode-modal-title">Pilih Episode Petualangan</h3>
+        <p class="modal-desc" id="episode-modal-desc">Selesaikan setiap episode untuk menghentikan ulah Dr. Chaos dan
+          menyelamatkan kantor!</p>
+      </div>
+
+      <!-- Episode Grid Container (5 Episodes) -->
+      <div class="episodes-grid" id="episodes-grid">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Screen Game Misi (3 Layar: Story, Gameplay, Reward) -->
+  <div id="episode-game-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card game-screen-card">
+      <button class="modal-close" id="btn-close-game-screen" title="Tutup Permainan">&times;</button>
+
+      <!-- Top Episode Header Info -->
+      <div class="game-screen-header">
+        <div class="header-tag-row">
+          <span class="game-screen-chapter-pill" id="game-screen-chapter-pill">🏢 Chapter 1 • Episode 1</span>
+        </div>
+        <h3 class="game-screen-title" id="game-screen-title">Bencana Kertas Terbang! 🌪️</h3>
+
+        <!-- Step / Phase Progress Indicators -->
+        <div class="game-phases-tracker">
+          <div class="phase-dot active" id="phase-dot-1">
+            <span class="dot-num">1</span>
+            <span class="dot-label">Cerita</span>
+          </div>
+          <div class="phase-line" id="phase-line-1"></div>
+          <div class="phase-dot" id="phase-dot-2">
+            <span class="dot-num">2</span>
+            <span class="dot-label">Misi Pemilahan</span>
+          </div>
+          <div class="phase-line" id="phase-line-2"></div>
+          <div class="phase-dot" id="phase-dot-3">
+            <span class="dot-num">3</span>
+            <span class="dot-label">Hadiah Bintang</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================================
+           LAYAR 1: STORY SCREEN (Dialog Interaktif Naskah)
+           ======================================================== -->
+      <div class="game-screen-phase active" id="game-phase-story">
+        <div class="story-dialog-container" id="story-dialog-container">
+          <!-- Populated dynamically with Komandan Kiki, Dr. Chaos, & Player's Agent -->
+        </div>
+
+        <div class="game-phase-footer">
+          <button id="btn-start-gameplay" class="btn-modal-action btn-game-primary">
+            <span>🚀 Mulai Misi Sekarang!</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ========================================================
+           LAYAR 2: GAMEPLAY SCREEN (Pemilahan Dokumen / Sorting Mini-Game)
+           ======================================================== -->
+      <div class="game-screen-phase" id="game-phase-gameplay">
+        <div class="gameplay-instructions">
+          <div class="instruction-badge">🌪️ Tantangan Kantor</div>
+          <p class="instruction-text"><strong>Dr. Chaos</strong> menerbangkan berkas di kantor! Pilah 4 kertas ke tempat
+            yang tepat:</p>
+          <div class="gameplay-counter">
+            <span>Kertas Tersisa:</span>
+            <strong id="sorting-remaining-count">4</strong>
+          </div>
+        </div>
+
+        <!-- Target Drop Zones -->
+        <div class="sorting-targets-row">
+          <div class="sorting-target-zone zone-archive" id="target-archive" data-type="archive">
+            <div class="zone-icon">📁</div>
+            <div class="zone-info">
+              <div class="zone-label">Lemari Arsip</div>
+              <div class="zone-sub">Dokumen Penting Resmi</div>
+            </div>
+            <div class="zone-badge" id="count-archive">0 Disimpan</div>
+          </div>
+
+          <div class="sorting-target-zone zone-trash" id="target-trash" data-type="trash">
+            <div class="zone-icon">🗑️</div>
+            <div class="zone-info">
+              <div class="zone-label">Tempat Sampah</div>
+              <div class="zone-sub">Kertas Sampah & Bekas</div>
+            </div>
+            <div class="zone-badge" id="count-trash">0 Dibuang</div>
+          </div>
+        </div>
+
+        <!-- 4 Paper Cards Container -->
+        <div class="sorting-items-container" id="sorting-items-container">
+          <!-- 4 items rendered dynamically with sort buttons and drag functionality -->
+        </div>
+      </div>
+
+      <!-- ========================================================
+           LAYAR 3: REWARD SCREEN (Pop-Up Bintang & Pujian Agen)
+           ======================================================== -->
+      <div class="game-screen-phase" id="game-phase-reward">
+        <div class="reward-content-box">
+          <div class="reward-stars-row">
+            <span class="star-icon star-1">⭐</span>
+            <span class="star-icon star-2">⭐</span>
+            <span class="star-icon star-3">⭐</span>
+          </div>
+
+          <div class="reward-title-group">
+            <span class="reward-tag">MISI BERHASIL! 100% SEMPURNA ✨</span>
+            <h2 class="reward-heading">Luar Biasa, <span id="reward-agent-name">Agen Cilik</span>! 🎉</h2>
+          </div>
+
+          <div class="reward-character-praise">
+            <div class="praise-avatar" id="reward-agent-avatar">👦🏻</div>
+            <div class="praise-speech">
+              <p id="reward-praise-text">"Kerja hebat! Semua dokumen rahasia telah aman di lemari arsip dan kantor
+                kembali bersih dari ulah Dr. Chaos!"</p>
+              <div class="praise-signature">— Komandan Kiki 🦉 (Pimpinan Kantor)</div>
+            </div>
+          </div>
+
+          <div class="reward-unlock-banner">
+            <div class="unlock-icon" id="reward-unlock-icon">🔓</div>
+            <div class="unlock-info">
+              <strong id="reward-unlock-title">EPISODE 2 BERHASIL TERBUKA!</strong>
+              <span id="reward-unlock-subtitle">"Misteri Stempel Merah" kini siap kamu jelajahi!</span>
+            </div>
+          </div>
+
+          <div class="reward-actions-row">
+            <button id="btn-return-episodes" class="btn-modal-secondary">
+              <span>📋 Pilihan Episode</span>
+            </button>
+            <button id="btn-next-episode" class="btn-modal-action btn-game-primary">
+              <span id="btn-next-episode-text">➔ Lanjut Episode 2</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal: Simulasi Misi Interaktif (Untuk Chapter 2 - 4) -->
+  <div id="mission-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card mission-modal-card">
+      <button class="modal-close" id="btn-close-mission-modal" title="Tutup Modal">&times;</button>
+      <div class="mission-icon-header" id="mission-modal-icon">📁</div>
+      <h3 class="modal-title" id="mission-modal-title">Chapter Misi</h3>
+      <p class="modal-desc" id="mission-modal-desc">Selesaikan tugas mini berikut untuk menyelesaikan misi dan membuka
+        chapter berikutnya!</p>
+
+      <!-- Interactive Mini Task Steps -->
+      <div class="mission-task-box">
+        <div class="task-step" id="task-step-1">
+          <span class="step-num">1</span>
+          <span class="step-text" id="step-1-text">Rapikan meja & alat tulis</span>
+          <button class="btn-step-action" id="btn-step-1">Lakukan ✨</button>
+        </div>
+        <div class="task-step disabled" id="task-step-2">
+          <span class="step-num">2</span>
+          <span class="step-text" id="step-2-text">Stempel dokumen resmi</span>
+          <button class="btn-step-action" id="btn-step-2" disabled>Stempel 🔏</button>
+        </div>
+        <div class="task-step disabled" id="task-step-3">
+          <span class="step-num">3</span>
+          <span class="step-text" id="step-3-text">Kumpulkan ke meja bos</span>
+          <button class="btn-step-action" id="btn-step-3" disabled>Selesai 🚀</button>
+        </div>
+      </div>
+
+      <div class="mission-footer-action">
+        <button id="btn-complete-mission" class="btn-modal-action btn-success" style="display: none;">
+          🎉 Misi Selesai! Klaim Hadiah
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+
+</html>

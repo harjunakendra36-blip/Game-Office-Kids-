@@ -1,0 +1,1305 @@
+/* ===================================================
+   ADMINISTRASI CILIK - MODULES & CERTIFICATE STYLING
+   =================================================== */
+
+/* Common Module Container & Topbar */
+.module-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 12px;
+}
+
+.module-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-bg);
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  border: 2px solid #ffffff;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.mod-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mod-pill {
+  background: var(--primary);
+  color: white;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+}
+
+.mod-info h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.mod-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.visitor-counter, .archive-progress, .letter-counter, .cash-balance-pill {
+  background: #f0fdf4;
+  border: 2px solid var(--secondary-light);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  color: #166534;
+  font-size: 0.95rem;
+}
+
+.cash-balance-pill {
+  background: #fffbeb;
+  border-color: var(--accent-gold-light);
+  color: #92400e;
+}
+
+/* ===================================================
+   MODULE 1: FRONT OFFICE & BUKU TAMU
+   =================================================== */
+.mod1-stage {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.mod1-left-panel, .mod1-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+/* Visitor Reception Spot */
+.visitor-spot {
+  flex: 1;
+  background: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 70%, #dbeafe 100%);
+  border-radius: var(--radius-lg);
+  border: 3px solid #ffffff;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.visitor-character {
+  width: 170px;
+  height: 230px;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.reception-desk {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient(180deg, #d97706 0%, #b45309 100%);
+  border-top: 5px solid #fcd34d;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 3;
+}
+
+.desk-nameplate {
+  background: #1e293b;
+  color: #fbbf24;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 4px 14px;
+  border-radius: 4px;
+  border: 2px solid #f59e0b;
+}
+
+.desk-bell {
+  width: 44px;
+  height: 44px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.desk-bell:hover {
+  transform: scale(1.1);
+}
+
+.desk-bell:active {
+  transform: scale(0.92);
+}
+
+.bell-top {
+  width: 32px;
+  height: 22px;
+  background: linear-gradient(180deg, #fef08a 0%, #eab308 70%, #a16207 100%);
+  border-radius: 20px 20px 0 0;
+  border: 2px solid #713f12;
+  position: relative;
+}
+
+.bell-top::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 6px;
+  background: #713f12;
+  border-radius: 3px;
+}
+
+.bell-base {
+  width: 40px;
+  height: 6px;
+  background: #475569;
+  border-radius: 3px;
+  border: 1px solid #1e293b;
+}
+
+.bell-label {
+  position: absolute;
+  bottom: -16px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* Dialogue Box */
+.dialogue-box {
+  background: #ffffff;
+  border: 3px solid #0284c7;
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-md);
+}
+
+.dialogue-speaker {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.dialogue-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  line-height: 1.4;
+  min-height: 48px;
+}
+
+.dialogue-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dialogue-choice-btn {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #166534;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dialogue-choice-btn:hover {
+  background: #dcfce7;
+  border-color: #22c55e;
+  transform: translateX(4px);
+}
+
+/* Digital Guestbook */
+.digital-guestbook {
+  background: #ffffff;
+  border: 3px solid #cbd5e1;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.guestbook-header {
+  background: linear-gradient(90deg, #0284c7 0%, #0369a1 100%);
+  color: white;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.book-title-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.book-title-bar h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.date-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.guestbook-form {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.form-group input {
+  padding: 8px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: #f8fafc;
+  color: var(--text-main);
+  outline: none;
+}
+
+/* Visitor Pass Card */
+.pass-card-preview {
+  background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pass-header {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #b45309;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.pass-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pass-photo {
+  font-size: 2rem;
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+}
+
+.pass-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.pass-details strong {
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.pass-details span {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* ===================================================
+   MODULE 2: PENGARSIPAN BERKAS (FILING)
+   =================================================== */
+.mod2-stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.mod2-cabinet-section, .mod2-desk-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.cabinet-top-label, .desk-mat-header {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Filing Cabinet Structure */
+.filing-cabinet {
+  background: #334155;
+  border: 4px solid #1e293b;
+  border-radius: var(--radius-lg);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-md);
+  flex: 1;
+  justify-content: space-around;
+}
+
+.cabinet-drawer {
+  background: linear-gradient(180deg, #475569 0%, #334155 100%);
+  border: 2px solid #64748b;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  min-height: 62px;
+  transition: all 0.2s ease;
+}
+
+.cabinet-drawer.drag-over {
+  background: #0284c7;
+  border-color: #38bdf8;
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+}
+
+.drawer-handle {
+  width: 50px;
+  height: 10px;
+  background: #cbd5e1;
+  border-radius: 4px;
+  border: 1px solid #94a3b8;
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.drawer-label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  color: #0f172a;
+}
+
+.yellow-label { background: #fef08a; border: 1px solid #eab308; }
+.red-label { background: #fecdd3; border: 1px solid #f43f5e; }
+.green-label { background: #bbf7d0; border: 1px solid #22c55e; }
+.blue-label { background: #bae6fd; border: 1px solid #0284c7; }
+.purple-label { background: #e9d5ff; border: 1px solid #a855f7; }
+
+.drawer-slot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Desk Work Mat & Draggable Folders */
+.desk-work-mat {
+  background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+  border: 3px solid #ea580c;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.desk-mat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #7c2d12;
+}
+
+.hint-badge {
+  background: #ffedd5;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+}
+
+.draggable-folders-pool {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Single Draggable Folder */
+.doc-folder {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: grab;
+  position: relative;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15), var(--shadow-sm);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-top: 8px solid #94a3b8;
+}
+
+.doc-folder:hover {
+  transform: translateY(-4px) rotate(1deg);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.15), var(--shadow-md);
+}
+
+.doc-folder.is-dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
+.doc-folder[data-category="keuangan"] { border-top-color: #eab308; background: #fefce8; }
+.doc-folder[data-category="surat_masuk"] { border-top-color: #f43f5e; background: #fff1f2; }
+.doc-folder[data-category="personalia"] { border-top-color: #22c55e; background: #f0fdf4; }
+.doc-folder[data-category="jadwal"] { border-top-color: #0284c7; background: #f0f9ff; }
+.doc-folder[data-category="inventaris"] { border-top-color: #a855f7; background: #faf5ff; }
+
+.folder-icon {
+  font-size: 2.2rem;
+  margin-bottom: 4px;
+}
+
+.folder-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.folder-code {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* ===================================================
+   MODULE 3: TATA SURAT & STEMPEL DIGITAL
+   =================================================== */
+.mod3-stage {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.mod3-paper-panel, .mod3-tools-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.official-letter-sheet {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  border: 1px solid #cbd5e1;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-family: 'Quicksand', serif;
+}
+
+.letter-letterhead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.letterhead-logo {
+  font-size: 2.2rem;
+}
+
+.letterhead-text h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.letterhead-text p {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.letter-divider {
+  border: none;
+  border-top: 3px double #0f172a;
+  margin-bottom: 12px;
+}
+
+.letter-meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+.badge-urgent {
+  background: #fecdd3;
+  color: #9f1239;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.letter-body-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #1e293b;
+  margin: 16px 0;
+  flex: 1;
+}
+
+.letter-sign-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 12px;
+}
+
+.sign-block-left, .sign-block-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.sign-handwritten {
+  font-family: cursive;
+  font-size: 1.3rem;
+  color: #0284c7;
+  margin-top: 14px;
+}
+
+/* Stamp Target Area */
+.stamp-target-zone {
+  width: 130px;
+  height: 90px;
+  border: 3px dashed #38bdf8;
+  border-radius: 12px;
+  background: #f0f9ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: crosshair;
+  margin: 6px 0;
+  transition: all 0.2s ease;
+}
+
+.stamp-target-zone:hover {
+  background: #e0f2fe;
+  border-color: #0284c7;
+  transform: scale(1.04);
+}
+
+.target-hint {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #0284c7;
+  text-align: center;
+}
+
+.stamped-imprint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  pointer-events: none;
+}
+
+.stamped-imprint.stamped {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: stampSlam 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.imprint-seal {
+  border: 4px solid #dc2626;
+  color: #dc2626;
+  font-size: 0.95rem;
+  font-weight: 900;
+  padding: 6px 14px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  transform: rotate(-12deg);
+  background: rgba(254, 226, 226, 0.4);
+  box-shadow: inset 0 0 6px rgba(220, 38, 38, 0.3);
+}
+
+/* Stamp Station Tool Panel */
+.stamp-tool-station {
+  background: var(--card-bg);
+  border: 3px solid #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+  flex: 1;
+}
+
+.stamp-tool-station h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.tool-instruction {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  background: #f8fafc;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid #e2e8f0;
+}
+
+.stamp-types-selector {
+  display: flex;
+  gap: 8px;
+}
+
+.stamp-type-option {
+  flex: 1;
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  padding: 8px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.stamp-type-option.active {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #b91c1c;
+}
+
+/* Ink Pad Component */
+.inkpad-container {
+  background: #1e293b;
+  border-radius: var(--radius-md);
+  padding: 8px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.inkpad-container:hover {
+  transform: scale(1.02);
+}
+
+.inkpad-lid {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.inkpad-sponge {
+  height: 60px;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.ink-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #fef2f2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.stamper-preview-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.stamper-tool-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stamper-handle {
+  width: 22px;
+  height: 36px;
+  background: #78350f;
+  border-radius: 8px 8px 0 0;
+  border: 2px solid #451a03;
+}
+
+.stamper-shaft {
+  width: 14px;
+  height: 12px;
+  background: #cbd5e1;
+  border: 1px solid #64748b;
+}
+
+.stamper-base {
+  width: 80px;
+  height: 24px;
+  background: #dc2626;
+  border-radius: 4px;
+  border: 2px solid #7f1d1d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.stamp-action-status {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0284c7;
+}
+
+/* ===================================================
+   MODULE 4: PETTY CASH (UANG KAS CILIK)
+   =================================================== */
+.mod4-stage {
+  display: grid;
+  grid-template-columns: 1.15fr 1.15fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.mod4-left-panel, .mod4-right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+.scenario-card {
+  background: #ffffff;
+  border: 3px solid #86efac;
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.scenario-badge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #166534;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.scenario-card h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.price-tag-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.price-highlight {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  border: 2px solid #f87171;
+}
+
+.scenario-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Petty Cash Ledger Table */
+.ledger-table-box {
+  background: #ffffff;
+  border: 3px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.ledger-header {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.ledger-table th, .ledger-table td {
+  border: 1px solid #e2e8f0;
+  padding: 6px 10px;
+  text-align: left;
+}
+
+.ledger-table th {
+  background: #f1f5f9;
+  font-weight: 800;
+  color: #475569;
+}
+
+.ledger-entry-form {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.math-question {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.math-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.currency-prefix {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.math-input-row input {
+  flex: 1;
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+
+.math-feedback {
+  font-size: 0.85rem;
+  font-weight: 700;
+  min-height: 18px;
+}
+
+/* Cash Drawer & Banknotes */
+.cash-drawer-box {
+  background: #1e293b;
+  border: 4px solid #0f172a;
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.drawer-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.btn-subtle {
+  background: #334155;
+  border: 1px solid #475569;
+  color: #cbd5e1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.banknotes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.money-note {
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.15s ease;
+  position: relative;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.money-note:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 7px 0 rgba(0, 0, 0, 0.4);
+}
+
+.money-note:active {
+  transform: translateY(2px);
+}
+
+.note-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.note-denom {
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.note-label {
+  font-size: 0.55rem;
+  font-weight: 800;
+}
+
+.note-cur {
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+}
+
+/* Rupiah Banknote Colors */
+.note-50k { background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%); color: #eff6ff; border: 2px solid #1d4ed8; }
+.note-20k { background: linear-gradient(135deg, #4ade80 0%, #16a34a 100%); color: #f0fdf4; border: 2px solid #15803d; }
+.note-10k { background: linear-gradient(135deg, #c084fc 0%, #9333ea 100%); color: #faf5ff; border: 2px solid #7e22ce; }
+.note-5k { background: linear-gradient(135deg, #fdba74 0%, #ea580c 100%); color: #fff7ed; border: 2px solid #c2410c; }
+.note-2k { background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%); color: #f8fafc; border: 2px solid #475569; }
+.note-1k { background: linear-gradient(135deg, #a3e635 0%, #65a30d 100%); color: #f7fee7; border: 2px solid #4d7c0f; }
+
+/* Payment Tray */
+.payment-tray-zone {
+  background: #334155;
+  border: 2px dashed #64748b;
+  border-radius: var(--radius-md);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.tray-title {
+  display: flex;
+  justify-content: space-between;
+  color: #f1f5f9;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.tray-items-display {
+  flex: 1;
+  background: #1e293b;
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  min-height: 50px;
+}
+
+.tray-empty-hint {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: auto;
+}
+
+.tray-chip {
+  background: #38bdf8;
+  color: #0c4a6e;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===================================================
+   CERTIFICATE MODAL STYLING (PRINT READY)
+   =================================================== */
+.cert-card-container {
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.cert-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.btn-close-modal {
+  background: #f1f5f9;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 800;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.cert-preview-scroll {
+  overflow-y: auto;
+  flex: 1;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: var(--radius-md);
+}
+
+.certificate-frame {
+  background: #fffdfa;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.cert-border-outer {
+  border: 6px solid #d97706;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fffdf5;
+}
+
+.cert-border-inner {
+  border: 2px dashed #b45309;
+  padding: 24px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cert-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cert-emblem {
+  font-size: 3rem;
+  margin-bottom: 4px;
+}
+
+.cert-main-title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #78350f;
+  letter-spacing: 3px;
+}
+
+.cert-subtitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #0284c7;
+  letter-spacing: 1px;
+}
+
+.cert-recipient-name {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #0f172a;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-color: #f59e0b;
+  margin: 10px 0;
+  font-family: 'Fredoka', cursive, sans-serif;
+}
+
+.cert-statement {
+  font-size: 1.05rem;
+  color: #334155;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.cert-modules-summary {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.cert-mod-badge {
+  background: #e0f2fe;
+  border: 1px solid #38bdf8;
+  color: #0369a1;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+}
+
+.cert-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding: 0 20px;
+}
+
+.cert-sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.sign-line {
+  width: 140px;
+  height: 2px;
+  background: #334155;
+  margin-bottom: 6px;
+}
+
+.cert-gold-seal {
+  width: 85px;
+  height: 85px;
+  background: linear-gradient(135deg, #fde047 0%, #ca8a04 100%);
+  border-radius: 50%;
+  border: 4px solid #eab308;
+  box-shadow: 0 4px 10px rgba(202, 138, 4, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.seal-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #713f12;
+  font-weight: 900;
+  font-size: 0.65rem;
+}
+
+.cert-actions-bar {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 16px;
+}
