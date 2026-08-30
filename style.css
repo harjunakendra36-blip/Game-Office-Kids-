@@ -4034,3 +4034,289 @@ input:checked+.toggle-slider::before {
     font-size: 1.15rem;
   }
 }
+
+/* ==========================================================================
+   CERITA SPESIAL CARD  —  Murni Coming Soon, terisolasi penuh
+   Semua selector pakai prefix .special-story- untuk menghindari konflik
+   ========================================================================== */
+
+/* ── Wrapper box ── */
+.special-story-box {
+  border: 2px dashed #eab308 !important;
+  background: rgba(6, 78, 59, 0.4) !important;
+  border-radius: 24px !important;
+  box-shadow:
+    0 0 0 1px rgba(234, 179, 8, 0.1),
+    0 0 28px rgba(234, 179, 8, 0.12),
+    inset 0 0 50px rgba(6, 78, 59, 0.15);
+  animation: specialGreenBreath 4s ease-in-out infinite;
+  cursor: default !important;
+}
+
+@keyframes specialGreenBreath {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(234, 179, 8, 0.1),
+      0 0 28px rgba(234, 179, 8, 0.12),
+      inset 0 0 50px rgba(6, 78, 59, 0.15);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(234, 179, 8, 0.22),
+      0 0 46px rgba(234, 179, 8, 0.25),
+      inset 0 0 70px rgba(6, 78, 59, 0.25);
+  }
+}
+
+/* ── Inner flex container ── */
+.special-story-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+
+/* ── Header row ── */
+.special-story-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+}
+
+.special-story-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.special-story-icon {
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  background: rgba(234, 179, 8, 0.12);
+  border: 1.5px solid rgba(234, 179, 8, 0.35);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  animation: starIconSpin 6s ease-in-out infinite;
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.2);
+}
+
+@keyframes starIconSpin {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(18deg) scale(1.1);
+  }
+}
+
+.special-story-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  /* Gold shimmer text */
+  background: linear-gradient(90deg, #eab308, #fef08a, #eab308);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldTextShimmer 3s linear infinite;
+  line-height: 1.2;
+  margin: 0;
+}
+
+@keyframes goldTextShimmer {
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.special-story-sub {
+  font-size: 0.82rem;
+  color: #86efac;
+  font-weight: 600;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Badge pill: EKSKLUSIF */
+.special-story-badge {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 13px;
+  border-radius: 999px;
+  background: rgba(234, 179, 8, 0.18);
+  border: 1.5px solid rgba(234, 179, 8, 0.5);
+  color: #fde047;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(234, 179, 8, 0.2);
+  flex-shrink: 0;
+}
+
+/* ── Divider ── */
+.special-divider {
+  border: none;
+  border-top: 1px solid rgba(234, 179, 8, 0.25);
+  margin: 0 0 20px 0;
+}
+
+/* ── Body: Coming Soon block ── */
+.special-story-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 28px 16px 24px;
+  text-align: center;
+}
+
+/* Bintang emas besar berputar */
+.special-star-glow {
+  font-size: 3rem;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: rgba(234, 179, 8, 0.1);
+  border: 2px solid rgba(234, 179, 8, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: starGlowPulse 2.4s ease-in-out infinite;
+  box-shadow:
+    0 0 0 5px rgba(234, 179, 8, 0.07),
+    0 0 22px rgba(234, 179, 8, 0.18);
+  margin-bottom: 4px;
+}
+
+@keyframes starGlowPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 5px rgba(234, 179, 8, 0.07),
+      0 0 22px rgba(234, 179, 8, 0.18);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(234, 179, 8, 0.12),
+      0 0 40px rgba(234, 179, 8, 0.35);
+    transform: scale(1.06);
+  }
+}
+
+/* Teks utama COMING SOON */
+.special-coming-label {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #eab308, #fef9c3, #eab308);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldTextShimmer 2.5s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.45));
+}
+
+/* Teks deskripsi */
+.special-coming-desc {
+  font-size: 0.88rem;
+  color: #fef08a;
+  font-weight: 600;
+  line-height: 1.5;
+  max-width: 340px;
+  opacity: 0.85;
+}
+
+/* Titik-titik indikator kuning */
+.special-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.special-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(234, 179, 8, 0.55);
+  animation: specialDotBlink 1.6s ease-in-out infinite;
+}
+
+.special-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.special-dot:nth-child(2) {
+  animation-delay: 0.27s;
+}
+
+.special-dot:nth-child(3) {
+  animation-delay: 0.54s;
+}
+
+@keyframes specialDotBlink {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+    background: rgba(234, 179, 8, 0.4);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+    background: #eab308;
+    box-shadow: 0 0 8px rgba(234, 179, 8, 0.7);
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 650px) {
+  .special-story-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .special-story-title {
+    font-size: 1rem;
+  }
+
+  .special-story-badge {
+    display: none;
+  }
+
+  .special-coming-label {
+    font-size: 1.1rem;
+  }
+
+  .special-star-glow {
+    width: 66px;
+    height: 66px;
+    font-size: 2.4rem;
+  }
+}

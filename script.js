@@ -1230,6 +1230,14 @@ const Navigation = {
       ChapterManager.render();
     } else if (targetSlideId === 'slide-6') {
       OfficeCustomizer.render();
+    } else if (targetSlideId === 'slide-7') {
+      if (typeof StoryEngine !== 'undefined') {
+        StoryEngine.rebuildRosterFromGameState();
+        StoryEngine.playScript(DEMO_STORY_SCRIPT, {
+          chapterNumber: 1,
+          chapterTitle: 'Bencana Kipas Dr. Chaos'
+        });
+      }
     }
 
     // Scroll to top of slide
@@ -1452,6 +1460,9 @@ const ProfileManager = {
 
     Storage.save();
     TopBar.update();
+    if (typeof StoryEngine !== 'undefined') {
+      StoryEngine.rebuildRosterFromGameState();
+    }
     showToast('Profil Agen Berhasil Disimpan! 🎉', 'success');
   }
 };
@@ -1715,7 +1726,7 @@ const EpisodeMissionManager = {
     if (!modal) return;
 
     const episodeData = CHAPTER_1_EPISODES.find(e => e.id === episodeId) || CHAPTER_1_EPISODES[0];
-    
+
     // Set Header Info
     const chapterPill = document.getElementById('game-screen-chapter-pill');
     const screenTitle = document.getElementById('game-screen-title');
@@ -1724,7 +1735,7 @@ const EpisodeMissionManager = {
 
     modal.classList.add('active');
     this.showPhase(1);
-    
+
     // Trigger Scene BGM for Story Mode (Office Normal or Flashback)
     SceneManager.onStartEpisodeStory(chapterId, episodeId);
     this.renderStoryPhase(episodeData);
@@ -1899,7 +1910,7 @@ const EpisodeMissionManager = {
 
     [archiveZone, trashZone].forEach(zone => {
       if (!zone) return;
-      
+
       zone.ondragover = (e) => {
         e.preventDefault();
         zone.classList.add('dragover');
@@ -1937,7 +1948,7 @@ const EpisodeMissionManager = {
       // Correct!
       this.sortedItemIds.add(item.id);
       SoundSystem.play('step');
-      
+
       cardElement.classList.add('sorted');
       setTimeout(() => {
         cardElement.style.display = 'none';
@@ -1971,8 +1982,8 @@ const EpisodeMissionManager = {
       SoundSystem.play('back');
       cardElement.classList.add('wiggle');
       setTimeout(() => cardElement.classList.remove('wiggle'), 500);
-      showToast(chosenTarget === 'archive' 
-        ? 'Ups! Itu kertas sampah, buang ke Tempat Sampah ya 🗑️' 
+      showToast(chosenTarget === 'archive'
+        ? 'Ups! Itu kertas sampah, buang ke Tempat Sampah ya 🗑️'
         : 'Ups! Itu dokumen penting resmi, simpan ke Lemari Arsip ya 📁'
       );
     }
@@ -2685,3 +2696,7 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast(`Selamat datang di kantor, ${gameState.profile.name}! 🌟`);
   }, 400);
 });
+
+function showComingSoonToast() {
+  alert("🎮 Mini Game Misi Antar Berkas akan segera hadir!");
+}
