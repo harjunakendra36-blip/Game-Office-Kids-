@@ -2698,5 +2698,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showComingSoonToast() {
-  alert("🎮 Mini Game Misi Antar Berkas akan segera hadir!");
+  alert("🎮 Mini Game akan segera hadir!");
 }

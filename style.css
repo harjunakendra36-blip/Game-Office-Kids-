@@ -474,14 +474,18 @@ body {
 }
 
 .menu-hero {
-  text-align: center;
-  padding: 6px 0 12px;
+  text-align: center !important;
+  padding: 0 !important;
+  margin-bottom: -15px !important;
+  /* Nilai minus dibesarkan agar makin rapat ke bawah */
 }
 
 .logo-wrapper {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0px !important;
+  /* Nol-kan gap antar logo dan subtitle */
 }
 
 /* Logo 3D floating without box */
@@ -541,6 +545,24 @@ body {
   border-radius: var(--radius-full);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   display: inline-block;
+}
+
+/* Mission Active Badge (below game-title) */
+.mission-active-badge {
+  display: inline-block;
+  background: rgba(245, 158, 11, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  color: #1C1008;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+  margin-bottom: 6px;
 }
 
 /* --- Playful Pill Menu Buttons (Center-Bottom) --- */
@@ -642,7 +664,7 @@ body {
 /* Secondary Menu Grid */
 .menu-grid-secondary {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
 
@@ -4318,5 +4340,22 @@ input:checked+.toggle-slider::before {
     width: 66px;
     height: 66px;
     font-size: 2.4rem;
+  }
+
+  /* PAKSA MERAPATKAN TEKS JUDUL DAN SUBTITLE */
+  #slide-1 .menu-hero {
+    margin-bottom: -20px !important;
+  }
+
+  #slide-1 .logo-badge,
+  #slide-1 .menu-hero h1 {
+    margin-bottom: -10px !important;
+    line-height: 0.9 !important;
+  }
+
+  #slide-1 .game-subtitle,
+  #slide-1 .menu-hero p {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 }
