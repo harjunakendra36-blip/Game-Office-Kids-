@@ -2698,5 +2698,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showComingSoonToast() {
-  alert("🎮 Mini Game akan segera hadir!");
+  const toast = document.getElementById("toast");
+  if (!toast) return;
+
+  // Reset animasi jika diklik ulang secara cepat
+  toast.classList.remove("show");
+  void toast.offsetWidth;
+
+  // Tambahkan kelas 'show' untuk menampilkan toast
+  toast.classList.add("show");
+
+  // Sembunyikan otomatis setelah 3 detik
+  if (window.toastTimer) clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(function () {
+    toast.classList.remove("show");
+  }, 3000);
 }
