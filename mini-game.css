@@ -1,0 +1,331 @@
+/* ==========================================================================
+   MINI GAME CSS — Office Chair Racing 🏁
+   Semua style terisolasi di dalam #miniGameUI agar tidak bentrok
+   dengan UI utama Office Kids (Story Mode, Main Menu, dll.)
+   ========================================================================== */
+
+/* ---- Container Utama Fullscreen ---- */
+#miniGameUI {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: none;
+  flex-direction: column;
+  background: #0f172a;
+  font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+#miniGameUI.active { display: flex; }
+
+/* ---- Canvas ---- */
+#miniGameCanvas {
+  width: 100%;
+  flex: 1;
+  display: block;
+  touch-action: none;
+}
+
+/* ============================================================ HUD TOP ============================================================ */
+#mg-hud-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 10px 14px 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(to bottom, rgba(0,0,0,.65) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+#mg-btn-pause {
+  pointer-events: all;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, transform .15s;
+  flex-shrink: 0;
+}
+#mg-btn-pause:hover { background: rgba(255,255,255,.3); transform: scale(1.08); }
+
+/* Minimap */
+#mg-minimap {
+  flex: 1;
+  height: 28px;
+  background: rgba(0,0,0,.4);
+  border-radius: 14px;
+  border: 1.5px solid rgba(255,255,255,.2);
+  position: relative;
+  overflow: visible;
+}
+#mg-minimap-track {
+  position: absolute;
+  inset: 8px 12px;
+  background: rgba(255,255,255,.15);
+  border-radius: 6px;
+}
+.mg-minimap-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  font-size: .85rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 3px rgba(0,0,0,.8));
+  transition: left .1s linear;
+}
+#mg-marker-player { z-index: 3; }
+#mg-marker-finish  { z-index: 2; }
+
+/* HUD chips */
+.mg-hud-chip {
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(0,0,0,.45);
+  border-radius: 20px;
+  padding: 4px 10px;
+  color: #fff;
+  font-size: .82rem; font-weight: 700;
+  border: 1px solid rgba(255,255,255,.15);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.mg-hud-chip .chip-icon { font-size: 1rem; }
+
+/* Energy bar */
+#mg-energy-bar-wrap {
+  width: 90px; height: 12px;
+  background: rgba(0,0,0,.4);
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,.2);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+#mg-energy-bar-fill {
+  height: 100%; width: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  border-radius: 6px;
+  transition: width .3s ease, background .3s ease;
+}
+#mg-energy-bar-fill.medium { background: linear-gradient(90deg,#f59e0b,#d97706); }
+#mg-energy-bar-fill.low    { background: linear-gradient(90deg,#ef4444,#b91c1c); }
+
+#mg-score-label {
+  font-size: .8rem; font-weight: 700;
+  color: rgba(255,255,255,.9);
+  flex-shrink: 0;
+}
+
+/* ============================================================ CONTROLS ============================================================ */
+#mg-controls {
+  position: absolute;
+  bottom: 20px; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  pointer-events: none;
+  z-index: 10;
+}
+.mg-pedal {
+  pointer-events: all;
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.3);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: transform .1s, background .1s;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+#mg-pedal-left  { background: rgba(239,68,68,.25);  backdrop-filter: blur(6px); }
+#mg-pedal-right { background: rgba(16,185,129,.25); backdrop-filter: blur(6px); }
+.mg-pedal:active, .mg-pedal.pressed { transform: scale(.92); }
+#mg-pedal-left:active,  #mg-pedal-left.pressed  { background: rgba(239,68,68,.6);  border-color: #ef4444; }
+#mg-pedal-right:active, #mg-pedal-right.pressed { background: rgba(16,185,129,.6); border-color: #10b981; }
+.mg-pedal-icon  { font-size: 2rem; line-height: 1; }
+.mg-pedal-label { font-size: .6rem; font-weight: 700; color: rgba(255,255,255,.85); letter-spacing: .08em; text-transform: uppercase; }
+
+/* ============================================================ PAUSE ============================================================ */
+#mg-pause-overlay {
+  position: absolute; inset: 0;
+  display: none;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+}
+#mg-pause-overlay.visible { display: flex; animation: mgFadeIn .2s ease; }
+#mg-pause-card {
+  background: linear-gradient(145deg,#1e2a4a,#0f172a);
+  border: 2px solid rgba(99,102,241,.5);
+  border-radius: 28px;
+  padding: 36px 40px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,.5);
+  min-width: 260px;
+  animation: mgSlideUp .3s cubic-bezier(.34,1.56,.64,1);
+}
+#mg-pause-card .pause-emoji { font-size: 3rem; display: block; margin-bottom: 8px; }
+#mg-pause-card h2 { color: #fff; font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+#mg-pause-card p  { color: rgba(255,255,255,.6); font-size: .85rem; margin-bottom: 28px; }
+.mg-pause-stats { display: flex; gap: 16px; justify-content: center; margin-bottom: 28px; }
+.mg-stat-pill   { background: rgba(255,255,255,.08); border-radius: 12px; padding: 10px 16px; color: #fff; font-size: .8rem; text-align: center; }
+.mg-stat-pill .stat-val { font-size: 1.2rem; font-weight: 700; display: block; color: #fde68a; }
+.mg-pause-btns  { display: flex; flex-direction: column; gap: 12px; }
+.mg-btn-resume  {
+  background: linear-gradient(135deg,#10b981,#059669);
+  color: #fff; border: none; border-radius: 14px;
+  padding: 14px 24px;
+  font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 6px 0 #047857, 0 10px 20px rgba(5,150,105,.35);
+}
+.mg-btn-resume:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #047857, 0 14px 24px rgba(5,150,105,.4); }
+.mg-btn-resume:active { transform: translateY(3px); box-shadow: 0 2px 0 #047857; }
+.mg-btn-quit {
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.75);
+  border: 1.5px solid rgba(255,255,255,.15);
+  border-radius: 14px;
+  padding: 12px 24px;
+  font-family: inherit; font-size: .9rem; font-weight: 600; cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.mg-btn-quit:hover { background: rgba(239,68,68,.2); color: #fca5a5; border-color: rgba(239,68,68,.4); }
+
+/* ============================================================ QUIZ ============================================================ */
+#mg-quiz-overlay {
+  position: absolute; inset: 0;
+  display: none;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(8px);
+  z-index: 600;
+}
+#mg-quiz-overlay.visible { display: flex; animation: mgFadeIn .2s ease; }
+#mg-quiz-card {
+  background: linear-gradient(145deg,#1e3a5f,#0f172a);
+  border: 2px solid rgba(6,182,212,.5);
+  border-radius: 24px;
+  padding: 28px 32px;
+  max-width: 360px;
+  width: calc(100% - 48px);
+  box-shadow: 0 24px 48px rgba(0,0,0,.5);
+  animation: mgSlideUp .3s cubic-bezier(.34,1.56,.64,1);
+}
+.quiz-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.quiz-badge { background: #06b6d4; color: #fff; font-size: .65rem; font-weight: 700; padding: 3px 9px; border-radius: 9999px; letter-spacing: .08em; text-transform: uppercase; }
+.quiz-checkpoint-label { color: rgba(255,255,255,.55); font-size: .78rem; font-weight: 600; }
+#mg-quiz-question { color: #fff; font-size: 1.05rem; font-weight: 700; line-height: 1.45; margin-bottom: 20px; }
+#mg-quiz-options { display: flex; flex-direction: column; gap: 9px; }
+.mg-quiz-option {
+  background: rgba(255,255,255,.07);
+  border: 1.5px solid rgba(255,255,255,.15);
+  border-radius: 12px;
+  padding: 11px 16px;
+  color: rgba(255,255,255,.9);
+  font-family: inherit; font-size: .9rem; font-weight: 600; cursor: pointer;
+  text-align: left;
+  transition: background .15s, border-color .15s, transform .1s;
+}
+.mg-quiz-option:hover:not(:disabled) { background: rgba(6,182,212,.2); border-color: #06b6d4; }
+.mg-quiz-option.correct { background: rgba(16,185,129,.3); border-color: #10b981; color: #6ee7b7; }
+.mg-quiz-option.wrong   { background: rgba(239,68,68,.25);  border-color: #ef4444; color: #fca5a5; }
+.mg-quiz-option:disabled { cursor: default; }
+#mg-quiz-feedback { margin-top: 14px; text-align: center; font-size: .9rem; font-weight: 700; min-height: 20px; color: #fde68a; }
+#mg-quiz-continue {
+  display: none;
+  margin-top: 16px; width: 100%;
+  background: linear-gradient(135deg,#4f46e5,#6366f1);
+  color: #fff; border: none; border-radius: 12px;
+  padding: 12px;
+  font-family: inherit; font-size: .95rem; font-weight: 700; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 5px 0 #3730a3;
+}
+#mg-quiz-continue:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #3730a3; }
+
+/* ============================================================ END SCREEN ============================================================ */
+#mg-endscreen-overlay {
+  position: absolute; inset: 0;
+  display: none;
+  align-items: center; justify-content: center;
+  background: rgba(0,0,0,.8);
+  backdrop-filter: blur(10px);
+  z-index: 700;
+}
+#mg-endscreen-overlay.visible { display: flex; animation: mgFadeIn .4s ease; }
+#mg-endscreen-card {
+  background: linear-gradient(145deg,#1e2a4a,#0f172a);
+  border-radius: 28px;
+  padding: 36px 40px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,.6);
+  min-width: 280px; max-width: 340px;
+  width: calc(100% - 48px);
+  border: 2px solid rgba(255,255,255,.08);
+  animation: mgSlideUp .4s cubic-bezier(.34,1.56,.64,1);
+}
+#mg-endscreen-emoji  { font-size: 4rem; display: block; margin-bottom: 12px; animation: mgBounce .6s cubic-bezier(.34,1.56,.64,1) .3s both; }
+#mg-endscreen-title  { color: #fff; font-size: 1.7rem; font-weight: 700; margin-bottom: 6px; }
+#mg-endscreen-sub    { color: rgba(255,255,255,.6); font-size: .85rem; margin-bottom: 28px; line-height: 1.5; }
+.mg-end-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 28px; }
+.mg-end-stat  { background: rgba(255,255,255,.07); border-radius: 14px; padding: 12px 8px; color: #fff; }
+.mg-end-stat .es-val { font-size: 1.3rem; font-weight: 700; display: block; color: #fde68a; }
+.mg-end-stat .es-lbl { font-size: .65rem; color: rgba(255,255,255,.55); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.mg-end-btns { display: flex; flex-direction: column; gap: 10px; }
+.mg-btn-restart {
+  background: linear-gradient(135deg,#4f46e5,#6366f1);
+  color: #fff; border: none; border-radius: 14px;
+  padding: 14px;
+  font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 5px 0 #3730a3, 0 8px 18px rgba(79,70,229,.4);
+}
+.mg-btn-restart:hover { transform: translateY(-2px); }
+.mg-btn-main-menu {
+  background: rgba(255,255,255,.07); color: rgba(255,255,255,.75);
+  border: 1.5px solid rgba(255,255,255,.15);
+  border-radius: 14px; padding: 12px;
+  font-family: inherit; font-size: .9rem; font-weight: 600; cursor: pointer;
+  transition: background .15s;
+}
+.mg-btn-main-menu:hover { background: rgba(255,255,255,.14); color: #fff; }
+
+/* ============================================================ FLOATING PICKUP ============================================================ */
+.mg-pickup-text {
+  position: absolute;
+  font-size: 1rem; font-weight: 700; color: #fde68a;
+  pointer-events: none; z-index: 50;
+  animation: mgFloatUp 1s ease-out forwards;
+  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+}
+.mg-pickup-text.coffee { color: #6ee7b7; }
+
+/* ============================================================ KEYFRAMES ============================================================ */
+@keyframes mgFadeIn  { from{opacity:0} to{opacity:1} }
+@keyframes mgSlideUp { from{opacity:0;transform:translateY(30px) scale(.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+@keyframes mgBounce  { from{transform:scale(.5);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes mgFloatUp {
+  0%  {opacity:1;transform:translateY(0) scale(1)}
+  80% {opacity:.8;transform:translateY(-50px) scale(1.1)}
+  100%{opacity:0;transform:translateY(-70px) scale(.9)}
+}
+
+/* ============================================================ RESPONSIVE ============================================================ */
+@media(max-width:480px){
+  .mg-pedal { width:75px; height:75px; }
+  .mg-pedal-icon { font-size:1.6rem; }
+  #mg-pause-card, #mg-endscreen-card { padding:24px 20px; min-width:unset; }
+  #mg-hud-top { padding:8px 10px 6px; gap:7px; }
+  .mg-hud-chip { font-size:.75rem; padding:3px 8px; }
+  #mg-energy-bar-wrap { width:70px; }
+}
+
