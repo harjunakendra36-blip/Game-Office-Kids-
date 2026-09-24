@@ -79,24 +79,131 @@ const GAME_CHARACTERS = {
 };
 
 /**
+ * Helper to retrieve stored user avatar from localStorage or gameState.
+ * Falls back to default agent (Daffa).
+ * @returns {Object} Agent character profile object
+ */
+function getActiveUserAvatar() {
+  const stored = localStorage.getItem('userAvatar');
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (parsed && (parsed.id || parsed.avatar || parsed.name)) {
+        const found = GAME_CHARACTERS.agents.find(a =>
+          (parsed.id && a.id === parsed.id) ||
+          (parsed.avatar && a.avatar === parsed.avatar) ||
+          (parsed.name && a.name.toLowerCase() === parsed.name.toLowerCase())
+        );
+        if (found) return found;
+      }
+    } catch (e) {
+      const found = GAME_CHARACTERS.agents.find(a =>
+        a.id === stored || a.avatar === stored || a.name.toLowerCase() === stored.toLowerCase()
+      );
+      if (found) return found;
+    }
+  }
+
+  const activeAvatar = (typeof gameState !== 'undefined' && gameState?.profile) ? gameState.profile.avatar : '👦🏻';
+  return GAME_CHARACTERS.agents.find(agent => agent.avatar === activeAvatar) || GAME_CHARACTERS.agents[0];
+}
+
+/**
+ * Helper to get strictly mapped Roster:
+ * [Agen Utama] = Avatar Pilihan Pemain (misal: Daffa)
+ * [Agen Pendukung 1] = Nia (atau Daffa jika Nia dipilih sebagai MC)
+ * [Agen Pendukung 2] = Budi (atau Daffa jika Budi MC)
+ * [Agen Pendukung 3] = Sarah (atau Daffa jika Sarah MC)
+ * [Agen Pendukung 4] = Kenzo (atau Daffa jika Kenzo MC)
+ * [Agen Pendukung 5] = Maya (atau Daffa jika Maya MC)
+ * Komandan Kiki & Dr. Chaos = Tetap
+ * @param {Object} [overrideAgent] - Optional override MC agent object
+ * @returns {Object} Full mapped Roster object
+ */
+function getCharacterRoster(overrideAgent) {
+  const mc = overrideAgent || getActiveUserAvatar();
+  const daffa = GAME_CHARACTERS.agents.find(a => a.name === 'Daffa') || GAME_CHARACTERS.agents[0];
+  const nia   = GAME_CHARACTERS.agents.find(a => a.name === 'Nia')   || GAME_CHARACTERS.agents[1];
+  const budi  = GAME_CHARACTERS.agents.find(a => a.name === 'Budi')  || GAME_CHARACTERS.agents[2];
+  const sarah = GAME_CHARACTERS.agents.find(a => a.name === 'Sarah') || GAME_CHARACTERS.agents[3];
+  const kenzo = GAME_CHARACTERS.agents.find(a => a.name === 'Kenzo') || GAME_CHARACTERS.agents[4];
+  const maya  = GAME_CHARACTERS.agents.find(a => a.name === 'Maya')  || GAME_CHARACTERS.agents[5];
+
+  let s1 = nia;
+  let s2 = budi;
+  let s3 = sarah;
+  let s4 = kenzo;
+  let s5 = maya;
+
+  // Jika MC adalah salah satu agen pendukung, maka Daffa menggantikan posisinya
+  if (mc.name === 'Nia') {
+    s1 = daffa;
+  } else if (mc.name === 'Budi') {
+    s2 = daffa;
+  } else if (mc.name === 'Sarah') {
+    s3 = daffa;
+  } else if (mc.name === 'Kenzo') {
+    s4 = daffa;
+  } else if (mc.name === 'Maya') {
+    s5 = daffa;
+  }
+
+  return {
+    mc,
+    support1: s1,
+    support2: s2,
+    support3: s3,
+    support4: s4,
+    support5: s5,
+    mentor: GAME_CHARACTERS.mentor,
+    villain: GAME_CHARACTERS.villain
+  };
+}
+
+/**
+ * Format string dialog dengan mengganti tag / placeholder karakter
+ * @param {string} rawText
+ * @param {Object} [roster]
+ * @returns {string}
+ */
+function formatDialogueText(rawText, roster) {
+  if (!rawText) return '';
+  const r = roster || getCharacterRoster();
+  return rawText
+    .replace(/\[Nama Avatar\]/gi, r.mc.name)
+    .replace(/\[Agen Utama\]/gi, r.mc.name)
+    .replace(/\{PLAYER_NAME\}/gi, r.mc.name)
+    .replace(/\[Agen Pendukung 1\]/gi, r.support1.name)
+    .replace(/\[Agen Pendukung 2\]/gi, r.support2.name)
+    .replace(/\[Agen Pendukung 3\]/gi, r.support3.name)
+    .replace(/\[Agen Pendukung 4\]/gi, r.support4.name)
+    .replace(/\[Agen Pendukung 5\]/gi, r.support5.name)
+    .replace(/\[Komandan Kiki\]/gi, r.mentor.name)
+    .replace(/\[Dr\. Chaos\]/gi, r.villain.name);
+}
+
+/**
  * Helper function to retrieve NPC companion agents,
  * excluding the avatar currently selected by the player as the Main Character.
- * @param {string} [playerAvatar] - Optional avatar emoji (defaults to gameState.profile.avatar)
+ * @param {string} [playerAvatar] - Optional avatar emoji
  * @returns {Array} Array of 5 NPC companion agent objects
  */
 function getNPCAgents(playerAvatar) {
-  const activeAvatar = playerAvatar || (typeof gameState !== 'undefined' && gameState?.profile ? gameState.profile.avatar : '👦🏻');
-  return GAME_CHARACTERS.agents.filter(agent => agent.avatar !== activeAvatar);
+  const mc = playerAvatar ? (GAME_CHARACTERS.agents.find(a => a.avatar === playerAvatar) || getActiveUserAvatar()) : getActiveUserAvatar();
+  const roster = getCharacterRoster(mc);
+  return [roster.support1, roster.support2, roster.support3, roster.support4, roster.support5];
 }
 
 /**
  * Helper function to retrieve the active Main Agent character profile.
- * @param {string} [playerAvatar] - Optional avatar emoji (defaults to gameState.profile.avatar)
+ * @param {string} [playerAvatar] - Optional avatar emoji
  * @returns {Object} Active Main Agent object
  */
 function getMainPlayerAgent(playerAvatar) {
-  const activeAvatar = playerAvatar || (typeof gameState !== 'undefined' && gameState?.profile ? gameState.profile.avatar : '👦🏻');
-  return GAME_CHARACTERS.agents.find(agent => agent.avatar === activeAvatar) || GAME_CHARACTERS.agents[0];
+  if (playerAvatar) {
+    return GAME_CHARACTERS.agents.find(agent => agent.avatar === playerAvatar) || getActiveUserAvatar();
+  }
+  return getActiveUserAvatar();
 }
 
 const BADGES_DATA = [
@@ -249,78 +356,82 @@ const DECORATIONS_DATA = [
 const CHAPTERS_DATA = [
   {
     id: 1,
-    title: 'Hari Pertama Masuk Kantor',
-    icon: '🏢',
-    desc: 'Kenali meja kerjamu, rapikan alat tulis, dan cetak ID Card agen pertamamu!',
+    title: 'PILAR KEARSIPAN (ARCHIVING & FILING)',
+    icon: '🗂️',
+    desc: 'Pulihkan sistem kearsipan kantor yang dikacaukan Dr. Chaos! Pelajari cara memilah, menyusun, dan mengamankan berkas penting.',
     badgeReward: 'badge_2',
     tasks: [
-      { text: 'Rapikan meja & tata pensil warna ✨', button: 'Rapikan' },
-      { text: 'Cap dokumen surat sambutan 🔏', button: 'Stempel' },
-      { text: 'Ambil kartu tanda pengenal resmi 🪪', button: 'Ambil' }
+      { text: 'Pilah dokumen penting dari kertas sampah 📄', button: 'Pilah' },
+      { text: 'Susun berkas ke Map A-Z sesuai abjad 🗂️', button: 'Susun' },
+      { text: 'Tempel stiker kode warna kearsipan 🏷️', button: 'Stempel' }
     ]
   },
   {
     id: 2,
-    title: 'Misteri Berkas Rahasia',
-    icon: '📁',
-    desc: 'Cari dokumen berkas penting pimpinan yang terselip di lemari arsip rahasia.',
+    title: 'PILAR KOMUNIKASI & KORESPONDENSI',
+    icon: '📬',
+    desc: 'Kendalikan jalur komunikasi markas! Tangani panggilan penting, sortir surat masuk/keluar, dan rakit pesan rahasia.',
     badgeReward: 'badge_3',
     tasks: [
-      { text: 'Nyalakan lampu senter pencari 🔦', button: 'Nyalakan' },
-      { text: 'Buka map berkas bersandi rahasia 🗝️', button: 'Buka Map' },
-      { text: 'Serahkan berkas aman ke meja bos 💼', button: 'Serahkan' }
+      { text: 'Jawab telepon masuk dengan kalimat etis 📞', button: 'Angkat' },
+      { text: 'Sortir surat masuk & keluar ke kotak yang tepat ✉️', button: 'Sortir' },
+      { text: 'Antarkan memo prioritas ke divisi tujuan 📋', button: 'Kirim' }
     ]
   },
   {
     id: 3,
-    title: 'Operasi Fotokopi Ajaib',
-    icon: '🖨️',
-    desc: 'Bantu tim kantor memperbanyak laporan warna-warni sebelum presentasi dimulai.',
+    title: 'PILAR KEUANGAN & INVENTARIS',
+    icon: '💰',
+    desc: 'Hentikan sabotase keuangan Dr. Chaos! Audit kas kecil, kelola nota transaksi, dan tata stiker inventaris gudang.',
     badgeReward: 'badge_5',
     tasks: [
-      { text: 'Isi kertas warna-warni ke mesin 📄', button: 'Isi Kertas' },
-      { text: 'Tekan tombol cetak ajaib 🟢', button: 'Cetak' },
-      { text: 'Jilid berkas rapi dengan klip emas 📎', button: 'Jilid' }
+      { text: 'Pisahkan nota penerimaan dan pengeluaran 🧾', button: 'Pisahkan' },
+      { text: 'Hitung uang kembalian dengan tepat 💵', button: 'Hitung' },
+      { text: 'Tempel barcode inventaris gudang 📦', button: 'Tempel' }
     ]
   },
   {
     id: 4,
-    title: 'Rapat Direksi Cilik',
-    icon: '👔',
-    desc: 'Pimpin rapat besar bersama seluruh teman agen untuk menentukan masa depan kantor!',
+    title: 'PILAR MANAJEMEN OPERASIONAL',
+    icon: '⚙️',
+    desc: 'Satukan seluruh pilar administrasi, selesaikan flowchart SOP, dan ungkap misteri sosok bayangan di balik Dr. Chaos!',
     badgeReward: 'badge_8',
     tasks: [
-      { text: 'Ketuk palu tanda rapat dimulai 🔨', button: 'Ketuk Palu' },
-      { text: 'Tampilkan slide presentasi impian 📊', button: 'Tampilkan' },
-      { text: 'Rayakan keberhasilan tim kantor 🎉', button: 'Rayakan' }
+      { text: 'Rapikan regulasi & SK ke laci berkas 📑', button: 'Rapikan' },
+      { text: 'Susun balok alur SOP dari Input ke Output 🔀', button: 'Susun' },
+      { text: 'Ungkap rahasia Agen Nomor 0! 🕵️', button: 'Ungkap' }
     ]
   }
 ];
 
-// --- Episode Database for Chapter 1 ---
+// --- Episode Database for Chapter 1: Pilar Kearsipan ---
 const CHAPTER_1_EPISODES = [
   {
     id: 1,
     chapterId: 1,
     title: 'Bencana Kertas Terbang!',
-    icon: '📄',
-    desc: 'Dr. Chaos menyalakan kipas angin raksasa di ruang administrasi! Dokumen penting dan kertas sampah berterbangan campur aduk.',
+    icon: '🌪️',
+    desc: 'Dr. Chaos menyalakan kipas angin raksasa! Pisahkan dokumen penting kantor dari kertas sampah yang berterbangan.',
     dialogs: [
       {
         speaker: 'mentor',
-        text: 'Gawat, Agen {PLAYER_NAME}! Dr. Chaos baru saja menyalakan kipas angin raksasa di ruang administrasi kantor!'
+        text: 'Gawat, Agen [Nama Avatar]! Dr. Chaos baru saja menyalakan kipas angin raksasa di ruang arsip kantor!'
+      },
+      {
+        speaker: 'support_1',
+        text: 'Tenang Komandan! Aku dan teman-teman siap mendampingi [Agen Utama] memulihkan dokumen kantor!'
       },
       {
         speaker: 'villain',
-        text: 'Mwahahaha! Semua berkas rahasia dan sampah kantor sekarang berterbangan campur aduk! Coba kalau kalian bisa merapikannya, dasar agen cilik! 🌪️'
+        text: 'Mwahahaha! Semua berkas penting dan kertas sampah sekarang berterbangan campur aduk! Coba rapikan kalau bisa! 🌪️'
       },
       {
         speaker: 'player',
-        text: 'Tenang, Komandan! Saya akan segera memilah dokumen penting dan membuang kertas sampah ke tempat yang tepat! 💪'
+        text: 'Jangan khawatir, Komandan dan [Agen Pendukung 1]! Saya akan pilah dokumen penting dari kertas sampah sekarang juga! 💪'
       },
       {
         speaker: 'mentor',
-        text: 'Bagus sekali! Masukkan dokumen resmi ke Lemari Arsip 📁 dan buang kertas kotor ke Tempat Sampah 🗑️. Siap bertugas?'
+        text: 'Bagus sekali! Masukkan dokumen resmi ke Lemari Arsip 📁 dan buang kertas sampah ke Tempat Sampah 🗑️. Siap bertugas?'
       }
     ],
     sortingItems: [
@@ -334,8 +445,8 @@ const CHAPTER_1_EPISODES = [
       {
         id: 'item_1_2',
         type: 'archive',
-        title: 'Surat Rahasia Komandan',
-        typeBadge: 'Surat Bersegel Emas 📜',
+        title: 'Surat Dinas Pimpinan',
+        typeBadge: 'Surat Resmi Bersegel 📜',
         icon: '📜'
       },
       {
@@ -357,220 +468,220 @@ const CHAPTER_1_EPISODES = [
   {
     id: 2,
     chapterId: 1,
-    title: 'Misteri Stempel Merah',
-    icon: '🔏',
-    desc: 'Semua stempel persetujuan pimpinan kantor disembunyikan Dr. Chaos di laci bersandi rahasia!',
+    title: 'Peta Folder Rahasia',
+    icon: '🗂️',
+    desc: 'Susun dokumen penting ke dalam Map A-Z sesuai abjad sebelum berkas rahasia pimpinan tercebur kopi.',
     dialogs: [
       {
         speaker: 'mentor',
-        text: 'Agen {PLAYER_NAME}, Dr. Chaos telah mencampuradukkan stempel resmi kantor dengan benda-benda jahilnya!'
+        text: 'Agen {PLAYER_NAME}, Dr. Chaos mengacak-acak seluruh Map A-Z di lemari arsip! Berkas rahasia pimpinan hampir tumpah ke genangan kopi!'
       },
       {
         speaker: 'villain',
-        text: 'Mwahaha! Laci persetujuan kantor sudah penuh jebakan! Dokumen kalian tidak akan bisa disahkan hari ini! 🔏'
+        text: 'Mwahaha! Folder A-Z sudah kacau balau! Kalian tidak akan bisa menemukan berkas mana pun hari ini! 🗂️'
       },
       {
         speaker: 'player',
-        text: 'Jangan khawatir! Saya akan amankan stempel resmi pimpinan dan bersihkan perangkap usilnya! 🛡️'
+        text: 'Jangan khawatir! Saya akan susun kembali semua dokumen ke dalam Map A-Z yang benar sebelum tercebur! 🛡️'
       },
       {
         speaker: 'mentor',
-        text: 'Hebat! Simpan Stempel & Tinta Resmi ke Lemari Arsip 📁 dan buang benda perangkap ke Tempat Sampah 🗑️!'
+        text: 'Hebat! Simpan berkas dengan benar ke Lemari Arsip 📁 dan buang sampah ke Tempat Sampah 🗑️!'
       }
     ],
     sortingItems: [
       {
         id: 'item_2_1',
         type: 'archive',
-        title: 'Stempel Bintang Emas',
-        typeBadge: 'Cap Persetujuan Resmi 🔏',
-        icon: '🔏'
+        title: 'Berkas Rahasia Pimpinan',
+        typeBadge: 'Dokumen Folder A-Z 🗂️',
+        icon: '🗂️'
       },
       {
         id: 'item_2_2',
         type: 'archive',
-        title: 'Bantalan Tinta Merah',
-        typeBadge: 'Tinta Cap Pimpinan 🔴',
-        icon: '🔴'
+        title: 'Agenda Rapat Mingguan',
+        typeBadge: 'Agenda Tersusun Rapi 📅',
+        icon: '📅'
       },
       {
         id: 'item_2_3',
         type: 'trash',
-        title: 'Kulit Pisang Licin',
-        typeBadge: 'Jebakan Usil Dr. Chaos 🍌',
-        icon: '🍌'
+        title: 'Folder Rusak Sobek',
+        typeBadge: 'Map Rusak Tak Layak 🗞️',
+        icon: '🗞️'
       },
       {
         id: 'item_2_4',
         type: 'trash',
-        title: 'Klip Kertas Karatan',
-        typeBadge: 'Klip Rusak Tak Layak 📎',
-        icon: '📎'
+        title: 'Kertas Blangko Kosong',
+        typeBadge: 'Kertas Sisa Tak Terpakai 📄',
+        icon: '📄'
       }
     ]
   },
   {
     id: 3,
     chapterId: 1,
-    title: 'Operasi Kopi Tumpah',
-    icon: '☕',
-    desc: 'Bersihkan tumpahan kopi di meja kerja sebelum berkas penting basah kuyup terkena cairan!',
+    title: 'Kode Warna Kerajaan',
+    icon: '🏷️',
+    desc: 'Tempelkan stiker warna sesuai pilar (Merah: Rahasia, Biru: Keuangan, Hijau: Surat Umum).',
     dialogs: [
       {
         speaker: 'mentor',
-        text: 'Awas Agen {PLAYER_NAME}! Dr. Chaos menyenggol teko kopi dan cairan mulai mengalir ke meja berkas penting!'
+        text: 'Awas Agen {PLAYER_NAME}! Dr. Chaos mencampuradukkan stiker kode warna kearsipan! Sistem pengkodean berkas kantor kacau total!'
       },
       {
         speaker: 'villain',
-        text: 'Biar semua catatan rapat luntur dan hitam terkena kopi! Selamat menikmati kekacauan! ☕'
+        text: 'Biarkan berkas Rahasia, Keuangan, dan Surat Umum bercampur acak tanpa warna! Selamat menikmati kekacauan! 🎨'
       },
       {
         speaker: 'player',
-        text: 'Segera bertindak! Saya selamatkan berkas yang masih kering dan buang sampah basah!'
+        text: 'Segera bertindak! Saya pasang kode warna yang tepat: Merah untuk Rahasia, Biru untuk Keuangan, Hijau untuk Surat Umum!'
       },
       {
         speaker: 'mentor',
-        text: 'Cepat amankan berkas kering ke Lemari Arsip 📁 dan masukkan sampah tisu kotor ke Tempat Sampah 🗑️!'
+        text: 'Cepat amankan stiker warna resmi ke Lemari Arsip 📁 dan buang stiker palsu Dr. Chaos ke Tempat Sampah 🗑️!'
       }
     ],
     sortingItems: [
       {
         id: 'item_3_1',
         type: 'archive',
-        title: 'Berkas Kontrak Kering',
-        typeBadge: 'Dokumen Terselamatkan 📄',
-        icon: '📄'
+        title: 'Stiker Merah - Arsip Rahasia',
+        typeBadge: 'Kode Warna Resmi 🔴',
+        icon: '🔴'
       },
       {
         id: 'item_3_2',
         type: 'archive',
-        title: 'Buku Agenda Kerja',
-        typeBadge: 'Agenda Harian Penting 📓',
-        icon: '📓'
+        title: 'Stiker Biru - Arsip Keuangan',
+        typeBadge: 'Kode Warna Resmi 🔵',
+        icon: '🔵'
       },
       {
         id: 'item_3_3',
         type: 'trash',
-        title: 'Cangkir Kopi Pecah',
-        typeBadge: 'Pecahan Gelas Kotor ☕',
-        icon: '☕'
+        title: 'Stiker Palsu Dr. Chaos',
+        typeBadge: 'Stiker Jahil Tak Terpakai 🎭',
+        icon: '🎭'
       },
       {
         id: 'item_3_4',
         type: 'trash',
-        title: 'Tisu Basah Pekat',
-        typeBadge: 'Tisu Kotor Bekas Kopi 🧻',
-        icon: '🧻'
+        title: 'Label Warna Kabur',
+        typeBadge: 'Label Rusak Tidak Layak 🏷️',
+        icon: '🏷️'
       }
     ]
   },
   {
     id: 4,
     chapterId: 1,
-    title: 'Mesin Fotokopi Ajaib',
-    icon: '🖨️',
-    desc: 'Perbaiki tombol mesin cetak agar laporan warna-warni divisi tidak tercetak berantakan!',
+    title: 'Jejak Berkas Tersembunyi',
+    icon: '🕵️',
+    desc: 'Temukan Berkas Kunci yang disembunyikan Dr. Chaos di balik tumpukan kardus tua sebelum waktu habis.',
     dialogs: [
       {
         speaker: 'mentor',
-        text: 'Dr. Chaos mengotori mesin fotokopi dengan kertas macet dan bubuk tinta tumpah!'
+        text: 'Agen {PLAYER_NAME}, Dr. Chaos menyembunyikan Berkas Kunci pimpinan di balik tumpukan kardus tua! Kita harus menemukannya sebelum terlambat!'
       },
       {
         speaker: 'villain',
-        text: 'Brosur presentasi kalian tidak akan pernah selesai! Semuanya jadi abu-abu buram! 🖨️'
+        text: 'Mwahaha! Berkas Kunci itu sudah kusembunyikan sangat dalam! Tidak akan ada yang menemukannya sebelum waktu habis! ⏰'
       },
       {
         speaker: 'player',
-        text: 'Saya akan sortir hasil cetakan yang sempurna dan bersihkan kertas rusak dari mesin!'
+        text: 'Saya tidak akan menyerah! Saya akan cari Berkas Kunci itu dan amankan dari tangan Dr. Chaos! 🔦'
       },
       {
         speaker: 'mentor',
-        text: 'Tepat! Simpan Laporan Berwarna ke Lemari Arsip 📁 dan singkirkan kertas macet ke Tempat Sampah 🗑️!'
+        text: 'Luar biasa! Simpan Berkas Kunci dan dokumen asli ke Lemari Arsip 📁, dan singkirkan sampah ke Tempat Sampah 🗑️!'
       }
     ],
     sortingItems: [
       {
         id: 'item_4_1',
         type: 'archive',
-        title: 'Laporan Grafik Warna',
-        typeBadge: 'Hasil Cetak Sempurna 📊',
-        icon: '📊'
+        title: 'Berkas Kunci Pimpinan',
+        typeBadge: 'Berkas Ditemukan! 🔑',
+        icon: '🔑'
       },
       {
         id: 'item_4_2',
         type: 'archive',
-        title: 'Brosur Kantor Cilik',
-        typeBadge: 'Materi Presentasi Tim 📑',
-        icon: '📑'
+        title: 'Dokumen Kontrak Asli',
+        typeBadge: 'Dokumen Tersimpan Aman 📜',
+        icon: '📜'
       },
       {
         id: 'item_4_3',
         type: 'trash',
-        title: 'Kertas Macet Kusut',
-        typeBadge: 'Kertas Cacat Fotokopi 🗞️',
-        icon: '🗞️'
+        title: 'Kardus Tua Berdebu',
+        typeBadge: 'Kardus Bekas Tak Berguna 📦',
+        icon: '📦'
       },
       {
         id: 'item_4_4',
         type: 'trash',
-        title: 'Botol Tinta Bocor',
-        typeBadge: 'Limbah Tinta Habis 🖨️',
-        icon: '🖨️'
+        title: 'Jebakan Debu Dr. Chaos',
+        typeBadge: 'Perangkap Usil Villain 🕷️',
+        icon: '🕷️'
       }
     ]
   },
   {
     id: 5,
     chapterId: 1,
-    title: 'Rapat Divisi Pimpinan',
-    icon: '👔',
-    desc: 'Kumpulkan seluruh lencana dan pimpin inspeksi kantor besar bersama Komandan Kiki!',
+    title: 'Boss Level - Badai Kearsipan 30 Detik',
+    icon: '⚡',
+    desc: 'Dr. Chaos menyerang total! Gabungkan pemilahan, map A-Z, dan kode warna dalam kurun waktu 30 detik.',
     dialogs: [
       {
         speaker: 'mentor',
-        text: 'Inilah misi pamungkas Chapter 1, Agen {PLAYER_NAME}! Rapat dewan kantor akan segera dimulai!'
+        text: 'Inilah misi pamungkas Chapter 1, Agen {PLAYER_NAME}! Dr. Chaos melancarkan serangan kearsipan total — semua teknik harus digunakan sekarang!'
       },
       {
         speaker: 'villain',
-        text: 'Aku belum menyerah! Masih ada surat kaleng ejekan dan balon kempis yang kusebarkan! 🎈'
+        text: 'Aku gabungkan semua seranganku! Kipas angin, map kacau, stiker palsu — semuanya dalam 30 detik! Kalian tidak akan sanggup! ⚡'
       },
       {
         speaker: 'player',
-        text: 'Kantor ini milik kita bersama! Semua piagam dan hasil keputusan rapat akan aman tersimpan! 🏆'
+        text: 'Kantor ini milik kita bersama! Saya gabungkan semua teknik kearsipan yang sudah kupelajari — siap menghadapi badai! 🏆'
       },
       {
         speaker: 'mentor',
-        text: 'Luar biasa! Masukkan Piagam & Berkas Keputusan ke Lemari Arsip 📁, buang sampah usil ke Tempat Sampah 🗑️!'
+        text: 'Luar biasa semangat Agen {PLAYER_NAME}! Amankan semua berkas penting ke Lemari Arsip 📁 dan buang sampah ke Tempat Sampah 🗑️ secepat kilat!'
       }
     ],
     sortingItems: [
       {
         id: 'item_5_1',
         type: 'archive',
-        title: 'Piagam Penghargaan Tim',
-        typeBadge: 'Piagam Kehormatan Resmi 🏆',
-        icon: '🏆'
+        title: 'Berkas A-Z Lengkap',
+        typeBadge: 'Arsip Terselamatkan Total 🗂️',
+        icon: '🗂️'
       },
       {
         id: 'item_5_2',
         type: 'archive',
-        title: 'Notulen Keputusan Rapat',
+        title: 'Piagam Kearsipan Resmi',
         typeBadge: 'Dokumen Bersegel Kantor 📜',
         icon: '📜'
       },
       {
         id: 'item_5_3',
         type: 'trash',
-        title: 'Surat Kaleng Dr. Chaos',
-        typeBadge: 'Surat Jahil Tak Terpakai ✉️',
-        icon: '✉️'
+        title: 'Senjata Chaos - Kipas Rusak',
+        typeBadge: 'Alat Perusak Kantor 💨',
+        icon: '💨'
       },
       {
         id: 'item_5_4',
         type: 'trash',
-        title: 'Pita Balon Kempis',
-        typeBadge: 'Sampah Dekorasi Bekas 🎈',
-        icon: '🎈'
+        title: 'Senjata Chaos - Stiker Palsu',
+        typeBadge: 'Sampah Sabotase Dr. Chaos 🎭',
+        icon: '🎭'
       }
     ]
   }
@@ -764,6 +875,24 @@ const Storage = {
         localStorage.setItem('office_kids_starter_granted_v1', 'true');
       }
 
+      // Sync active avatar if userAvatar exists in localStorage
+      const savedUserAvatar = localStorage.getItem('userAvatar');
+      if (savedUserAvatar) {
+        try {
+          const parsedAvatar = JSON.parse(savedUserAvatar);
+          if (parsedAvatar && parsedAvatar.name && parsedAvatar.avatar) {
+            gameState.profile.name = parsedAvatar.name;
+            gameState.profile.avatar = parsedAvatar.avatar;
+          }
+        } catch (e) {
+          const matched = GAME_CHARACTERS.agents.find(a => a.id === savedUserAvatar || a.avatar === savedUserAvatar);
+          if (matched) {
+            gameState.profile.name = matched.name;
+            gameState.profile.avatar = matched.avatar;
+          }
+        }
+      }
+
       // Re-validate and strictly synchronize progression
       syncProgression();
     } catch (e) {
@@ -778,6 +907,7 @@ const Storage = {
     for (let id = 1; id <= 4; id++) {
       localStorage.removeItem(`chapter${id}_completed`);
     }
+    localStorage.removeItem('userAvatar');
     // Grant fresh 500 starter coins upon intentional reset
     localStorage.setItem('office_kids_starter_granted_v1', 'true');
     gameState = JSON.parse(JSON.stringify(DEFAULT_STATE));
@@ -1630,7 +1760,120 @@ const ChapterManager = {
 };
 
 // ==========================================================================
-// 10. EPISODE SELECT MANAGER (CHAPTER 1 MODAL)
+// 10. AVATAR FIRST-TIME SELECTION MODAL CONTROLLER
+// ==========================================================================
+const AvatarSelectModal = {
+  selectedAgentId: 'agent_daffa',
+  onConfirmCallback: null,
+
+  init() {
+    const closeBtn = document.getElementById('btn-close-avatar-modal');
+    const confirmBtn = document.getElementById('btn-confirm-avatar');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        SoundSystem.play('back');
+        this.close();
+      });
+    }
+
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', () => {
+        this.confirmSelection();
+      });
+    }
+  },
+
+  open(onConfirm) {
+    this.onConfirmCallback = onConfirm;
+    const modal = document.getElementById('avatar-first-select-modal');
+    const grid = document.getElementById('avatar-modal-grid');
+    if (!modal || !grid) return;
+
+    // Default: gunakan agen aktif atau Daffa
+    const currentMC = getActiveUserAvatar();
+    this.selectedAgentId = currentMC.id || 'agent_daffa';
+
+    grid.innerHTML = '';
+    GAME_CHARACTERS.agents.forEach(agent => {
+      const card = document.createElement('div');
+      const isSelected = agent.id === this.selectedAgentId;
+      card.className = `avatar-choice-card ${isSelected ? 'active' : ''}`;
+      card.setAttribute('data-agent-id', agent.id);
+      card.innerHTML = `
+        <span class="avatar-choice-emoji">${agent.avatar}</span>
+        <span class="avatar-choice-name">${agent.name}</span>
+        <span class="avatar-choice-tag">${agent.specialty}</span>
+      `;
+
+      card.addEventListener('click', () => {
+        SoundSystem.play('click');
+        document.querySelectorAll('.avatar-choice-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        this.selectedAgentId = agent.id;
+        this.updatePreview(agent);
+      });
+
+      grid.appendChild(card);
+    });
+
+    const activeAgent = GAME_CHARACTERS.agents.find(a => a.id === this.selectedAgentId) || GAME_CHARACTERS.agents[0];
+    this.updatePreview(activeAgent);
+
+    modal.classList.add('active');
+  },
+
+  updatePreview(agent) {
+    const badge = document.getElementById('preview-avatar-badge');
+    const name = document.getElementById('preview-avatar-name');
+    const role = document.getElementById('preview-avatar-role');
+    const desc = document.getElementById('preview-avatar-desc');
+
+    if (badge) badge.textContent = agent.avatar;
+    if (name) name.textContent = agent.name;
+    if (role) role.textContent = `⭐ Agen Utama (${agent.specialty})`;
+    if (desc) desc.textContent = agent.desc;
+  },
+
+  close() {
+    const modal = document.getElementById('avatar-first-select-modal');
+    if (modal) modal.classList.remove('active');
+    this.onConfirmCallback = null;
+  },
+
+  confirmSelection() {
+    SoundSystem.play('success');
+    const selectedAgent = GAME_CHARACTERS.agents.find(a => a.id === this.selectedAgentId) || GAME_CHARACTERS.agents[0];
+
+    // 1. Simpan ke localStorage dengan key 'userAvatar'
+    localStorage.setItem('userAvatar', JSON.stringify({
+      id: selectedAgent.id,
+      name: selectedAgent.name,
+      avatar: selectedAgent.avatar,
+      specialty: selectedAgent.specialty,
+      tagline: selectedAgent.tagline
+    }));
+
+    // 2. Sinkronkan ke gameState profile
+    gameState.profile.name = selectedAgent.name;
+    gameState.profile.avatar = selectedAgent.avatar;
+    Storage.save();
+    TopBar.update();
+    ProfileManager.syncFormWithState();
+
+    showToast(`Avatar ${selectedAgent.name} resmi dipilih sebagai Agen Utama! 🎉`, 'success');
+
+    const cb = this.onConfirmCallback;
+    this.close();
+
+    if (typeof cb === 'function') {
+      cb(selectedAgent);
+    }
+  }
+};
+
+// ==========================================================================
+// 11. EPISODE SELECT MANAGER (CHAPTER 1 MODAL)
 // ==========================================================================
 const EpisodeSelectManager = {
   currentChapterId: 1,
@@ -1685,7 +1928,7 @@ const EpisodeSelectManager = {
         if (isUnlocked) {
           SoundSystem.play('click');
           this.closeModal();
-          EpisodeMissionManager.startEpisode(chapterId, ep.id);
+          EpisodeMissionManager.checkAndStartEpisode(chapterId, ep.id);
         } else {
           SoundSystem.play('back');
           showToast('Selesaikan Episode sebelumnya terlebih dahulu! 🔒', 'warning');
@@ -1706,7 +1949,7 @@ const EpisodeSelectManager = {
 };
 
 // ==========================================================================
-// 11. EPISODE MISSION SCREEN MANAGER (3 PHASES: STORY, GAMEPLAY, REWARD)
+// 12. EPISODE MISSION SCREEN MANAGER (3 PHASES: STORY, GAMEPLAY, REWARD)
 // ==========================================================================
 const EpisodeMissionManager = {
   activeChapterId: 1,
@@ -1715,12 +1958,43 @@ const EpisodeMissionManager = {
   archiveCount: 0,
   trashCount: 0,
 
+  /**
+   * Router untuk memulai episode:
+   * Jika Chapter 1 Episode 1 baru pertama kali dimainkan (userAvatar belum ada di localStorage),
+   * tampilkan modal Pilih Avatar Agen Favorit HANYA 1 KALI.
+   * Untuk episode selanjutnya (Ch 1 Ep 2 s/d Ch 4 Ep 5), lewati pemilihan avatar secara otomatis.
+   * @param {number} chapterId
+   * @param {number} episodeId
+   */
+  checkAndStartEpisode(chapterId = 1, episodeId = 1) {
+    if (chapterId === 1 && episodeId === 1) {
+      const hasUserAvatar = localStorage.getItem('userAvatar');
+      if (!hasUserAvatar) {
+        AvatarSelectModal.open((selectedAgent) => {
+          this.startEpisode(1, 1);
+        });
+        return;
+      }
+    }
+
+    // Lewati pemilihan avatar untuk episode berikutnya atau jika sudah memilih avatar
+    this.startEpisode(chapterId, episodeId);
+  },
+
   startEpisode(chapterId = 1, episodeId = 1) {
     this.activeChapterId = chapterId;
     this.activeEpisodeId = episodeId;
     this.sortedItemIds.clear();
     this.archiveCount = 0;
     this.trashCount = 0;
+
+    // Pastikan avatar pemain sinkron dengan userAvatar yang tersimpan
+    const roster = getCharacterRoster();
+    if (roster.mc) {
+      gameState.profile.name = roster.mc.name;
+      gameState.profile.avatar = roster.mc.avatar;
+      TopBar.update();
+    }
 
     const modal = document.getElementById('episode-game-modal');
     if (!modal) return;
@@ -1778,30 +2052,57 @@ const EpisodeMissionManager = {
     if (!container) return;
 
     container.innerHTML = '';
-    const playerName = gameState.profile.name || 'Agen Cilik';
-    const playerAvatar = gameState.profile.avatar || '👦🏻';
+    const roster = getCharacterRoster();
     const dialogs = episodeData.dialogs || [];
 
     dialogs.forEach((dialog, index) => {
-      let avatarEmoji = '👦🏻';
-      let senderName = playerName;
+      let avatarEmoji = roster.mc.avatar;
+      let senderName = `${roster.mc.name} (Agen Utama)`;
       let themeClass = 'dialog-player';
 
-      if (dialog.speaker === 'mentor') {
-        avatarEmoji = GAME_CHARACTERS.mentor.avatar;
-        senderName = `${GAME_CHARACTERS.mentor.name} (Mentor)`;
+      const sp = (dialog.speaker || '').toLowerCase();
+      if (sp === 'mentor' || sp === 'komandan_kiki' || sp === 'kiki') {
+        avatarEmoji = roster.mentor.avatar;
+        senderName = `${roster.mentor.name} (Mentor)`;
         themeClass = 'dialog-mentor';
-      } else if (dialog.speaker === 'villain') {
-        avatarEmoji = GAME_CHARACTERS.villain.avatar;
-        senderName = `${GAME_CHARACTERS.villain.name} (Villain)`;
+      } else if (sp === 'villain' || sp === 'dr_chaos' || sp === 'chaos') {
+        avatarEmoji = roster.villain.avatar;
+        senderName = `${roster.villain.name} (Villain)`;
         themeClass = 'dialog-villain';
-      } else {
-        avatarEmoji = playerAvatar;
-        senderName = `${playerName} (Agen Utama)`;
+      } else if (sp === 'support_1' || sp === 'support1') {
+        avatarEmoji = roster.support1.avatar;
+        senderName = `${roster.support1.name} (Agen Pendukung 1)`;
+        themeClass = 'dialog-support';
+      } else if (sp === 'support_2' || sp === 'support2') {
+        avatarEmoji = roster.support2.avatar;
+        senderName = `${roster.support2.name} (Agen Pendukung 2)`;
+        themeClass = 'dialog-support';
+      } else if (sp === 'support_3' || sp === 'support3') {
+        avatarEmoji = roster.support3.avatar;
+        senderName = `${roster.support3.name} (Agen Pendukung 3)`;
+        themeClass = 'dialog-support';
+      } else if (sp === 'support_4' || sp === 'support4') {
+        avatarEmoji = roster.support4.avatar;
+        senderName = `${roster.support4.name} (Agen Pendukung 4)`;
+        themeClass = 'dialog-support';
+      } else if (sp === 'support_5' || sp === 'support5') {
+        avatarEmoji = roster.support5.avatar;
+        senderName = `${roster.support5.name} (Agen Pendukung 5)`;
+        themeClass = 'dialog-support';
+      } else if (sp === 'player' || sp === 'main' || sp === 'mc' || sp === 'agent_utama') {
+        avatarEmoji = roster.mc.avatar;
+        senderName = `${roster.mc.name} (Agen Utama)`;
         themeClass = 'dialog-player';
+      } else {
+        const matched = GAME_CHARACTERS.agents.find(a => a.name.toLowerCase() === sp || a.id.toLowerCase() === sp);
+        if (matched) {
+          avatarEmoji = matched.avatar;
+          senderName = `${matched.name} (Agen)`;
+          themeClass = 'dialog-support';
+        }
       }
 
-      const formattedText = dialog.text.replace(/\{PLAYER_NAME\}/g, playerName);
+      const formattedText = formatDialogueText(dialog.text, roster);
 
       const row = document.createElement('div');
       row.className = `dialog-bubble-row ${themeClass}`;
@@ -2070,7 +2371,7 @@ const EpisodeMissionManager = {
       }
       if (unlockIconEl) unlockIconEl.textContent = '🏆';
       if (unlockTitleEl) unlockTitleEl.textContent = '🎉 CHAPTER 1 SELESAI SEMPURNA!';
-      if (unlockSubEl) unlockSubEl.textContent = 'Chapter 2 "Misteri Berkas Rahasia" kini RESMI TERBUKA di Menu Misi! 🔓';
+      if (unlockSubEl) unlockSubEl.textContent = 'Chapter 2 "Pilar Komunikasi & Korespondensi" kini RESMI TERBUKA di Menu Misi! 🔓';
       if (nextBtnTextEl) nextBtnTextEl.textContent = '➔ Buka Chapter 2 di Menu Misi 🗺️';
 
       showToast(`🎉 Luar Biasa! Semua Episode Chapter 1 Selesai! (+${earnedCoins} 🪙) ⭐⭐⭐ Chapter 2 RESMI TERBUKA! 🔓`, 'success');
@@ -2460,6 +2761,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   TopBar.update();
+  AvatarSelectModal.init();
   ProfileManager.init();
   SettingsManager.init();
   OfficeCustomizer.init();
@@ -2620,7 +2922,7 @@ document.addEventListener('DOMContentLoaded', () => {
       EpisodeMissionManager.closeGameModal();
       if (currentEp < 5) {
         const nextEp = currentEp + 1;
-        EpisodeMissionManager.startEpisode(1, nextEp);
+        EpisodeMissionManager.checkAndStartEpisode(1, nextEp);
         showToast(`Memulai Episode ${nextEp}! 🚀`, 'success');
       } else {
         // Completed Chapter 1 -> Show Chapter Select menu
@@ -2661,6 +2963,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (resetChaptersBtn) {
     resetChaptersBtn.addEventListener('click', () => {
       SoundSystem.play('back');
+      localStorage.removeItem('userAvatar');
       gameState.progress.unlockedChapters = [1];
       gameState.progress.completedChapters = [];
       gameState.progress.chapterStars = { 1: 0, 2: 0, 3: 0, 4: 0 };
