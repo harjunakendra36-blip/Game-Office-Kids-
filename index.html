@@ -740,7 +740,8 @@
             <h4 id="preview-avatar-name">Daffa</h4>
             <span class="preview-avatar-role" id="preview-avatar-role">⭐ Agen Utama (Sigap)</span>
           </div>
-          <p id="preview-avatar-desc">Agen yang selalu sigap, berani bergerak cepat, dan siap membantu tugas lapangan kantor.</p>
+          <p id="preview-avatar-desc">Agen yang selalu sigap, berani bergerak cepat, dan siap membantu tugas lapangan
+            kantor.</p>
         </div>
       </div>
 
@@ -821,40 +822,56 @@
            LAYAR 2: GAMEPLAY SCREEN (Pemilahan Dokumen / Sorting Mini-Game)
            ======================================================== -->
       <div class="game-screen-phase" id="game-phase-gameplay">
-        <div class="gameplay-instructions">
-          <div class="instruction-badge">🌪️ Tantangan Kantor</div>
-          <p class="instruction-text"><strong>Dr. Chaos</strong> menerbangkan berkas di kantor! Pilah 4 kertas ke tempat
-            yang tepat:</p>
-          <div class="gameplay-counter">
-            <span>Kertas Tersisa:</span>
-            <strong id="sorting-remaining-count">4</strong>
-          </div>
-        </div>
+        <!-- Chapter 1 Dedicated Interactive Mini Games Mount -->
+        <div id="ch1-minigame-mount"></div>
 
-        <!-- Target Drop Zones -->
-        <div class="sorting-targets-row">
-          <div class="sorting-target-zone zone-archive" id="target-archive" data-type="archive">
-            <div class="zone-icon">📁</div>
-            <div class="zone-info">
-              <div class="zone-label">Lemari Arsip</div>
-              <div class="zone-sub">Dokumen Penting Resmi</div>
+        <!-- Chapter 2 Dedicated Interactive Mini Games Mount -->
+        <div id="ch2-minigame-mount"></div>
+
+        <!-- Chapter 3 Dedicated Interactive Mini Games Mount -->
+        <div id="ch3-minigame-mount"></div>
+
+        <!-- Chapter 4 Dedicated Interactive Mini Games Mount -->
+        <div id="ch4-minigame-mount"></div>
+
+        <!-- Legacy Fallback for other chapters (Chapter 4, etc.) -->
+        <div id="legacy-sorting-wrapper">
+          <div class="gameplay-instructions">
+            <div class="instruction-badge">🌪️ Tantangan Kantor</div>
+            <p class="instruction-text"><strong>Dr. Chaos</strong> menerbangkan berkas di kantor! Pilah 4 kertas ke
+              tempat
+              yang tepat:</p>
+            <div class="gameplay-counter">
+              <span>Kertas Tersisa:</span>
+              <strong id="sorting-remaining-count">4</strong>
             </div>
-            <div class="zone-badge" id="count-archive">0 Disimpan</div>
           </div>
 
-          <div class="sorting-target-zone zone-trash" id="target-trash" data-type="trash">
-            <div class="zone-icon">🗑️</div>
-            <div class="zone-info">
-              <div class="zone-label">Tempat Sampah</div>
-              <div class="zone-sub">Kertas Sampah & Bekas</div>
+          <!-- Target Drop Zones -->
+          <div class="sorting-targets-row">
+            <div class="sorting-target-zone zone-archive" id="target-archive" data-type="archive">
+              <div class="zone-icon">📁</div>
+              <div class="zone-info">
+                <div class="zone-label">Lemari Arsip</div>
+                <div class="zone-sub">Dokumen Penting Resmi</div>
+              </div>
+              <div class="zone-badge" id="count-archive">0 Disimpan</div>
             </div>
-            <div class="zone-badge" id="count-trash">0 Dibuang</div>
-          </div>
-        </div>
 
-        <!-- 4 Paper Cards Container -->
-        <div class="sorting-items-container" id="sorting-items-container">
-          <!-- 4 items rendered dynamically with sort buttons and drag functionality -->
+            <div class="sorting-target-zone zone-trash" id="target-trash" data-type="trash">
+              <div class="zone-icon">🗑️</div>
+              <div class="zone-info">
+                <div class="zone-label">Tempat Sampah</div>
+                <div class="zone-sub">Kertas Sampah & Bekas</div>
+              </div>
+              <div class="zone-badge" id="count-trash">0 Dibuang</div>
+            </div>
+          </div>
+
+          <!-- 4 Paper Cards Container -->
+          <div class="sorting-items-container" id="sorting-items-container">
+            <!-- 4 items rendered dynamically with sort buttons and drag functionality -->
+          </div>
         </div>
       </div>
 
@@ -864,10 +881,11 @@
       <div class="game-screen-phase" id="game-phase-reward">
         <div class="reward-content-box">
           <div class="reward-stars-row">
-            <span class="star-icon star-1">⭐</span>
-            <span class="star-icon star-2">⭐</span>
-            <span class="star-icon star-3">⭐</span>
+            <span class="star-icon star-1" id="reward-star-1">⭐</span>
+            <span class="star-icon star-2" id="reward-star-2">⭐</span>
+            <span class="star-icon star-3" id="reward-star-3">⭐</span>
           </div>
+          <div class="reward-stars-label" id="reward-stars-label">⭐⭐⭐ 3 Bintang Sempurna!</div>
 
           <div class="reward-title-group">
             <span class="reward-tag">MISI BERHASIL! 100% SEMPURNA ✨</span>
@@ -907,36 +925,218 @@
 
   <!-- Modal: Simulasi Misi Interaktif (Untuk Chapter 2 - 4) -->
   <div id="mission-modal" class="modal-overlay" aria-hidden="true">
-    <div class="modal-card mission-modal-card">
+    <div class="modal-card episode-modal-card mission-modal-card">
       <button class="modal-close" id="btn-close-mission-modal" title="Tutup Modal">&times;</button>
-      <div class="mission-icon-header" id="mission-modal-icon">📁</div>
-      <h3 class="modal-title" id="mission-modal-title">Chapter Misi</h3>
-      <p class="modal-desc" id="mission-modal-desc">Selesaikan tugas mini berikut untuk menyelesaikan misi dan membuka
-        chapter berikutnya!</p>
-
-      <!-- Interactive Mini Task Steps -->
-      <div class="mission-task-box">
-        <div class="task-step" id="task-step-1">
-          <span class="step-num">1</span>
-          <span class="step-text" id="step-1-text">Rapikan meja & alat tulis</span>
-          <button class="btn-step-action" id="btn-step-1">Lakukan ✨</button>
-        </div>
-        <div class="task-step disabled" id="task-step-2">
-          <span class="step-num">2</span>
-          <span class="step-text" id="step-2-text">Stempel dokumen resmi</span>
-          <button class="btn-step-action" id="btn-step-2" disabled>Stempel 🔏</button>
-        </div>
-        <div class="task-step disabled" id="task-step-3">
-          <span class="step-num">3</span>
-          <span class="step-text" id="step-3-text">Kumpulkan ke meja bos</span>
-          <button class="btn-step-action" id="btn-step-3" disabled>Selesai 🚀</button>
-        </div>
+      <div class="modal-header-badge">
+        <div class="mission-icon-header" id="mission-modal-icon">📁</div>
+        <h3 class="modal-title" id="mission-modal-title">Chapter Misi</h3>
+        <p class="modal-desc" id="mission-modal-desc">Selesaikan tugas mini berikut untuk menyelesaikan misi dan membuka
+          chapter berikutnya!</p>
       </div>
 
-      <div class="mission-footer-action">
-        <button id="btn-complete-mission" class="btn-modal-action btn-success" style="display: none;">
-          🎉 Misi Selesai! Klaim Hadiah
-        </button>
+      <!-- Daftar Episode Interaktif Chapter 2 -->
+      <div class="episodes-grid" id="chapter2-episodes-grid">
+
+        <!-- Episode 1 -->
+        <div class="episode-card unlocked">
+          <span class="episode-number-badge">Episode 1</span>
+          <div class="episode-card-icon">📞</div>
+          <h4 class="episode-card-title">Telepon Darurat Kantor</h4>
+          <p class="episode-card-desc">Tangkap panggilan darurat yang melayang di udara!</p>
+          <div class="episode-card-stars">⭐ Belum Selesai</div>
+          <button class="episode-btn-action episode-btn-play"
+            onclick="EpisodeMissionManager.checkAndStartEpisode(2, 1)">Mulai Misi 🚀</button>
+        </div>
+
+        <!-- Episode 2 -->
+        <div class="episode-card locked">
+          <span class="episode-number-badge">Episode 2</span>
+          <div class="episode-card-icon">🔒</div>
+          <h4 class="episode-card-title">Sortir Surat Masuk & Keluar</h4>
+          <p class="episode-card-desc">Pisahkan surat resmi dari spam di konveyor antigravitasi.</p>
+          <div class="episode-card-stars">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" disabled>🔒 Terkunci</button>
+        </div>
+
+        <!-- Episode 3 -->
+        <div class="episode-card locked">
+          <span class="episode-number-badge">Episode 3</span>
+          <div class="episode-card-icon">🔒</div>
+          <h4 class="episode-card-title">Pesan Sandi Antar Lantai</h4>
+          <p class="episode-card-desc">Susun kepingan kata sandi yang melayang di udara.</p>
+          <div class="episode-card-stars">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" disabled>🔒 Terkunci</button>
+        </div>
+
+        <!-- Episode 4 -->
+        <div class="episode-card locked">
+          <span class="episode-number-badge">Episode 4</span>
+          <div class="episode-card-icon">🔒</div>
+          <h4 class="episode-card-title">Jalur Kabel Interkom</h4>
+          <p class="episode-card-desc">Hubungkan ulang sirkuit kabel interkom yang putus.</p>
+          <div class="episode-card-stars">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" disabled>🔒 Terkunci</button>
+        </div>
+
+        <!-- Episode 5 (Boss Level) -->
+        <div class="episode-card locked" style="border-color: #F87171;">
+          <span class="episode-number-badge" style="background: #FEF2F2; color: #DC2626;">Episode 5 (Boss)</span>
+          <div class="episode-card-icon">🚨</div>
+          <h4 class="episode-card-title">Alarm Darurat Eksekutif</h4>
+          <p class="episode-card-desc">Atasi kekacauan sistem telekomunikasi secara bersamaan!</p>
+          <div class="episode-card-stars">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" disabled>🔒 Terkunci</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Pilihan Episode Chapter 3: Pilar Keuangan & Inventaris -->
+  <div id="chapter3-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card episode-modal-card chapter3-modal-card">
+      <button class="modal-close" id="btn-close-chapter3-modal" title="Tutup Modal">&times;</button>
+      <div class="modal-header-badge">
+        <span class="chapter-tag chapter3-tag" id="chapter3-modal-chapter-tag">💰 CHAPTER 3</span>
+        <h3 class="modal-title" id="chapter3-modal-title">Pilar Keuangan & Inventaris</h3>
+        <p class="modal-desc" id="chapter3-modal-desc">Hentikan sabotase keuangan Dr. Chaos! Audit kas kecil, kelola
+          nota transaksi, dan tata stiker inventaris gudang.</p>
+      </div>
+
+      <!-- Daftar 5 Episode Interaktif Chapter 3 (Horizontal Grid Layout) -->
+      <div class="episodes-grid" id="chapter3-episodes-grid">
+
+        <!-- Episode 1: Pemasukan & Pengeluaran Kas (Terbuka) -->
+        <div class="episode-card unlocked" id="card-ch3-ep1">
+          <span class="episode-number-badge" style="background: #FEF3C7; color: #92400E;">Episode 1</span>
+          <div class="episode-card-icon">🪙</div>
+          <h4 class="episode-card-title">Pemasukan & Pengeluaran Kas</h4>
+          <p class="episode-card-desc">Kelola transaksi keuangan dasar dan pilah arus koin penerimaan serta nota
+            pengeluaran kas yang melayang ke buku besar yang tepat.
+          </p>
+          <div class="episode-card-stars" id="stars-ch3-ep1">⭐ Belum Selesai</div>
+          <button class="episode-btn-action episode-btn-play" id="btn-play-ch3-ep1"
+            onclick="EpisodeMissionManager.checkAndStartEpisode(3, 1)">Mulai Misi 🚀</button>
+        </div>
+
+        <!-- Episode 2: Hitung Kembalian Kasir (Terkunci) -->
+        <div class="episode-card locked" id="card-ch3-ep2">
+          <span class="episode-number-badge">Episode 2</span>
+          <div class="episode-card-icon">🧮</div>
+          <h4 class="episode-card-title">Hitung Kembalian Kasir</h4>
+          <p class="episode-card-desc">Latih ketangkasan matematika dan hitung serta berikan nominal kembalian uang
+            tunai dengan akurat sebelum batas waktu habis.</p>
+          <div class="episode-card-stars" id="stars-ch3-ep2">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" id="btn-play-ch3-ep2" disabled>🔒 Terkunci</button>
+        </div>
+
+        <!-- Episode 3: Sortir & Stiker Kode Barang (Terkunci) -->
+        <div class="episode-card locked" id="card-ch3-ep3">
+          <span class="episode-number-badge">Episode 3</span>
+          <div class="episode-card-icon">📦</div>
+          <h4 class="episode-card-title">Sortir & Stiker Kode Barang</h4>
+          <p class="episode-card-desc">Pilah barang-barang inventaris kantor yang berterbangan dan tempelkan stiker kode
+            kategori barang yang sesuai ke rak penyimpanan.</p>
+          <div class="episode-card-stars" id="stars-ch3-ep3">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" id="btn-play-ch3-ep3" disabled>🔒 Terkunci</button>
+        </div>
+
+        <!-- Episode 4: Audit Skala Prioritas (Terkunci) -->
+        <div class="episode-card locked" id="card-ch3-ep4">
+          <span class="episode-number-badge">Episode 4</span>
+          <div class="episode-card-icon">⚖️</div>
+          <h4 class="episode-card-title">Audit Skala Prioritas</h4>
+          <p class="episode-card-desc">Latih literasi finansial operasional dengan mengaudit daftar pengeluaran
+            berdasarkan skala prioritas kebutuhan kantor yang esensial.</p>
+          <div class="episode-card-stars" id="stars-ch3-ep4">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" id="btn-play-ch3-ep4" disabled>🔒 Terkunci</button>
+        </div>
+
+        <!-- Episode 5 (Boss Level): Boss Level - Kebutuhan Kas & Gudang 30 Detik (Terkunci) -->
+        <div class="episode-card locked boss-card" id="card-ch3-ep5" style="border-color: #F87171;">
+          <span class="episode-number-badge" style="background: #FEF2F2; color: #DC2626;">Episode 5 (Boss)</span>
+          <div class="episode-card-icon">🚨</div>
+          <h4 class="episode-card-title">Boss Level - Kebutuhan Kas & Gudang 30 Detik</h4>
+          <p class="episode-card-desc">Tantangan puncak akumulatif! Tuntaskan kombinasi pencatatan kas, perhitungan
+            kembalian, dan audit tata letak gudang dalam batas waktu 30 detik!</p>
+          <div class="episode-card-stars" id="stars-ch3-ep5">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" id="btn-play-ch3-ep5" disabled>🔒 Terkunci</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Pilihan Episode Chapter 4: Pilar Manajemen Operasional -->
+  <div id="chapter4-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card episode-modal-card chapter3-modal-card">
+      <button class="modal-close" id="btn-close-chapter4-modal" title="Tutup Modal">&times;</button>
+      <div class="modal-header-badge">
+        <span class="chapter-tag chapter3-tag" id="chapter4-modal-chapter-tag">⚙️ CHAPTER 4</span>
+        <h3 class="modal-title" id="chapter4-modal-title">Pilar Manajemen Operasional</h3>
+        <p class="modal-desc" id="chapter4-modal-desc">Selamatkan markas Office Kids! Susun SOP, audit fasilitas,
+          bongkar bukti, dan pulihkan gravitasi kantor dari cengkeraman Dr. Chaos.</p>
+      </div>
+
+      <!-- Daftar 5 Episode Interaktif Chapter 4 (Horizontal Grid Layout) -->
+      <div class="episodes-grid" id="chapter4-episodes-grid">
+
+        <!-- Episode 1: Tata Kelola Dokumen Operasional (Terbuka) -->
+        <div class="episode-card unlocked" id="card-ch4-ep1">
+          <span class="episode-number-badge" style="background: #E0F2FE; color: #0369A1;">Episode 1</span>
+          <div class="episode-card-icon">📂</div>
+          <h4 class="episode-card-title">Tata Kelola Dokumen Operasional</h4>
+          <p class="episode-card-desc">Pemain mengatur dan mengklasifikasikan dokumen operasional harian yang melayang
+            akibat antigravitasi ke laci birokrasi yang tepat.</p>
+          <div class="episode-card-stars" id="stars-ch4-ep1">⭐ Belum Selesai</div>
+          <button class="episode-btn-action episode-btn-play" id="btn-play-ch4-ep1"
+            onclick="EpisodeMissionManager.checkAndStartEpisode(4, 1)">Mulai Misi 🚀</button>
+        </div>
+
+        <!-- Episode 2: Rekonstruksi Flowchart SOP (Terkunci) -->
+        <div class="episode-card locked" id="card-ch4-ep2">
+          <span class="episode-number-badge">Episode 2</span>
+          <div class="episode-card-icon">🔀</div>
+          <h4 class="episode-card-title">Rekonstruksi Flowchart SOP</h4>
+          <p class="episode-card-desc">Menyusun kembali alur kerja Standar Operasional Prosedur (SOP) kantor yang
+            teracak dan terpotong-potong di udara menjadi urutan logis.</p>
+          <div class="episode-card-stars" id="stars-ch4-ep2">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" id="btn-play-ch4-ep2" disabled>🔒 Terkunci</button>
+        </div>
+
+        <!-- Episode 3: Audit Tata Ruang & Fasilitas Kantor (Terkunci) -->
+        <div class="episode-card locked" id="card-ch4-ep3">
+          <span class="episode-number-badge">Episode 3</span>
+          <div class="episode-card-icon">🏢</div>
+          <h4 class="episode-card-title">Audit Tata Ruang & Fasilitas Kantor</h4>
+          <p class="episode-card-desc">Melakukan inspeksi dan mencocokkan kondisi inventaris/fasilitas kantor yang rusak
+            atau bergeser posisinya ke denah tata letak ruangan yang benar.</p>
+          <div class="episode-card-stars" id="stars-ch4-ep3">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" id="btn-play-ch4-ep3" disabled>🔒 Terkunci</button>
+        </div>
+
+        <!-- Episode 4: Verifikasi Keotentikan Stempel & Dokumen (Terkunci) -->
+        <div class="episode-card locked" id="card-ch4-ep4">
+          <span class="episode-number-badge">Episode 4</span>
+          <div class="episode-card-icon">🔍</div>
+          <h4 class="episode-card-title">Verifikasi Keotentikan Stempel & Dokumen</h4>
+          <p class="episode-card-desc">Memeriksa detail tanda tangan, cap stempel resmi, dan hologram pengaman pada
+            dokumen penting untuk menyaring dokumen palsu Dr. Chaos.</p>
+          <div class="episode-card-stars" id="stars-ch4-ep4">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" id="btn-play-ch4-ep4" disabled>🔒 Terkunci</button>
+        </div>
+
+        <!-- Episode 5 (Boss Level): Pemulihan Sistem Administrasi 30 Detik (EXtreme Difficulty) (Terkunci) -->
+        <div class="episode-card locked boss-card" id="card-ch4-ep5" style="border-color: #F87171;">
+          <span class="episode-number-badge" style="background: #FEF2F2; color: #DC2626;">Episode 5 (Boss EX)</span>
+          <div class="episode-card-icon">🚨</div>
+          <h4 class="episode-card-title">Boss Level - Pemulihan Sistem Administrasi 30 Detik</h4>
+          <p class="episode-card-desc">Tantangan Puncak Tersulit! Multi-tasking 30 detik di bawah anomali gravitasi:
+            susun SOP, verifikasi stempel kilat, dan audit tata ruang!</p>
+          <div class="episode-card-stars" id="stars-ch4-ep5">🔒 Terkunci</div>
+          <button class="episode-btn-action episode-btn-locked" id="btn-play-ch4-ep5" disabled>🔒 Terkunci</button>
+        </div>
+
       </div>
     </div>
   </div>

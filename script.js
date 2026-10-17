@@ -123,11 +123,11 @@ function getActiveUserAvatar() {
 function getCharacterRoster(overrideAgent) {
   const mc = overrideAgent || getActiveUserAvatar();
   const daffa = GAME_CHARACTERS.agents.find(a => a.name === 'Daffa') || GAME_CHARACTERS.agents[0];
-  const nia   = GAME_CHARACTERS.agents.find(a => a.name === 'Nia')   || GAME_CHARACTERS.agents[1];
-  const budi  = GAME_CHARACTERS.agents.find(a => a.name === 'Budi')  || GAME_CHARACTERS.agents[2];
+  const nia = GAME_CHARACTERS.agents.find(a => a.name === 'Nia') || GAME_CHARACTERS.agents[1];
+  const budi = GAME_CHARACTERS.agents.find(a => a.name === 'Budi') || GAME_CHARACTERS.agents[2];
   const sarah = GAME_CHARACTERS.agents.find(a => a.name === 'Sarah') || GAME_CHARACTERS.agents[3];
   const kenzo = GAME_CHARACTERS.agents.find(a => a.name === 'Kenzo') || GAME_CHARACTERS.agents[4];
-  const maya  = GAME_CHARACTERS.agents.find(a => a.name === 'Maya')  || GAME_CHARACTERS.agents[5];
+  const maya = GAME_CHARACTERS.agents.find(a => a.name === 'Maya') || GAME_CHARACTERS.agents[5];
 
   let s1 = nia;
   let s2 = budi;
@@ -687,6 +687,423 @@ const CHAPTER_1_EPISODES = [
   }
 ];
 
+// --- Episode Database for Chapter 2: Pilar Komunikasi & Korespondensi ---
+// --- Episode Database for Chapter 2: Pilar Komunikasi & Korespondensi ---
+const CHAPTER_2_EPISODES = [
+  {
+    id: 1,
+    chapterId: 2,
+    title: 'Etika & Catatan Pesan Telepon',
+    icon: '📞',
+    desc: 'Tangkap panggilan telepon yang melayang akibat antigravitasi, baca pesan masuk, dan pilih respons kalimat etis yang tepat untuk dicatat.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Perhatian Agen {PLAYER_NAME}! Dr. Chaos menyabotase sistem telepon kantor kita — pesawat telepon melayang dan berdering tanpa henti!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Mwahaha! Biarkan panggilan telepon mitra penting berdering sampai putus! Klien kalian akan marah besar! 📞⚡'
+      },
+      {
+        speaker: 'support_1',
+        text: 'Jangan panik! Selalu ingat prinsip 3S (Senyum, Salam, Sapa) dan siapkan Lembar Pesan Telepon!'
+      },
+      {
+        speaker: 'player',
+        text: 'Siap! Saya akan angkat setiap panggilan yang melayang dan berikan tanggapan etis paling santun serta profesional! 💪'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Bagus sekali! Dengarkan pesan penelepon dengan seksama dan pilih respon kalimat resmi yang paling etis!'
+      }
+    ]
+  },
+  {
+    id: 2,
+    chapterId: 2,
+    title: 'Sortir Surat Masuk & Keluar',
+    icon: '✉️',
+    desc: 'Sortir amplop dan dokumen di atas ban konveyor bergravitasi terbalik, pisahkan surat resmi perusahaan dari spam atau iklan komersial.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Awas Agen {PLAYER_NAME}! Dr. Chaos membalik arah gravitasi pada ban konveyor surat ruang ekspedisi kantor!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Semua amplop surat dinas, surat balasan keluar, dan brosur penipuan buatanku sekarang bercampur baur di udara! ✉️🌪️'
+      },
+      {
+        speaker: 'player',
+        text: 'Saya akan periksa kop surat, nomor agenda, dan stempel dinas untuk memilah surat masuk, surat keluar, dan membuang spam!'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Tepat sekali! Amankan Surat Masuk 📨 dan Surat Keluar 📤 ke keranjang resmi, serta buang spam 🗑️ ke tempat sampah!'
+      }
+    ]
+  },
+  {
+    id: 3,
+    chapterId: 2,
+    title: 'Distribusi Memo Prioritas',
+    icon: '📋',
+    desc: 'Antar dan cocokkan memo penting ke bilik divisi/departemen yang tepat di tengah ruangan kantor yang dinamis.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Laporan darurat! Nota dinas dan memo antar divisi beterbangan dan terancam tidak sampai ke meja pimpinan bagian!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Biar Divisi HRD, Keuangan, Marketing, dan IT saling salah paham dan kantor kalian lumpuh total! 📋😈'
+      },
+      {
+        speaker: 'player',
+        text: 'Koordinasi kantor tidak boleh terputus! Saya akan antarkan setiap memo prioritas ke bilik divisi yang berwenang!'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Hebat! Cermati perihal memo: HRD untuk personalia/cuti 👥, Keuangan untuk anggaran 💰, Marketing untuk promosi 📣, dan IT untuk sistem ⚙️!'
+      }
+    ]
+  },
+  {
+    id: 4,
+    chapterId: 2,
+    title: 'Puzzle Rekonstruksi Faks',
+    icon: '📠',
+    desc: 'Susun kembali kepingan lembar faksimili atau pesan sandi yang robek dan teracak di udara menjadi kalimat perintah korporat yang utuh.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Agen {PLAYER_NAME}, mesin faksimili pusat menerima instruksi rahasia pimpinan, tapi Dr. Chaos merobeknya menjadi potongan kata yang melayang!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Kalian tak akan bisa menyusun potongan strip faks itu! Tanpa kalimat utuh, instruksi pimpinan tidak berlaku! 📠✂️'
+      },
+      {
+        speaker: 'player',
+        text: 'Saya paham struktur surat dan kalimat korespondensi bisnis! Dari salam pembuka, isi pesan, hingga penutup akan saya susun utuh!'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Gunakan ketelitianmu! Pasang strip kata pada urutan nomor 1 sampai 4 agar mesin faks dapat mencetak ulang dokumen sah!'
+      }
+    ]
+  },
+  {
+    id: 5,
+    chapterId: 2,
+    title: 'Boss Level - Komunikasi Darurat 30 Detik',
+    icon: '⚡',
+    desc: 'Tantangan puncak akumulatif! Selesaikan kombinasi pencatatan telepon, sortir surat, dan distribusi memo secara simultan dalam batas waktu 30 detik.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Peringatan bahaya tingkat tinggi! Dr. Chaos mengaktifkan Menara Jammer Frekuensi Telekomunikasi Eksekutif!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Semua jalur komunikasi kantor akan kupadamkan permanen dalam 30 detik! Kalian tidak akan sempat melayani telepon, surat, dan memo sekaligus! ⚡📡'
+      },
+      {
+        speaker: 'player',
+        text: 'Ini adalah ujian komunikasi darurat sesungguhnya! Saya akan selesaikan semua tantangan serentak dan pulihkan sinyal kantor!'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Fokus penuh dan bergerak cepat, Agen {PLAYER_NAME}! Pulihkan sinyal jaringan hingga 100% sebelum waktu 30 detik habis!'
+      }
+    ]
+  }
+];
+
+// --- Episode Database for Chapter 3: Pilar Keuangan & Inventaris ---
+const CHAPTER_3_EPISODES = [
+  {
+    id: 1,
+    chapterId: 3,
+    title: 'Pemasukan & Pengeluaran Kas',
+    icon: '🪙',
+    desc: 'Kelola transaksi keuangan dasar dan pilah arus koin penerimaan serta nota pengeluaran kas yang melayang ke buku besar yang tepat.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Perhatian darurat, Agen [Nama Avatar]! Dr. Chaos baru saja meretas brankas kas kecil kantor administrasi kita!'
+      },
+      {
+        speaker: 'support_1',
+        text: 'Benar Komandan! Koin kas pemasukan dan bukti nota pengeluaran berhamburan di meja kerja — semuanya bercampur aduk!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Mwahahaha! Tanpa pembukuan kas masuk dan kas keluar yang benar, keuangan kantor kalian akan kacau total! 💰🌪️'
+      },
+      {
+        speaker: 'player',
+        text: 'Jangan harap, Dr. Chaos! Saya akan mencatat setiap transaksi dengan teliti — pemasukan ke Buku Kas Masuk, pengeluaran ke Buku Kas Keluar! 💪'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Luar biasa! Pilah koin penerimaan kas ke Buku Kas Masuk 🟢 dan nota belanja ke Buku Kas Keluar 🔴. Siap bertugas?'
+      }
+    ],
+    sortingItems: []
+  },
+  {
+    id: 2,
+    chapterId: 3,
+    title: 'Hitung Kembalian Kasir',
+    icon: '🧮',
+    desc: 'Latih ketangkasan matematika dan hitung serta berikan nominal kembalian uang tunai dengan akurat sebelum batas waktu habis.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Kerja bagus di misi kas pertama, Agen [Nama Avatar]! Sekarang saatnya melatih kecepatan dan ketepatan berpikir sebagai kasir kantor.'
+      },
+      {
+        speaker: 'villain',
+        text: 'Mwahaha! Biar antrean pelanggan kasir menumpuk dan uang kembalian kalian selalu salah hitung! 🧮💸'
+      },
+      {
+        speaker: 'player',
+        text: 'Saya akan teliti menghitung setiap pecahan kembalian uang agar tidak terjadi selisih kas satu rupiah pun!'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Tepat sekali! Gunakan laci kasir, hitung selisih harga tagihan dengan uang diterima, dan berikan kembalian yang persis tepat!'
+      }
+    ],
+    sortingItems: []
+  },
+  {
+    id: 3,
+    chapterId: 3,
+    title: 'Sortir & Stiker Kode Barang',
+    icon: '📦',
+    desc: 'Pilah barang-barang inventaris kantor yang berterbangan dan tempelkan stiker kode kategori barang yang sesuai ke rak penyimpanan.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Gudang logistik kantor membutuhkan audit inventaris mendesak! Dr. Chaos membuat semua barang berterbangan tanpa kode kategori!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Biar laptop, kertas, kursi, dan sabun pembersih bercampur acak di gudang tanpa stiker kode inventaris! 📦🌀'
+      },
+      {
+        speaker: 'player',
+        text: 'Setiap aset kantor wajib memiliki kode inventaris resmi! Saya akan tempel stiker kategori yang tepat pada setiap barang!'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Cermati jenis barang: ELK (Elektronik 💻), ATK (Alat Tulis ✏️), FUR (Furnitur 🪑), atau KBS (Kebersihan 🧹)!'
+      }
+    ],
+    sortingItems: []
+  },
+  {
+    id: 4,
+    chapterId: 3,
+    title: 'Audit Skala Prioritas',
+    icon: '⚖️',
+    desc: 'Latih literasi finansial operasional dengan mengaudit daftar pengeluaran berdasarkan skala prioritas kebutuhan kantor yang esensial.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Sebagai pengelola keuangan kantor, Agen [Nama Avatar] harus bijak membedakan kebutuhan esensial dari belanja sekunder yang dapat ditunda.'
+      },
+      {
+        speaker: 'villain',
+        text: 'Biarkan anggaran kantor kalian terbuang sia-sia untuk barang mewah yang tidak perlu! Kas akan ludes sebelum kebutuhan pokok terpenuhi! 💸😈'
+      },
+      {
+        speaker: 'player',
+        text: 'Saya akan audit setiap pengajuan belanja dengan skala prioritas yang tepat — kebutuhan pokok kantor harus disetujui lebih dulu!'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Utamakan kebutuhan operasional kantor yang esensial (Prioritas Utama 🛡️) dan tunda pembelian yang sekunder (Bisa Ditunda ⏳)!'
+      }
+    ],
+    sortingItems: []
+  },
+  {
+    id: 5,
+    chapterId: 3,
+    title: 'Boss Level - Kebutuhan Kas & Gudang 30 Detik',
+    icon: '🚨',
+    desc: 'Tantangan puncak akumulatif! Tuntaskan kombinasi pencatatan kas, perhitungan kembalian, dan audit tata letak gudang dalam batas waktu 30 detik!',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Inilah misi pamungkas Chapter 3, Agen [Nama Avatar]! Dr. Chaos melancarkan serangan keuangan & gudang total — semua teknik harus digunakan sekarang!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Mwahaha! Dr. Chaos meretas brankas kas sekaligus merobohkan rak gudang logistik! Waktumu hanya 30 detik untuk mengatasi semua ini! 🚨⚡'
+      },
+      {
+        speaker: 'player',
+        text: 'Aku tidak akan gentar! Gabungan kemampuan audit kas, kembalian kilat, sortir inventaris, dan prioritas anggaran akan mengalahkan Dr. Chaos!'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Fokus penuh dan bergerak cepat, Agen [Nama Avatar]! Pulihkan stabilitas keuangan & gudang hingga 100% sebelum waktu 30 detik habis!'
+      }
+    ],
+    sortingItems: []
+  }
+];
+
+// --- Episode Database for Chapter 4: Pilar Manajemen Operasional ---
+const CHAPTER_4_EPISODES = [
+  {
+    id: 1,
+    chapterId: 4,
+    title: 'Tata Kelola Dokumen Operasional',
+    icon: '📂',
+    desc: 'Mengatur dan mengklasifikasikan dokumen operasional harian yang melayang akibat antigravitasi ke laci birokrasi yang tepat.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Lapor, Agen [Nama Avatar]! Gelombang antigravitasi Dr. Chaos membuat seluruh dokumen operasional harian kantor melayang di udara!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Hahaha! Rasakan kekacauan dokumen! Tanpa administrasi dan birokrasi yang tertata, seluruh operasional kantor ini akan lumpuh total! 🌪️'
+      },
+      {
+        speaker: 'player',
+        text: 'Jangan khawatir, Komandan! Saya akan memilah setiap dokumen operasional ke laci birokrasi yang tepat sebelum waktu habis! 📂'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Klasifikasikan dokumen ke 4 Laci: Regulasi/SOP 📜, Finansial 💰, Administrasi SDM 👥, dan Logistik Aset 📦. Cepat dan akurat!'
+      }
+    ],
+    sortingItems: []
+  },
+  {
+    id: 2,
+    chapterId: 4,
+    title: 'Rekonstruksi Flowchart SOP',
+    icon: '🔀',
+    desc: 'Menyusun kembali alur kerja Standar Operasional Prosedur (SOP) kantor yang teracak dan terpotong-potong di udara menjadi urutan proses keputusan bisnis yang logis.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Gawat! Dr. Chaos telah memotong-motong bagan alur Standar Operasional Prosedur (SOP) kantor kita!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Kalian tak akan bisa mengambil keputusan bisnis tanpa alur SOP yang sah! Semuanya sudah kuacak berkeping-keping! ✂️'
+      },
+      {
+        speaker: 'player',
+        text: 'Saya paham alur operasional: dari Pengajuan Formulir, Verifikasi Berkas, Persetujuan Manajer, hingga Eksekusi dan Pengarsipan! Saya akan rangkai kembali! 📋'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Tepat sekali! Susun balok langkah SOP sesuai logika urutan proses kantor, lalu tekan tombol Validasi Alur SOP. Maju, Agen!'
+      }
+    ],
+    sortingItems: []
+  },
+  {
+    id: 3,
+    chapterId: 4,
+    title: 'Audit Tata Ruang & Fasilitas Kantor',
+    icon: '🏢',
+    desc: 'Melakukan inspeksi dan mencocokkan kondisi inventaris/fasilitas kantor yang rusak atau bergeser posisinya ke denah tata letak ruangan yang benar.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Anomali gravitasi mengacak tata ruang kantor kita! Meja kerja, mesin presentasi, hingga server terlempar ke zona yang salah!'
+      },
+      {
+        speaker: 'player',
+        text: 'Saya akan membuka denah Blueprint 2D kantor dan mengembalikan setiap fasilitas ke zona fungsional yang benar! 📐'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Perhatikan baik-baik! Beberapa fasilitas mengalami kerusakan teknis ⚠️. Lakukan inspeksi dan perbaiki fasilitas tersebut agar operasional kantor kembali 100% prima!'
+      }
+    ],
+    sortingItems: []
+  },
+  {
+    id: 4,
+    chapterId: 4,
+    title: 'Verifikasi Keotentikan Stempel & Dokumen',
+    icon: '🔍',
+    desc: 'Memeriksa detail tanda tangan, cap stempel resmi, dan hologram pengaman pada dokumen penting untuk menyaring dokumen palsu buatan Dr. Chaos.',
+    dialogs: [
+      {
+        speaker: 'mentor',
+        text: 'Waspada tingkat tinggi! Dr. Chaos mencoba menyusupkan dokumen operasional palsu dengan stempel dan tanda tangan bodong!'
+      },
+      {
+        speaker: 'villain',
+        text: 'Kalian takkan bisa membedakan dokumen aslimu dengan dokumen sabotaseku! Sekali stempel salah, kantor ini jadi milikku! 😈'
+      },
+      {
+        speaker: 'player',
+        text: 'Mata agen detektif tak bisa dikelabui! Saya akan periksa cap stempel resmi, hologram berkilau, nomor registrasi, dan tanda tangan sah! 🔍'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Gunakan cap TERIMA ✅ untuk dokumen resmi terverifikasi dan cap TOLAK ❌ untuk dokumen sabotase Dr. Chaos!'
+      }
+    ],
+    sortingItems: []
+  },
+  {
+    id: 5,
+    chapterId: 4,
+    title: 'Boss Level - Pemulihan Sistem Administrasi 30 Detik',
+    icon: '🚨',
+    desc: 'Tantangan Puncak Tersulit! Multi-tasking ekstrem 30 detik di bawah anomali gravitasi penuh: menyusun SOP, verifikasi stempel kilat, dan audit tata ruang!',
+    dialogs: [
+      {
+        speaker: 'villain',
+        text: 'INILAH AKHIR PETUALANGAN KALIAN! Aku mengaktifkan Vorteks Gravitasi Pembalik 30 Detik! Seluruh sistem administrasi markas akan hancur selamanya! 🌪️💥'
+      },
+      {
+        speaker: 'mentor',
+        text: 'Peringatan Darurat Merah! Agen [Nama Avatar], lakukan multi-tasking darurat: sortir dokumen melayang cepat, deteksi dokumen jebakan, dan aktifkan sakelar protokol pemulihan kantor!'
+      },
+      {
+        speaker: 'player',
+        text: 'Kita hanya punya waktu 30 detik dan tidak boleh ada satu pun kesalahan! Demi Markas Office Kids, sistem administrasi operasional akan kupulihkan sekarang juga! ⚡🏆'
+      }
+    ],
+    sortingItems: []
+  }
+];
+
+/**
+ * Universal episode data resolver supporting Chapter 1, 2, 3, and 4
+ */
+function getEpisodeData(chapterId, episodeId) {
+  if (chapterId === 4 && typeof CHAPTER_4_EPISODES !== 'undefined') {
+    const ep = CHAPTER_4_EPISODES.find(e => e.id === episodeId);
+    if (ep) return ep;
+  }
+  if (chapterId === 3 && typeof CHAPTER_3_EPISODES !== 'undefined') {
+    const ep = CHAPTER_3_EPISODES.find(e => e.id === episodeId);
+    if (ep) return ep;
+  }
+  if (chapterId === 2 && typeof CHAPTER_2_EPISODES !== 'undefined') {
+    const ep = CHAPTER_2_EPISODES.find(e => e.id === episodeId);
+    if (ep) return ep;
+  }
+  return CHAPTER_1_EPISODES.find(e => e.id === episodeId) || CHAPTER_1_EPISODES[0];
+}
+
 // --- Default Application State ---
 const DEFAULT_STATE = {
   profile: {
@@ -711,6 +1128,16 @@ const DEFAULT_STATE = {
     chapterStars: { 1: 0, 2: 0, 3: 0, 4: 0 },
     chapterEpisodes: {
       1: {
+        unlocked: [1],
+        completed: [],
+        stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+      },
+      3: {
+        unlocked: [1],
+        completed: [],
+        stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+      },
+      4: {
         unlocked: [1],
         completed: [],
         stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
@@ -751,6 +1178,16 @@ function isChapterCompleted(chapterId) {
     const allEpDone = Boolean(ch1 && Array.isArray(ch1.completed) && CHAPTER_1_EPISODES.every(ep => ch1.completed.includes(ep.id)));
     return localFlag || stateFlag || allEpDone;
   }
+  if (chapterId === 3) {
+    const ch3 = gameState.progress && gameState.progress.chapterEpisodes && gameState.progress.chapterEpisodes[3];
+    const allEpDone = Boolean(ch3 && Array.isArray(ch3.completed) && CHAPTER_3_EPISODES.every(ep => ch3.completed.includes(ep.id)));
+    return localFlag || stateFlag || allEpDone;
+  }
+  if (chapterId === 4) {
+    const ch4 = gameState.progress && gameState.progress.chapterEpisodes && gameState.progress.chapterEpisodes[4];
+    const allEpDone = Boolean(ch4 && Array.isArray(ch4.completed) && CHAPTER_4_EPISODES.every(ep => ch4.completed.includes(ep.id)));
+    return localFlag || stateFlag || allEpDone;
+  }
   return localFlag || stateFlag;
 }
 
@@ -777,10 +1214,24 @@ function syncProgression() {
     gameState.progress = JSON.parse(JSON.stringify(DEFAULT_STATE.progress));
   }
 
-  // 1. Sync Chapter 1 Episodes
+  // 1. Sync Chapter 1, 3, and 4 Episodes
   if (!gameState.progress.chapterEpisodes) gameState.progress.chapterEpisodes = {};
   if (!gameState.progress.chapterEpisodes[1]) {
     gameState.progress.chapterEpisodes[1] = {
+      unlocked: [1],
+      completed: [],
+      stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+    };
+  }
+  if (!gameState.progress.chapterEpisodes[3]) {
+    gameState.progress.chapterEpisodes[3] = {
+      unlocked: [1],
+      completed: [],
+      stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+    };
+  }
+  if (!gameState.progress.chapterEpisodes[4]) {
+    gameState.progress.chapterEpisodes[4] = {
       unlocked: [1],
       completed: [],
       stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
@@ -1646,6 +2097,12 @@ const ChapterManager = {
           SoundSystem.play('click');
           if (chapter.id === 1) {
             EpisodeSelectManager.openModal(1);
+          } else if (chapter.id === 2) {
+            EpisodeSelectManager.openModal(2);
+          } else if (chapter.id === 3) {
+            this.openChapter3Modal();
+          } else if (chapter.id === 4) {
+            this.openChapter4Modal();
           } else {
             this.startMission(chapter.id);
           }
@@ -1660,6 +2117,112 @@ const ChapterManager = {
     });
   },
 
+  openChapter3Modal() {
+    activeMissionChapterId = 3;
+    SceneManager.changeScene('office_normal');
+    this.renderChapter3Episodes();
+    const modal = document.getElementById('chapter3-modal');
+    if (modal) {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+  },
+
+  openChapter4Modal() {
+    activeMissionChapterId = 4;
+    SceneManager.changeScene('office_normal');
+    this.renderChapter4Episodes();
+    const modal = document.getElementById('chapter4-modal');
+    if (modal) {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+  },
+
+  renderChapter3Episodes() {
+    if (!gameState.progress.chapterEpisodes) gameState.progress.chapterEpisodes = {};
+    if (!gameState.progress.chapterEpisodes[3]) {
+      gameState.progress.chapterEpisodes[3] = {
+        unlocked: [1],
+        completed: [],
+        stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+      };
+    }
+    const epProgress = gameState.progress.chapterEpisodes[3];
+
+    CHAPTER_3_EPISODES.forEach(ep => {
+      const card = document.getElementById(`card-ch3-ep${ep.id}`);
+      const starsEl = document.getElementById(`stars-ch3-ep${ep.id}`);
+      const btn = document.getElementById(`btn-play-ch3-ep${ep.id}`);
+      if (!card) return;
+
+      const isCompleted = epProgress.completed && epProgress.completed.includes(ep.id);
+      const isUnlocked = isCompleted || (ep.id === 1) || (epProgress.unlocked && epProgress.unlocked.includes(ep.id)) || (epProgress.completed && epProgress.completed.includes(ep.id - 1));
+
+      card.className = `episode-card ${isCompleted ? 'completed' : (isUnlocked ? 'unlocked' : 'locked')} ${ep.id === 5 ? 'boss-card' : ''}`;
+      if (ep.id === 5) {
+        card.style.borderColor = isCompleted ? '#34D399' : '#F87171';
+      }
+
+      if (starsEl) {
+        starsEl.textContent = isCompleted ? '⭐⭐⭐ Selesai' : (isUnlocked ? '⭐ Belum Selesai' : '🔒 Terkunci');
+      }
+
+      if (btn) {
+        btn.className = `episode-btn-action ${isCompleted ? 'episode-btn-completed' : (isUnlocked ? 'episode-btn-play' : 'episode-btn-locked')}`;
+        btn.disabled = !isUnlocked;
+        btn.textContent = isCompleted ? 'Main Ulang 🔄' : (isUnlocked ? 'Mulai Misi 🚀' : '🔒 Terkunci');
+        if (isUnlocked) {
+          btn.onclick = () => EpisodeMissionManager.checkAndStartEpisode(3, ep.id);
+        } else {
+          btn.onclick = null;
+        }
+      }
+    });
+  },
+
+  renderChapter4Episodes() {
+    if (!gameState.progress.chapterEpisodes) gameState.progress.chapterEpisodes = {};
+    if (!gameState.progress.chapterEpisodes[4]) {
+      gameState.progress.chapterEpisodes[4] = {
+        unlocked: [1],
+        completed: [],
+        stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+      };
+    }
+    const epProgress = gameState.progress.chapterEpisodes[4];
+
+    CHAPTER_4_EPISODES.forEach(ep => {
+      const card = document.getElementById(`card-ch4-ep${ep.id}`);
+      const starsEl = document.getElementById(`stars-ch4-ep${ep.id}`);
+      const btn = document.getElementById(`btn-play-ch4-ep${ep.id}`);
+      if (!card) return;
+
+      const isCompleted = epProgress.completed && epProgress.completed.includes(ep.id);
+      const isUnlocked = isCompleted || (ep.id === 1) || (epProgress.unlocked && epProgress.unlocked.includes(ep.id)) || (epProgress.completed && epProgress.completed.includes(ep.id - 1));
+
+      card.className = `episode-card ${isCompleted ? 'completed' : (isUnlocked ? 'unlocked' : 'locked')} ${ep.id === 5 ? 'boss-card' : ''}`;
+      if (ep.id === 5) {
+        card.style.borderColor = isCompleted ? '#34D399' : '#F87171';
+      }
+
+      if (starsEl) {
+        starsEl.textContent = isCompleted ? '⭐⭐⭐ Selesai' : (isUnlocked ? '⭐ Belum Selesai' : '🔒 Terkunci');
+      }
+
+      if (btn) {
+        btn.className = `episode-btn-action ${isCompleted ? 'episode-btn-completed' : (isUnlocked ? 'episode-btn-play' : 'episode-btn-locked')}`;
+        btn.disabled = !isUnlocked;
+        btn.textContent = isCompleted ? 'Main Ulang 🔄' : (isUnlocked ? 'Mulai Misi 🚀' : '🔒 Terkunci');
+        if (isUnlocked) {
+          btn.onclick = () => EpisodeMissionManager.checkAndStartEpisode(4, ep.id);
+        } else {
+          btn.onclick = null;
+        }
+      }
+    });
+  },
+
   startMission(chapterId) {
     if (!isChapterUnlocked(chapterId)) {
       SoundSystem.play('back');
@@ -1669,6 +2232,21 @@ const ChapterManager = {
 
     if (chapterId === 1) {
       EpisodeSelectManager.openModal(1);
+      return;
+    }
+
+    if (chapterId === 2) {
+      EpisodeSelectManager.openModal(2);
+      return;
+    }
+
+    if (chapterId === 3) {
+      this.openChapter3Modal();
+      return;
+    }
+
+    if (chapterId === 4) {
+      this.openChapter4Modal();
       return;
     }
 
@@ -1886,7 +2464,11 @@ const EpisodeSelectManager = {
     if (!modal || !grid) return;
 
     if (chapterTag) {
-      chapterTag.textContent = `🏢 CHAPTER ${chapterId}`;
+      if (chapterId === 2) {
+        chapterTag.textContent = '📞 CHAPTER 2: KOMUNIKASI & KORESPONDENSI';
+      } else {
+        chapterTag.textContent = `🏢 CHAPTER ${chapterId}: KEARSIPAN & FILING`;
+      }
     }
 
     // Ensure chapter episodes data exists in gameState
@@ -1904,12 +2486,16 @@ const EpisodeSelectManager = {
     const epProgress = gameState.progress.chapterEpisodes[chapterId];
     grid.innerHTML = '';
 
-    CHAPTER_1_EPISODES.forEach(ep => {
+    const episodeList = (chapterId === 2) ? CHAPTER_2_EPISODES : CHAPTER_1_EPISODES;
+
+    episodeList.forEach(ep => {
       // Episode 1 is unlocked by default, episode N unlocked if episode N-1 completed
       const isUnlocked = (ep.id === 1) || (epProgress.completed && epProgress.completed.includes(ep.id - 1)) || (epProgress.unlocked && epProgress.unlocked.includes(ep.id));
       const isCompleted = epProgress.completed && epProgress.completed.includes(ep.id);
-      const starsCount = epProgress.stars[ep.id] || (isCompleted ? 3 : 0);
-      const starsHtml = isCompleted ? '⭐⭐⭐ Selesai' : (isUnlocked ? '⭐ Belum Selesai' : '🔒 Terkunci');
+      const starsCount = (epProgress.stars && epProgress.stars[ep.id]) || (isCompleted ? 3 : 0);
+      const starsHtml = isCompleted 
+        ? `${'⭐'.repeat(starsCount || 3)} Selesai` 
+        : (isUnlocked ? '⭐ Belum Selesai' : '🔒 Terkunci');
 
       const card = document.createElement('div');
       card.className = `episode-card ${isCompleted ? 'completed' : (isUnlocked ? 'unlocked' : 'locked')}`;
@@ -1967,6 +2553,22 @@ const EpisodeMissionManager = {
    * @param {number} episodeId
    */
   checkAndStartEpisode(chapterId = 1, episodeId = 1) {
+    // Sembunyikan/tutup seluruh pop-up pemilihan chapter aktif untuk menghindari overlap UI
+    const modalsToClose = [
+      'episode-select-modal',
+      'mission-modal',
+      'chapter3-modal',
+      'chapter4-modal',
+      'avatar-first-select-modal'
+    ];
+    modalsToClose.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('active');
+        el.setAttribute('aria-hidden', 'true');
+      }
+    });
+
     if (chapterId === 1 && episodeId === 1) {
       const hasUserAvatar = localStorage.getItem('userAvatar');
       if (!hasUserAvatar) {
@@ -1999,15 +2601,16 @@ const EpisodeMissionManager = {
     const modal = document.getElementById('episode-game-modal');
     if (!modal) return;
 
-    const episodeData = CHAPTER_1_EPISODES.find(e => e.id === episodeId) || CHAPTER_1_EPISODES[0];
+    const episodeData = getEpisodeData(chapterId, episodeId);
 
     // Set Header Info
     const chapterPill = document.getElementById('game-screen-chapter-pill');
     const screenTitle = document.getElementById('game-screen-title');
     if (chapterPill) chapterPill.textContent = `🏢 Chapter ${chapterId} • Episode ${episodeId}`;
-    if (screenTitle) screenTitle.textContent = `${episodeData.title} 🌪️`;
+    if (screenTitle) screenTitle.textContent = `${episodeData.title} ${episodeData.icon || '🌪️'}`;
 
     modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
     this.showPhase(1);
 
     // Trigger Scene BGM for Story Mode (Office Normal or Flashback)
@@ -2016,8 +2619,23 @@ const EpisodeMissionManager = {
   },
 
   closeGameModal() {
+    if (window.Chapter1MiniGames && window.Chapter1MiniGames.stop) {
+      window.Chapter1MiniGames.stop();
+    }
+    if (window.Chapter2MiniGames && window.Chapter2MiniGames.stop) {
+      window.Chapter2MiniGames.stop();
+    }
+    if (window.Chapter3MiniGames && window.Chapter3MiniGames.stop) {
+      window.Chapter3MiniGames.stop();
+    }
+    if (window.Chapter4MiniGames && window.Chapter4MiniGames.stop) {
+      window.Chapter4MiniGames.stop();
+    }
     const modal = document.getElementById('episode-game-modal');
-    if (modal) modal.classList.remove('active');
+    if (modal) {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
     SceneManager.changeScene('menu');
   },
 
@@ -2126,6 +2744,106 @@ const EpisodeMissionManager = {
   },
 
   renderGameplayPhase() {
+    const ch1Mount = document.getElementById('ch1-minigame-mount');
+    const ch2Mount = document.getElementById('ch2-minigame-mount');
+    const ch3Mount = document.getElementById('ch3-minigame-mount');
+    const ch4Mount = document.getElementById('ch4-minigame-mount');
+    const legacyWrapper = document.getElementById('legacy-sorting-wrapper');
+
+    // Dedicated Chapter 1 Interactive Mini Game Engine (Episodes 1-5)
+    if (this.activeChapterId === 1 && window.Chapter1MiniGames) {
+      if (ch1Mount) ch1Mount.style.display = 'block';
+      if (ch2Mount) ch2Mount.style.display = 'none';
+      if (ch3Mount) ch3Mount.style.display = 'none';
+      if (ch4Mount) ch4Mount.style.display = 'none';
+      if (legacyWrapper) legacyWrapper.style.display = 'none';
+
+      window.Chapter1MiniGames.start(this.activeEpisodeId, {
+        onComplete: (result) => {
+          this.finishMissionReward(result);
+        },
+        onRetry: () => {
+          this.startGameplay();
+        },
+        onQuit: () => {
+          this.closeGameModal();
+        }
+      });
+      return;
+    }
+
+    // Dedicated Chapter 2 Interactive Mini Game Engine (Episodes 1-5)
+    if (this.activeChapterId === 2 && window.Chapter2MiniGames) {
+      if (ch1Mount) ch1Mount.style.display = 'none';
+      if (ch2Mount) ch2Mount.style.display = 'block';
+      if (ch3Mount) ch3Mount.style.display = 'none';
+      if (ch4Mount) ch4Mount.style.display = 'none';
+      if (legacyWrapper) legacyWrapper.style.display = 'none';
+
+      window.Chapter2MiniGames.start(this.activeEpisodeId, {
+        onComplete: (result) => {
+          this.finishMissionReward(result);
+        },
+        onRetry: () => {
+          this.startGameplay();
+        },
+        onQuit: () => {
+          this.closeGameModal();
+        }
+      });
+      return;
+    }
+
+    // Dedicated Chapter 3 Interactive Mini Game Engine (Episodes 1-5)
+    if (this.activeChapterId === 3 && window.Chapter3MiniGames) {
+      if (ch1Mount) ch1Mount.style.display = 'none';
+      if (ch2Mount) ch2Mount.style.display = 'none';
+      if (ch3Mount) ch3Mount.style.display = 'block';
+      if (ch4Mount) ch4Mount.style.display = 'none';
+      if (legacyWrapper) legacyWrapper.style.display = 'none';
+
+      window.Chapter3MiniGames.start(this.activeEpisodeId, {
+        onComplete: (result) => {
+          this.finishMissionReward(result);
+        },
+        onRetry: () => {
+          this.startGameplay();
+        },
+        onQuit: () => {
+          this.closeGameModal();
+        }
+      });
+      return;
+    }
+
+    // Dedicated Chapter 4 Interactive Mini Game Engine (Episodes 1-5)
+    if (this.activeChapterId === 4 && window.Chapter4MiniGames) {
+      if (ch1Mount) ch1Mount.style.display = 'none';
+      if (ch2Mount) ch2Mount.style.display = 'none';
+      if (ch3Mount) ch3Mount.style.display = 'none';
+      if (ch4Mount) ch4Mount.style.display = 'block';
+      if (legacyWrapper) legacyWrapper.style.display = 'none';
+
+      window.Chapter4MiniGames.start(this.activeEpisodeId, {
+        onComplete: (result) => {
+          this.finishMissionReward(result);
+        },
+        onRetry: () => {
+          this.startGameplay();
+        },
+        onQuit: () => {
+          this.closeGameModal();
+        }
+      });
+      return;
+    }
+
+    if (ch1Mount) ch1Mount.style.display = 'none';
+    if (ch2Mount) ch2Mount.style.display = 'none';
+    if (ch3Mount) ch3Mount.style.display = 'none';
+    if (ch4Mount) ch4Mount.style.display = 'none';
+    if (legacyWrapper) legacyWrapper.style.display = 'block';
+
     const container = document.getElementById('sorting-items-container');
     const remainingEl = document.getElementById('sorting-remaining-count');
     const archiveBadge = document.getElementById('count-archive');
@@ -2137,12 +2855,49 @@ const EpisodeMissionManager = {
     this.archiveCount = 0;
     this.trashCount = 0;
 
-    if (archiveBadge) archiveBadge.textContent = '0 Disimpan';
-    if (trashBadge) trashBadge.textContent = '0 Dibuang';
+    // Adaptasi instruksi & drop zone berdasarkan Chapter aktif
+    const instructionBadge = document.querySelector('.gameplay-instructions .instruction-badge');
+    const instructionText = document.querySelector('.gameplay-instructions .instruction-text');
+    const targetArchiveLabel = document.querySelector('#target-archive .zone-label');
+    const targetArchiveSub = document.querySelector('#target-archive .zone-sub');
+    const targetArchiveIcon = document.querySelector('#target-archive .zone-icon');
+    const targetTrashLabel = document.querySelector('#target-trash .zone-label');
+    const targetTrashSub = document.querySelector('#target-trash .zone-sub');
+    const targetTrashIcon = document.querySelector('#target-trash .zone-icon');
+
+    if (this.activeChapterId === 3) {
+      if (instructionBadge) instructionBadge.textContent = '💰 Tantangan Kas Kecil';
+      if (instructionText) instructionText.innerHTML = '<strong>Dr. Chaos</strong> menyabotase uang kas kecil kantor! Kelola 4 transaksi kas kecil & bukti belanja ke pos yang tepat:';
+      if (targetArchiveIcon) targetArchiveIcon.textContent = '💰';
+      if (targetArchiveLabel) targetArchiveLabel.textContent = 'Brankas Kas Kecil';
+      if (targetArchiveSub) targetArchiveSub.textContent = 'Penerimaan & Modal Kas';
+      if (targetTrashIcon) targetTrashIcon.textContent = '🧾';
+      if (targetTrashLabel) targetTrashLabel.textContent = 'Buku Kas Transaksi';
+      if (targetTrashSub) targetTrashSub.textContent = 'Bukti Pengeluaran Kas';
+      if (archiveBadge) archiveBadge.textContent = '0 Masuk Kas';
+      if (trashBadge) trashBadge.textContent = '0 Dicatat';
+    } else {
+      if (instructionBadge) instructionBadge.textContent = '🌪️ Tantangan Kantor';
+      if (instructionText) instructionText.innerHTML = '<strong>Dr. Chaos</strong> menerbangkan berkas di kantor! Pilah 4 kertas ke tempat yang tepat:';
+      if (targetArchiveIcon) targetArchiveIcon.textContent = '📁';
+      if (targetArchiveLabel) targetArchiveLabel.textContent = 'Lemari Arsip';
+      if (targetArchiveSub) targetArchiveSub.textContent = 'Dokumen Penting Resmi';
+      if (targetTrashIcon) targetTrashIcon.textContent = '🗑️';
+      if (targetTrashLabel) targetTrashLabel.textContent = 'Tempat Sampah';
+      if (targetTrashSub) targetTrashSub.textContent = 'Kertas Sampah & Bekas';
+      if (archiveBadge) archiveBadge.textContent = '0 Disimpan';
+      if (trashBadge) trashBadge.textContent = '0 Dibuang';
+    }
+
     if (remainingEl) remainingEl.textContent = '4';
 
-    const episodeData = CHAPTER_1_EPISODES.find(e => e.id === this.activeEpisodeId) || CHAPTER_1_EPISODES[0];
+    const episodeData = getEpisodeData(this.activeChapterId, this.activeEpisodeId);
     const items = episodeData.sortingItems || [];
+
+    const archiveBtnLabel = (this.activeChapterId === 3) ? '💰 Masuk Brankas' : '📁 Ke Lemari Arsip';
+    const trashBtnLabel = (this.activeChapterId === 3) ? '🧾 Catat Pengeluaran' : '🗑️ Ke Tempat Sampah';
+    const archiveBtnTitle = (this.activeChapterId === 3) ? 'Simpan ke Brankas Kas Kecil' : 'Simpan ke Lemari Arsip';
+    const trashBtnTitle = (this.activeChapterId === 3) ? 'Catat ke Buku Pengeluaran' : 'Buang ke Tempat Sampah';
 
     items.forEach(item => {
       const card = document.createElement('div');
@@ -2161,11 +2916,11 @@ const EpisodeMissionManager = {
           </div>
         </div>
         <div class="sorting-actions-row">
-          <button type="button" class="btn-sort-archive" data-action="archive" title="Simpan ke Lemari Arsip">
-            📁 Ke Lemari Arsip
+          <button type="button" class="btn-sort-archive" data-action="archive" title="${archiveBtnTitle}">
+            ${archiveBtnLabel}
           </button>
-          <button type="button" class="btn-sort-trash" data-action="trash" title="Buang ke Tempat Sampah">
-            🗑️ Ke Tempat Sampah
+          <button type="button" class="btn-sort-trash" data-action="trash" title="${trashBtnTitle}">
+            ${trashBtnLabel}
           </button>
         </div>
       `;
@@ -2228,7 +2983,7 @@ const EpisodeMissionManager = {
           const data = JSON.parse(e.dataTransfer.getData('text/plain'));
           if (data && data.itemId) {
             const card = document.getElementById(`sort-card-${data.itemId}`);
-            const episodeData = CHAPTER_1_EPISODES.find(e => e.id === this.activeEpisodeId) || CHAPTER_1_EPISODES[0];
+            const episodeData = getEpisodeData(this.activeChapterId, this.activeEpisodeId);
             const item = episodeData.sortingItems ? episodeData.sortingItems.find(i => i.id === data.itemId) : null;
             if (item && card) {
               const targetType = zone.getAttribute('data-type');
@@ -2259,11 +3014,11 @@ const EpisodeMissionManager = {
       if (chosenTarget === 'archive') {
         this.archiveCount++;
         const badge = document.getElementById('count-archive');
-        if (badge) badge.textContent = `${this.archiveCount} Disimpan ✨`;
+        if (badge) badge.textContent = (this.activeChapterId === 3) ? `${this.archiveCount} Masuk Kas ✨` : `${this.archiveCount} Disimpan ✨`;
       } else {
         this.trashCount++;
         const badge = document.getElementById('count-trash');
-        if (badge) badge.textContent = `${this.trashCount} Dibuang ✨`;
+        if (badge) badge.textContent = (this.activeChapterId === 3) ? `${this.trashCount} Dicatat ✨` : `${this.trashCount} Dibuang ✨`;
       }
 
       const remaining = 4 - this.sortedItemIds.size;
@@ -2283,21 +3038,32 @@ const EpisodeMissionManager = {
       SoundSystem.play('back');
       cardElement.classList.add('wiggle');
       setTimeout(() => cardElement.classList.remove('wiggle'), 500);
-      showToast(chosenTarget === 'archive'
-        ? 'Ups! Itu kertas sampah, buang ke Tempat Sampah ya 🗑️'
-        : 'Ups! Itu dokumen penting resmi, simpan ke Lemari Arsip ya 📁'
-      );
+      if (this.activeChapterId === 3) {
+        showToast(chosenTarget === 'archive'
+          ? 'Ups! Itu bukti pengeluaran, catat ke Buku Kas Transaksi ya 🧾'
+          : 'Ups! Itu penerimaan/modal kas, simpan ke Brankas Kas Kecil ya 💰'
+        );
+      } else {
+        showToast(chosenTarget === 'archive'
+          ? 'Ups! Itu kertas sampah, buang ke Tempat Sampah ya 🗑️'
+          : 'Ups! Itu dokumen penting resmi, simpan ke Lemari Arsip ya 📁'
+        );
+      }
     }
   },
 
-  finishMissionReward() {
+  finishMissionReward(gameResult = null) {
     this.showPhase(3);
     SceneManager.onEpisodeCompleted();
     SoundSystem.play('success');
 
+    const activeCh = this.activeChapterId || 1;
     const epId = this.activeEpisodeId;
     const isLastEpisode = (epId >= 5);
     const nextEpId = epId + 1;
+
+    // Calculate stars earned dynamically (defaults to 3)
+    const starsEarned = (gameResult && typeof gameResult.stars === 'number') ? gameResult.stars : 3;
 
     const playerName = gameState.profile.name || 'Agen Cilik';
     const playerAvatar = gameState.profile.avatar || '👦🏻';
@@ -2308,73 +3074,121 @@ const EpisodeMissionManager = {
     const unlockTitleEl = document.getElementById('reward-unlock-title');
     const unlockSubEl = document.getElementById('reward-unlock-subtitle');
     const nextBtnTextEl = document.getElementById('btn-next-episode-text');
+    const starsLabelEl = document.getElementById('reward-stars-label');
 
     if (nameEl) nameEl.textContent = playerName;
     if (avatarEl) avatarEl.textContent = playerAvatar;
 
+    // Render illuminated stars
+    for (let s = 1; s <= 3; s++) {
+      const starEl = document.getElementById(`reward-star-${s}`);
+      if (starEl) {
+        if (s <= starsEarned) {
+          starEl.className = 'star-icon star-earned';
+          starEl.textContent = '⭐';
+        } else {
+          starEl.className = 'star-icon star-dimmed';
+          starEl.textContent = '☆';
+        }
+      }
+    }
+
+    if (starsLabelEl) {
+      starsLabelEl.textContent = `${'⭐'.repeat(starsEarned)} ${starsEarned === 3 ? '3 Bintang Sempurna! ✨' : (starsEarned === 2 ? '2 Bintang Hebat! 🌟' : '1 Bintang Bagus! ⭐')}`;
+    }
+
     // Ensure chapterEpisodes structure exists
     if (!gameState.progress.chapterEpisodes) gameState.progress.chapterEpisodes = {};
-    if (!gameState.progress.chapterEpisodes[1]) {
-      gameState.progress.chapterEpisodes[1] = {
+    if (!gameState.progress.chapterEpisodes[activeCh]) {
+      gameState.progress.chapterEpisodes[activeCh] = {
         unlocked: [1],
         completed: [],
         stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
       };
     }
 
-    const ch1 = gameState.progress.chapterEpisodes[1];
-    if (!ch1.completed.includes(epId)) ch1.completed.push(epId);
-    ch1.stars[epId] = 3;
+    const chEp = gameState.progress.chapterEpisodes[activeCh];
+    if (!chEp.completed.includes(epId)) chEp.completed.push(epId);
+    chEp.stars[epId] = Math.max(chEp.stars[epId] || 0, starsEarned);
 
     if (!isLastEpisode) {
-      // Unlock next episode within Chapter 1
-      if (!ch1.unlocked.includes(nextEpId)) ch1.unlocked.push(nextEpId);
-      const nextEpData = CHAPTER_1_EPISODES.find(e => e.id === nextEpId);
+      // Unlock next episode within active chapter
+      if (!chEp.unlocked.includes(nextEpId)) chEp.unlocked.push(nextEpId);
+      const nextEpData = getEpisodeData(activeCh, nextEpId);
       const nextTitle = nextEpData ? nextEpData.title : `Episode ${nextEpId}`;
 
       if (praiseTextEl) {
-        praiseTextEl.textContent = `"Kerja hebat, Agen ${playerName}! Seluruh dokumen di Episode ${epId} berhasil diamankan! Siap untuk tantangan selanjutnya?"`;
+        if (activeCh === 4) {
+          praiseTextEl.textContent = `"Kerja luar biasa, Agen ${playerName}! Tata kelola dan manajemen operasional di Episode ${epId} berhasil dipulihkan dengan ${starsEarned} Bintang! Siap untuk tantangan selanjutnya?"`;
+        } else if (activeCh === 3) {
+          praiseTextEl.textContent = `"Kerja hebat, Agen ${playerName}! Seluruh transaksi kas, kembalian kasir, dan inventaris gudang di Episode ${epId} berhasil diaudit dengan ${starsEarned} Bintang! Siap untuk tantangan selanjutnya?"`;
+        } else if (activeCh === 2) {
+          praiseTextEl.textContent = `"Kerja hebat, Agen ${playerName}! Seluruh saluran komunikasi, sortir surat, & pesan darurat di Episode ${epId} berhasil diselesaikan dengan ${starsEarned} Bintang! Siap untuk tantangan selanjutnya?"`;
+        } else {
+          praiseTextEl.textContent = `"Kerja hebat, Agen ${playerName}! Seluruh berkas di Episode ${epId} berhasil diamankan dengan ${starsEarned} Bintang! Siap untuk tantangan selanjutnya?"`;
+        }
       }
       if (unlockIconEl) unlockIconEl.textContent = '🔓';
       if (unlockTitleEl) unlockTitleEl.textContent = `EPISODE ${nextEpId} BERHASIL TERBUKA!`;
       if (unlockSubEl) unlockSubEl.textContent = `"${nextTitle}" kini siap kamu jelajahi!`;
       if (nextBtnTextEl) nextBtnTextEl.textContent = `➔ Lanjut Episode ${nextEpId}`;
 
-      // Chapter 1 is NOT finished yet, Chapter 2 stays locked!
       syncProgression();
 
       // Award bonus coins (+50 Coins per episode)
       const earnedCoins = 50;
       gameState.coins = (gameState.coins || 0) + earnedCoins;
 
-      showToast(`🎉 Episode ${epId} Selesai! (+${earnedCoins} 🪙) ⭐⭐⭐ Episode ${nextEpId} Terbuka!`, 'success');
-    } else {
-      // ALL EPISODES OF CHAPTER 1 ARE COMPLETE!
-      if (!gameState.progress.completedChapters.includes(1)) {
-        gameState.progress.completedChapters.push(1);
+      Storage.save();
+      TopBar.update();
+      if (activeCh === 4) {
+        ChapterManager.renderChapter4Episodes();
+      } else if (activeCh === 3) {
+        ChapterManager.renderChapter3Episodes();
+      } else if (activeCh === 2) {
+        EpisodeSelectManager.openModal(2);
+      } else if (activeCh === 1) {
+        EpisodeSelectManager.openModal(1);
       }
-      localStorage.setItem('chapter1_completed', 'true');
-      gameState.progress.chapterStars[1] = 3;
 
-      // Unlock reward badge 2
-      BadgeGallery.unlockBadge('badge_2');
+      showToast(`🎉 Episode ${epId} Selesai! (+${earnedCoins} 🪙) ${'⭐'.repeat(starsEarned)} Episode ${nextEpId} Terbuka!`, 'success');
+    } else {
+      // ALL EPISODES OF THIS CHAPTER ARE COMPLETE!
+      if (!gameState.progress.completedChapters.includes(activeCh)) {
+        gameState.progress.completedChapters.push(activeCh);
+      }
+      localStorage.setItem(`chapter${activeCh}_completed`, 'true');
+      gameState.progress.chapterStars[activeCh] = 3;
 
-      // Sync progression - now Chapter 2 is unlocked!
+      // Unlock reward badge
+      const currentChapterData = CHAPTERS_DATA.find(c => c.id === activeCh);
+      if (currentChapterData && currentChapterData.badgeReward) {
+        BadgeGallery.unlockBadge(currentChapterData.badgeReward);
+      }
+
       syncProgression();
 
-      // Award bonus coins (+100 Coins for Chapter 1 grand finale)
-      const earnedCoins = 100;
+      const earnedCoins = (activeCh === 4) ? 200 : ((activeCh === 3) ? 150 : 100);
       gameState.coins = (gameState.coins || 0) + earnedCoins;
 
       if (praiseTextEl) {
-        praiseTextEl.textContent = `"Kerja yang SANGAT LUAR BIASA, Agen ${playerName}! Seluruh 5 episode di Chapter 1 telah tuntas diselesaikan! Dr. Chaos berhasil dihentikan!"`;
+        if (activeCh === 4) {
+          praiseTextEl.textContent = `"Kerja yang SANGAT SPEKTAKULER, Agen ${playerName}! Seluruh 5 episode di Chapter 4: Pilar Manajemen Operasional berhasil kamu selesaikan sempurna! Anomali Dr. Chaos dihancurkan dan markas Office Kids kini beroperasi dengan aman dan tertib!"`;
+        } else {
+          praiseTextEl.textContent = `"Kerja yang SANGAT LUAR BIASA, Agen ${playerName}! Seluruh 5 episode di Chapter ${activeCh} telah tuntas diselesaikan dengan gemilang! Ruang arsip kantor kembali aman dan teratur!"`;
+        }
       }
+      const nextChapterId = activeCh + 1;
       if (unlockIconEl) unlockIconEl.textContent = '🏆';
-      if (unlockTitleEl) unlockTitleEl.textContent = '🎉 CHAPTER 1 SELESAI SEMPURNA!';
-      if (unlockSubEl) unlockSubEl.textContent = 'Chapter 2 "Pilar Komunikasi & Korespondensi" kini RESMI TERBUKA di Menu Misi! 🔓';
-      if (nextBtnTextEl) nextBtnTextEl.textContent = '➔ Buka Chapter 2 di Menu Misi 🗺️';
+      if (unlockTitleEl) unlockTitleEl.textContent = `🎉 CHAPTER ${activeCh} SELESAI SEMPURNA!`;
+      if (unlockSubEl) {
+        unlockSubEl.textContent = nextChapterId <= 4
+          ? `Chapter ${nextChapterId} kini RESMI TERBUKA di Menu Misi! 🔓`
+          : 'Luar biasa! Kamu telah menuntaskan seluruh Chapter petualangan! 👑';
+      }
+      if (nextBtnTextEl) nextBtnTextEl.textContent = nextChapterId <= 4 ? `➔ Buka Chapter ${nextChapterId} di Menu Misi 🗺️` : '➔ Selesai';
 
-      showToast(`🎉 Luar Biasa! Semua Episode Chapter 1 Selesai! (+${earnedCoins} 🪙) ⭐⭐⭐ Chapter 2 RESMI TERBUKA! 🔓`, 'success');
+      showToast(`🎉 Luar Biasa! Semua Episode Chapter ${activeCh} Selesai! (+${earnedCoins} 🪙) ${'⭐'.repeat(starsEarned)}`, 'success');
     }
 
     // Update rank
@@ -2879,6 +3693,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const closeChapter3ModalBtn = document.getElementById('btn-close-chapter3-modal');
+  const chapter3Modal = document.getElementById('chapter3-modal');
+  if (closeChapter3ModalBtn && chapter3Modal) {
+    closeChapter3ModalBtn.addEventListener('click', () => {
+      SoundSystem.play('back');
+      chapter3Modal.classList.remove('active');
+      chapter3Modal.setAttribute('aria-hidden', 'true');
+      SceneManager.changeScene('menu');
+    });
+  }
+
+  const closeChapter4ModalBtn = document.getElementById('btn-close-chapter4-modal');
+  const chapter4Modal = document.getElementById('chapter4-modal');
+  if (closeChapter4ModalBtn && chapter4Modal) {
+    closeChapter4ModalBtn.addEventListener('click', () => {
+      SoundSystem.play('back');
+      chapter4Modal.classList.remove('active');
+      chapter4Modal.setAttribute('aria-hidden', 'true');
+      SceneManager.changeScene('menu');
+    });
+  }
+
   // 8. Episode & Game Screen Modal Handlers
   const closeEpisodeModalBtn = document.getElementById('btn-close-episode-modal');
   const closeGameScreenBtn = document.getElementById('btn-close-game-screen');
@@ -2910,19 +3746,65 @@ document.addEventListener('DOMContentLoaded', () => {
   if (returnEpisodesBtn) {
     returnEpisodesBtn.addEventListener('click', () => {
       SoundSystem.play('click');
+      const activeCh = EpisodeMissionManager.activeChapterId || 1;
       EpisodeMissionManager.closeGameModal();
-      EpisodeSelectManager.openModal(1);
+      if (activeCh === 4) {
+        ChapterManager.openChapter4Modal();
+      } else if (activeCh === 3) {
+        ChapterManager.openChapter3Modal();
+      } else if (activeCh === 2) {
+        EpisodeSelectManager.openModal(2);
+      } else {
+        EpisodeSelectManager.openModal(1);
+      }
     });
   }
 
   if (nextEpisodeBtn) {
     nextEpisodeBtn.addEventListener('click', () => {
       SoundSystem.play('click');
+      const activeCh = EpisodeMissionManager.activeChapterId || 1;
       const currentEp = EpisodeMissionManager.activeEpisodeId;
       EpisodeMissionManager.closeGameModal();
+      if (activeCh === 4) {
+        if (currentEp < 5) {
+          const nextEp = currentEp + 1;
+          EpisodeMissionManager.checkAndStartEpisode(4, nextEp);
+          showToast(`Memulai Chapter 4 Episode ${nextEp}! 🚀`, 'success');
+        } else {
+          Navigation.showSlide('slide-5');
+          ChapterManager.render();
+          showToast('👑 Luar Biasa! Semua Chapter tuntas diselesaikan! 🏆', 'success');
+        }
+        return;
+      }
+      if (activeCh === 3) {
+        if (currentEp < 5) {
+          const nextEp = currentEp + 1;
+          EpisodeMissionManager.checkAndStartEpisode(3, nextEp);
+          showToast(`Memulai Chapter 3 Episode ${nextEp}! 🚀`, 'success');
+        } else {
+          Navigation.showSlide('slide-5');
+          ChapterManager.render();
+          showToast('Chapter 4 Resmi Terbuka! Silakan pilih Chapter 4 🎉', 'success');
+        }
+        return;
+      }
+      if (activeCh === 2) {
+        if (currentEp < 5) {
+          const nextEp = currentEp + 1;
+          EpisodeMissionManager.checkAndStartEpisode(2, nextEp);
+          showToast(`Memulai Chapter 2 Episode ${nextEp}! 🚀`, 'success');
+        } else {
+          Navigation.showSlide('slide-5');
+          ChapterManager.render();
+          showToast('Chapter 3 Resmi Terbuka! Silakan pilih Chapter 3 🎉', 'success');
+        }
+        return;
+      }
       if (currentEp < 5) {
         const nextEp = currentEp + 1;
-        EpisodeMissionManager.checkAndStartEpisode(1, nextEp);
+        EpisodeMissionManager.checkAndStartEpisode(activeCh, nextEp);
         showToast(`Memulai Episode ${nextEp}! 🚀`, 'success');
       } else {
         // Completed Chapter 1 -> Show Chapter Select menu
@@ -2952,6 +3834,21 @@ document.addEventListener('DOMContentLoaded', () => {
         completed: [1, 2, 3, 4, 5],
         stars: { 1: 3, 2: 3, 3: 3, 4: 3, 5: 3 }
       };
+      gameState.progress.chapterEpisodes[2] = {
+        unlocked: [1, 2, 3, 4, 5],
+        completed: [1, 2, 3, 4, 5],
+        stars: { 1: 3, 2: 3, 3: 3, 4: 3, 5: 3 }
+      };
+      gameState.progress.chapterEpisodes[3] = {
+        unlocked: [1, 2, 3, 4, 5],
+        completed: [1, 2, 3, 4, 5],
+        stars: { 1: 3, 2: 3, 3: 3, 4: 3, 5: 3 }
+      };
+      gameState.progress.chapterEpisodes[4] = {
+        unlocked: [1, 2, 3, 4, 5],
+        completed: [1, 2, 3, 4, 5],
+        stars: { 1: 3, 2: 3, 3: 3, 4: 3, 5: 3 }
+      };
       gameState.profile.rank = calculateRank(4);
       Storage.save();
       TopBar.update();
@@ -2972,6 +3869,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       gameState.progress.chapterEpisodes = {
         1: {
+          unlocked: [1],
+          completed: [],
+          stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+        },
+        2: {
+          unlocked: [1],
+          completed: [],
+          stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
+        },
+        3: {
           unlocked: [1],
           completed: [],
           stars: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }

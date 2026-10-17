@@ -2141,7 +2141,73 @@ input:checked+.toggle-slider::before {
   cursor: not-allowed;
 }
 
+/* --- CHAPTER 3 MODAL & EPISODES THEME --- */
+#chapter3-modal {
+  z-index: 1000;
+}
+
+.chapter3-modal-card {
+  border-top: 5px solid #F59E0B;
+  box-shadow: 0 20px 45px rgba(245, 158, 11, 0.15), var(--shadow-modal);
+}
+
+.chapter3-tag {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #B45309;
+  background: #FEF3C7;
+  border: 1.5px solid #FCD34D;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+/* Chapter 3 Specific Card Styling */
+#chapter3-modal .episode-card.unlocked {
+  border-color: #FCD34D;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF5 100%);
+}
+
+#chapter3-modal .episode-card.unlocked:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: #F59E0B;
+  box-shadow: 0 12px 24px rgba(245, 158, 11, 0.25);
+}
+
+#chapter3-modal .episode-card.completed {
+  border-color: #34D399;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
+}
+
+#chapter3-modal .episode-btn-play {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+}
+
+#chapter3-modal .episode-btn-play:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45);
+}
+
+#chapter3-modal .episode-card.boss-card {
+  border-color: #F87171;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FEF2F2 100%);
+}
+
+#chapter3-modal .episode-card.boss-card:hover {
+  border-color: #EF4444;
+  box-shadow: 0 12px 24px rgba(239, 68, 68, 0.25);
+}
+
 /* --- GAME SCREEN MODAL (3-PHASE ADVENTURE) --- */
+#episode-game-modal {
+  z-index: 1050; /* Memastikan layar gameplay/misi berada di atas modal pemilihan chapter */
+}
+
 .game-screen-card {
   max-width: 760px;
   width: 100%;
@@ -4675,3 +4741,4524 @@ input:checked+.toggle-slider::before {
   visibility: visible;
   transform: translateX(-50%) translateY(0);
 }
+
+/* ==========================================================================
+   CHAPTER 1 INTERACTIVE MINI GAMES (EPISODES 1 - 5)
+   Pilar Kearsipan & Filing — Zero-G & Antigravity 2D Engine
+   ========================================================================== */
+
+#ch1-minigame-mount {
+  display: block;
+  width: 100%;
+  animation: ch1FadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ch1FadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Base Arena Frame */
+.ch1-game-arena {
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+  background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #0f172a 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(129, 140, 248, 0.35);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Floating dust/particles in arena */
+.ch1-arena-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(2px 2px at 120px 80px, rgba(167,139,250,0.5), transparent),
+    radial-gradient(3px 3px at 280px 160px, rgba(96,165,250,0.4), transparent),
+    radial-gradient(2px 2px at 420px 60px, rgba(255,255,255,0.45), transparent),
+    radial-gradient(2px 2px at 560px 210px, rgba(192,132,252,0.4), transparent),
+    radial-gradient(3px 3px at 680px 110px, rgba(253,224,71,0.35), transparent);
+  background-size: 720px 320px;
+  animation: ch1StarDrift 30s linear infinite;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+@keyframes ch1StarDrift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-320px); }
+}
+
+/* HUD Top Bar */
+.ch1-hud {
+  position: relative;
+  z-index: 10;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ch1-hud-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ch1-hud-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ch1-badge-ep {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+}
+
+.ch1-hud-name {
+  color: #f8fafc;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+
+.ch1-hud-stats {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ch1-stat-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.ch1-stat-pill strong {
+  color: #38bdf8;
+  font-size: 0.95rem;
+}
+
+/* Timer Bar */
+.ch1-timer-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ch1-timer-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #10b981, #06b6d4);
+  border-radius: 50px;
+  transition: width 0.1s linear, background 0.3s ease;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.ch1-timer-fill.warn {
+  background: linear-gradient(90deg, #f59e0b, #eab308);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+}
+
+.ch1-timer-fill.danger {
+  background: linear-gradient(90deg, #ef4444, #f43f5e);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.8);
+  animation: ch1PulseTimer 0.6s infinite alternate;
+}
+
+@keyframes ch1PulseTimer {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.4); }
+}
+
+.ch1-instruction-banner {
+  background: rgba(30, 41, 59, 0.8);
+  border-left: 4px solid #38bdf8;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.84rem;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Stage Area */
+.ch1-stage {
+  position: relative;
+  flex: 1;
+  min-height: 380px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Floating Agent in Zero-G (Episode 1) */
+.ch1-zero-g-agent {
+  position: absolute;
+  bottom: 24px;
+  left: 36px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(129, 140, 248, 0.4), rgba(59, 130, 246, 0.1));
+  border: 2px solid rgba(167, 139, 250, 0.6);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), inset 0 0 12px rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), bottom 0.35s ease;
+  animation: ch1AgentHover 3s ease-in-out infinite;
+  z-index: 15;
+  cursor: pointer;
+}
+
+.ch1-zero-g-agent.jumping {
+  transform: translateY(-80px) scale(1.12);
+  box-shadow: 0 0 35px rgba(192, 132, 252, 0.8), 0 20px 25px rgba(0, 0, 0, 0.4);
+}
+
+.ch1-agent-bubble-aura {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(255, 255, 255, 0.4);
+  animation: ch1Rotate 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes ch1AgentHover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes ch1Rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Floating Controls (Episode 1) */
+.ch1-ep1-controls {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 20;
+}
+
+.ch1-btn-float-jump {
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+  padding: 10px 24px;
+  font-family: var(--font-heading);
+  font-size: 0.96rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(99, 102, 241, 0.45);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ch1-btn-float-jump:active {
+  transform: scale(0.94);
+}
+
+/* Drop Targets (Ep 1) */
+.ch1-targets-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+  z-index: 10;
+}
+
+.ch1-target-box {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.25s ease;
+}
+
+.ch1-target-box.archive-box {
+  border-color: rgba(99, 102, 241, 0.6);
+  background: rgba(49, 46, 129, 0.35);
+}
+
+.ch1-target-box.archive-box.dragover,
+.ch1-target-box.archive-box.active-pulse {
+  background: rgba(99, 102, 241, 0.45);
+  border-color: #818cf8;
+  transform: scale(1.02);
+  box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);
+}
+
+.ch1-target-box.trash-box {
+  border-color: rgba(244, 63, 94, 0.6);
+  background: rgba(136, 19, 55, 0.35);
+}
+
+.ch1-target-box.trash-box.dragover,
+.ch1-target-box.trash-box.active-pulse {
+  background: rgba(244, 63, 94, 0.45);
+  border-color: #fb7185;
+  transform: scale(1.02);
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.6);
+}
+
+.ch1-t-icon {
+  font-size: 2rem;
+}
+
+.ch1-t-info {
+  flex: 1;
+  text-align: left;
+}
+
+.ch1-t-title {
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.ch1-t-sub {
+  color: #94a3b8;
+  font-size: 0.76rem;
+}
+
+.ch1-t-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+/* Floating Items Grid/Container (Ep 1) */
+.ch1-floating-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  padding: 8px;
+  z-index: 10;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.ch1-float-card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: ch1BobCard 4s ease-in-out infinite;
+  cursor: grab;
+  position: relative;
+}
+
+.ch1-float-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.35);
+  border-color: #818cf8;
+}
+
+.ch1-float-card.dragging {
+  opacity: 0.5;
+  transform: scale(0.92);
+}
+
+.ch1-float-card.sorted-anim {
+  animation: ch1CardSorted 0.35s ease forwards;
+}
+
+@keyframes ch1CardSorted {
+  to {
+    opacity: 0;
+    transform: scale(0.2) translateY(-40px);
+  }
+}
+
+@keyframes ch1BobCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.ch1-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+}
+
+.ch1-card-icon {
+  font-size: 1.6rem;
+}
+
+.ch1-card-text {
+  flex: 1;
+}
+
+.ch1-card-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.ch1-card-type {
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Quick Sort Touch Buttons (Ep 1) */
+.ch1-quick-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.ch1-btn-sort {
+  flex: 1;
+  padding: 6px 4px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.ch1-btn-sort:active {
+  transform: scale(0.95);
+}
+
+.ch1-btn-sort.archive {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.ch1-btn-sort.archive:hover {
+  background: #c7d2fe;
+}
+
+.ch1-btn-sort.trash {
+  background: #ffe4e6;
+  color: #be123c;
+}
+
+.ch1-btn-sort.trash:hover {
+  background: #fecdd3;
+}
+
+/* ==========================================================================
+   EPISODE 2: SORTIR MAP A-Z (Alphabetical Shelves)
+   ========================================================================== */
+
+.ch1-ep2-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ch1-alphabet-guide {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ch1-letter-token {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.ch1-letter-token.active-needed {
+  background: #fbbf24;
+  color: #78350f;
+  transform: scale(1.15);
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.7);
+  border-color: #ffffff;
+}
+
+.ch1-letter-token.completed {
+  background: #10b981;
+  color: #ffffff;
+  border-color: #34d399;
+}
+
+.ch1-shelves-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ch1-shelf-slot {
+  background: rgba(30, 41, 59, 0.85);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.25s ease;
+  min-height: 52px;
+}
+
+.ch1-shelf-slot.dragover,
+.ch1-shelf-slot.hover-target {
+  background: rgba(79, 70, 229, 0.4);
+  border-color: #a5b4fc;
+  box-shadow: 0 0 16px rgba(129, 140, 248, 0.5);
+}
+
+.ch1-shelf-slot.filled {
+  border-style: solid;
+  border-color: #34d399;
+  background: rgba(6, 78, 59, 0.6);
+}
+
+.ch1-shelf-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.4);
+}
+
+.ch1-shelf-slot.filled .ch1-shelf-badge {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.ch1-shelf-label {
+  flex: 1;
+  text-align: left;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.ch1-shelf-status {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+/* Floating Folder Cards (Ep 2) */
+.ch1-folders-pool {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px 4px;
+}
+
+.ch1-folder-card {
+  background: linear-gradient(135deg, #fef08a, #fde047);
+  border: 2px solid #ca8a04;
+  border-radius: 12px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: grab;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: ch1FolderBob 3.5s ease-in-out infinite;
+}
+
+.ch1-folder-card:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(234, 179, 8, 0.5);
+}
+
+.ch1-folder-card.selected {
+  outline: 3px solid #38bdf8;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.8);
+  transform: scale(1.08);
+}
+
+@keyframes ch1FolderBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.ch1-folder-letter {
+  background: #a16207;
+  color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.ch1-folder-title {
+  color: #713f12;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   EPISODE 3: KODE WARNA ARSIP (Rotating Gravity Vortex)
+   ========================================================================== */
+
+.ch1-ep3-arena {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Rotating background vortex aura */
+.ch1-vortex-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  margin-top: -160px;
+  margin-left: -160px;
+  border-radius: 50%;
+  border: 2px dashed rgba(167, 139, 250, 0.25);
+  animation: ch1VortexSpin 20s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.ch1-vortex-ring.inner {
+  width: 200px;
+  height: 200px;
+  margin-top: -100px;
+  margin-left: -100px;
+  border-color: rgba(56, 189, 248, 0.3);
+  animation-duration: 12s;
+  animation-direction: reverse;
+}
+
+@keyframes ch1VortexSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 3 Color Filing Stations */
+.ch1-color-bins-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  z-index: 10;
+}
+
+.ch1-color-bin {
+  border-radius: 16px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  border: 2px solid;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.ch1-color-bin:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+.ch1-color-bin.bin-red {
+  background: rgba(225, 29, 72, 0.2);
+  border-color: #f43f5e;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
+}
+
+.ch1-color-bin.bin-red.dragover,
+.ch1-color-bin.bin-red.flash {
+  background: rgba(225, 29, 72, 0.45);
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.8);
+  transform: scale(1.05);
+}
+
+.ch1-color-bin.bin-blue {
+  background: rgba(37, 99, 235, 0.2);
+  border-color: #3b82f6;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+}
+
+.ch1-color-bin.bin-blue.dragover,
+.ch1-color-bin.bin-blue.flash {
+  background: rgba(37, 99, 235, 0.45);
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+  transform: scale(1.05);
+}
+
+.ch1-color-bin.bin-green {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+}
+
+.ch1-color-bin.bin-green.dragover,
+.ch1-color-bin.bin-green.flash {
+  background: rgba(16, 185, 129, 0.45);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
+  transform: scale(1.05);
+}
+
+.ch1-bin-icon {
+  font-size: 1.8rem;
+}
+
+.ch1-bin-title {
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.ch1-bin-desc {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+}
+
+.ch1-bin-counter {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* Orbiting Documents Container */
+.ch1-orbit-pool {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+  padding: 6px;
+  z-index: 10;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.ch1-color-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  border: 2px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: ch1BobCard 4s ease-in-out infinite;
+  cursor: grab;
+}
+
+.ch1-color-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+.ch1-color-picker-row {
+  display: flex;
+  gap: 6px;
+}
+
+.ch1-btn-colortag {
+  flex: 1;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 2px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.ch1-btn-colortag:active {
+  transform: scale(0.94);
+}
+
+.ch1-btn-colortag.red {
+  background: linear-gradient(135deg, #e11d48, #be123c);
+}
+
+.ch1-btn-colortag.blue {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.ch1-btn-colortag.green {
+  background: linear-gradient(135deg, #059669, #047857);
+}
+
+/* ==========================================================================
+   EPISODE 4: PENCARIAN BERKAS KUNCI (Radar Scanner & Floating Clutter)
+   ========================================================================== */
+
+.ch1-ep4-arena {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+}
+
+.ch1-radar-box {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 12px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  z-index: 10;
+  position: relative;
+}
+
+.ch1-radar-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+  color: #e0f2fe;
+  font-weight: 600;
+}
+
+.ch1-radar-ping {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  animation: ch1Ping 1.2s infinite;
+}
+
+@keyframes ch1Ping {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+.ch1-radar-bar {
+  flex: 1;
+  max-width: 160px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.ch1-radar-fill {
+  height: 100%;
+  width: 30%;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  border-radius: 50px;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.ch1-clutter-field {
+  position: relative;
+  flex: 1;
+  min-height: 320px;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* Drifting Clutter Objects */
+.ch1-clutter-obj {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 8px 12px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #334155;
+  transition: transform 0.15s ease, opacity 0.25s ease;
+  z-index: 5;
+  animation: ch1ClutterDrift 6s ease-in-out infinite alternate;
+}
+
+.ch1-clutter-obj:hover {
+  transform: scale(1.08);
+  background: #ffffff;
+}
+
+.ch1-clutter-obj.flung {
+  pointer-events: none;
+  animation: ch1Fling 0.5s ease forwards;
+}
+
+@keyframes ch1Fling {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: translateY(-80px) rotate(35deg) scale(0.2); opacity: 0; }
+}
+
+@keyframes ch1ClutterDrift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(6px, -8px) rotate(2deg); }
+  100% { transform: translate(-6px, 8px) rotate(-2deg); }
+}
+
+/* Secret Key Targets to Discover */
+.ch1-key-target {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fef08a, #eab308);
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 25px rgba(234, 179, 8, 0.9), 0 0 50px rgba(251, 191, 36, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  cursor: pointer;
+  z-index: 3;
+  animation: ch1KeyPulse 1.5s infinite alternate;
+  transition: transform 0.2s ease;
+}
+
+.ch1-key-target:hover {
+  transform: scale(1.15);
+}
+
+@keyframes ch1KeyPulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 8px #facc15); }
+  100% { transform: scale(1.08); filter: drop-shadow(0 0 20px #fef08a); }
+}
+
+/* Inventory Tray at bottom */
+.ch1-vault-tray {
+  margin-top: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 12px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+}
+
+.ch1-vault-label {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.ch1-vault-slots {
+  display: flex;
+  gap: 8px;
+}
+
+.ch1-vault-slot {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px dashed rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.ch1-vault-slot.filled {
+  background: linear-gradient(135deg, #ca8a04, #eab308);
+  border-style: solid;
+  border-color: #fef08a;
+  box-shadow: 0 0 12px rgba(234, 179, 8, 0.6);
+  animation: ch1PopIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes ch1PopIn {
+  from { transform: scale(0.4); }
+  to { transform: scale(1); }
+}
+
+/* ==========================================================================
+   EPISODE 5: BOSS LEVEL - UJIAN ARSIP 30 DETIK (Dr. Chaos Final Showdown)
+   ========================================================================== */
+
+.ch1-ep5-arena {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+/* Dr. Chaos Boss Bar */
+.ch1-boss-header {
+  background: linear-gradient(135deg, rgba(88, 28, 135, 0.65), rgba(15, 23, 42, 0.9));
+  border: 1.5px solid rgba(244, 63, 94, 0.5);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 10;
+}
+
+.ch1-boss-portrait {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fecdd3, #fda4af);
+  border: 2px solid #ef4444;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  animation: villainShake 3s infinite ease-in-out;
+}
+
+.ch1-boss-dialogue {
+  flex: 1;
+  text-align: left;
+}
+
+.ch1-boss-name {
+  color: #fb7185;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.88rem;
+  letter-spacing: 0.5px;
+}
+
+.ch1-boss-quote {
+  color: #f1f5f9;
+  font-size: 0.84rem;
+  font-style: italic;
+  line-height: 1.25;
+}
+
+/* Stability Meter */
+.ch1-stability-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.ch1-stability-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #e2e8f0;
+  font-weight: 700;
+}
+
+.ch1-stability-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ch1-stability-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #3b82f6, #10b981, #06b6d4);
+  border-radius: 50px;
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.8);
+}
+
+/* Boss Stage Multi-Task Card */
+.ch1-boss-challenge-box {
+  background: rgba(30, 41, 59, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10;
+  animation: ch1FadeIn 0.3s ease;
+}
+
+.ch1-challenge-step-badge {
+  display: inline-block;
+  align-self: flex-start;
+  background: #f59e0b;
+  color: #78350f;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.76rem;
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+
+.ch1-challenge-prompt {
+  color: #ffffff;
+  font-size: 0.96rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+/* Boss Big Timer Digits */
+.ch1-boss-digits {
+  font-family: 'Fredoka', 'Courier New', monospace;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #facc15;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.7);
+}
+
+.ch1-boss-digits.panic {
+  color: #ef4444;
+  text-shadow: 0 0 16px rgba(239, 68, 68, 0.9);
+  animation: ch1PulseTimer 0.4s infinite alternate;
+}
+
+/* ==========================================================================
+   GAME OVER / RETRY OVERLAY (Within arena)
+   ========================================================================== */
+
+.ch1-fail-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  z-index: 50;
+  animation: ch1FadeIn 0.3s ease;
+}
+
+.ch1-fail-icon {
+  font-size: 3.5rem;
+  margin-bottom: 8px;
+  animation: villainShake 2s infinite ease-in-out;
+}
+
+.ch1-fail-title {
+  color: #f87171;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.ch1-fail-desc {
+  color: #cbd5e1;
+  font-size: 0.92rem;
+  max-width: 420px;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.ch1-fail-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ch1-btn-retry {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+  transition: transform 0.15s ease;
+}
+
+.ch1-btn-retry:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+.ch1-btn-quit {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   REWARD SCREEN STAR STYLING ENHANCEMENTS
+   ========================================================================== */
+
+.reward-stars-row .star-earned {
+  color: #facc15;
+  text-shadow: 0 0 18px rgba(250, 204, 21, 0.9), 0 0 35px rgba(234, 179, 8, 0.6);
+  display: inline-block;
+  animation: ch1StarBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.reward-stars-row .star-dimmed {
+  color: #94a3b8;
+  opacity: 0.4;
+  filter: grayscale(1);
+  display: inline-block;
+}
+
+.reward-stars-label {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #f59e0b;
+  margin: 8px 0 14px;
+  letter-spacing: 0.5px;
+}
+
+@keyframes ch1StarBounce {
+  0% { transform: scale(0.3); opacity: 0; }
+  60% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .ch1-game-arena {
+    padding: 12px;
+    min-height: 420px;
+  }
+  .ch1-targets-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .ch1-color-bins-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .ch1-floating-container {
+    grid-template-columns: 1fr;
+  }
+  .ch1-hud-name {
+    font-size: 0.9rem;
+  }
+}
+
+/* ==========================================================================
+   CHAPTER 2 INTERACTIVE MINI GAMES (EPISODES 1 - 5)
+   Pilar Komunikasi & Korespondensi — 2D Interactive Engine
+   ========================================================================== */
+
+#ch2-minigame-mount {
+  display: block;
+  width: 100%;
+  animation: ch1FadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ch2-game-arena {
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+  background: radial-gradient(circle at 50% 20%, #042f2e 0%, #0f172a 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(45, 212, 191, 0.35);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Communication wave particles */
+.ch2-arena-waves {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(2px 2px at 30px 40px, rgba(45, 212, 191, 0.4), transparent),
+    radial-gradient(2px 2px at 140px 100px, rgba(56, 189, 248, 0.4), transparent),
+    radial-gradient(3px 3px at 300px 180px, rgba(167, 139, 250, 0.35), transparent),
+    radial-gradient(2px 2px at 450px 70px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(3px 3px at 600px 220px, rgba(52, 211, 153, 0.35), transparent);
+  background-size: 680px 320px;
+  opacity: 0.85;
+  z-index: 1;
+}
+
+/* HUD Top Bar for Chapter 2 */
+.ch2-hud {
+  position: relative;
+  z-index: 10;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(45, 212, 191, 0.25);
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ch2-badge-ep {
+  background: linear-gradient(135deg, #0d9488, #0284c7);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.4);
+}
+
+/* ==========================================================================
+   EPISODE 1: ETIKA & CATATAN PESAN TELEPON
+   ========================================================================== */
+
+.ch2-ep1-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 5;
+}
+
+/* Floating ringing phone widget */
+.ch2-phone-caller-card {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1.5px solid rgba(45, 212, 191, 0.4);
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  animation: ch1FadeIn 0.3s ease;
+}
+
+.ch2-phone-bell {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2dd4bf, #0f766e);
+  border: 2px solid #99f6e4;
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  animation: ch2PhoneVibrate 0.8s infinite ease-in-out;
+}
+
+@keyframes ch2PhoneVibrate {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-12deg) scale(1.06); }
+  75% { transform: rotate(12deg) scale(1.06); }
+}
+
+.ch2-caller-info {
+  flex: 1;
+  text-align: left;
+}
+
+.ch2-caller-badge {
+  display: inline-block;
+  background: #f59e0b;
+  color: #78350f;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 50px;
+  margin-bottom: 2px;
+}
+
+.ch2-caller-name {
+  color: #f8fafc;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.96rem;
+}
+
+.ch2-caller-speech {
+  color: #cbd5e1;
+  font-size: 0.86rem;
+  font-style: italic;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+/* Telephone Message Slip Form */
+.ch2-msg-slip {
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 14px 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  position: relative;
+}
+
+.ch2-slip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px dashed #94a3b8;
+  padding-bottom: 6px;
+}
+
+.ch2-slip-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 0.5px;
+}
+
+.ch2-slip-time {
+  font-size: 0.76rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.ch2-slip-prompt {
+  font-size: 0.86rem;
+  color: #334155;
+  font-weight: 700;
+}
+
+/* Interactive Responses Options */
+.ch2-response-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ch2-btn-reply {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ch2-btn-reply:hover {
+  background: #f0fdfa;
+  border-color: #2dd4bf;
+  transform: translateX(4px);
+}
+
+.ch2-btn-reply:active {
+  transform: scale(0.98);
+}
+
+.ch2-btn-reply.correct-flash {
+  background: #dcfce7 !important;
+  border-color: #22c55e !important;
+  color: #15803d !important;
+  animation: ch1PopIn 0.3s ease;
+}
+
+.ch2-btn-reply.wrong-shake {
+  background: #ffe4e6 !important;
+  border-color: #f43f5e !important;
+  color: #be123c !important;
+  animation: villainShake 0.4s ease;
+}
+
+/* ==========================================================================
+   EPISODE 2: SORTIR SURAT MASUK & KELUAR (Inverted Gravity Conveyor)
+   ========================================================================== */
+
+.ch2-ep2-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  z-index: 5;
+}
+
+/* 3 Mail Sorting Stations */
+.ch2-mail-bins-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.ch2-mail-bin {
+  background: rgba(30, 41, 59, 0.85);
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.ch2-mail-bin.inbox {
+  border-color: #38bdf8;
+  background: rgba(14, 116, 144, 0.25);
+}
+
+.ch2-mail-bin.inbox.dragover,
+.ch2-mail-bin.inbox.flash {
+  background: rgba(14, 116, 144, 0.55);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
+  transform: scale(1.04);
+}
+
+.ch2-mail-bin.outbox {
+  border-color: #34d399;
+  background: rgba(6, 95, 70, 0.25);
+}
+
+.ch2-mail-bin.outbox.dragover,
+.ch2-mail-bin.outbox.flash {
+  background: rgba(6, 95, 70, 0.55);
+  box-shadow: 0 0 20px rgba(52, 211, 153, 0.7);
+  transform: scale(1.04);
+}
+
+.ch2-mail-bin.spam {
+  border-color: #fb7185;
+  background: rgba(159, 18, 57, 0.25);
+}
+
+.ch2-mail-bin.spam.dragover,
+.ch2-mail-bin.spam.flash {
+  background: rgba(159, 18, 57, 0.55);
+  box-shadow: 0 0 20px rgba(251, 113, 133, 0.7);
+  transform: scale(1.04);
+}
+
+.ch2-bin-counter {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* Inverted-Gravity Conveyor Belt */
+.ch2-conveyor-track {
+  background: repeating-linear-gradient(
+    45deg,
+    #1e293b,
+    #1e293b 15px,
+    #334155 15px,
+    #334155 30px
+  );
+  border: 2px solid #475569;
+  border-radius: 14px;
+  padding: 12px 14px;
+  min-height: 220px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.5);
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.ch2-envelope-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  border: 1.5px solid #cbd5e1;
+  cursor: grab;
+  animation: ch1BobCard 4s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ch2-envelope-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(45, 212, 191, 0.35);
+  border-color: #2dd4bf;
+}
+
+.ch2-env-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.ch2-btn-sort-mail {
+  flex: 1;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 2px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.ch2-btn-sort-mail:active {
+  transform: scale(0.94);
+}
+
+.ch2-btn-sort-mail.inbox {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.ch2-btn-sort-mail.outbox {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.ch2-btn-sort-mail.spam {
+  background: #ffe4e6;
+  color: #be123c;
+}
+
+/* ==========================================================================
+   EPISODE 3: DISTRIBUSI MEMO PRIORITAS (Division Cubicles)
+   ========================================================================== */
+
+.ch2-ep3-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 5;
+}
+
+/* 4 Division Cubicles */
+.ch2-cubicles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ch2-cubicle {
+  background: rgba(30, 41, 59, 0.85);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.ch2-cubicle.hr { border-color: #a78bfa; background: rgba(88, 28, 135, 0.25); }
+.ch2-cubicle.fin { border-color: #facc15; background: rgba(133, 77, 14, 0.25); }
+.ch2-cubicle.mkt { border-color: #38bdf8; background: rgba(3, 105, 161, 0.25); }
+.ch2-cubicle.ops { border-color: #34d399; background: rgba(6, 95, 70, 0.25); }
+
+.ch2-cubicle.dragover,
+.ch2-cubicle.flash {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+  transform: scale(1.03);
+}
+
+.ch2-cub-icon {
+  font-size: 1.8rem;
+}
+
+.ch2-cub-info {
+  flex: 1;
+  text-align: left;
+}
+
+.ch2-cub-title {
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.ch2-cub-sub {
+  color: #94a3b8;
+  font-size: 0.74rem;
+}
+
+/* Floating Memos Pool */
+.ch2-memos-pool {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.ch2-memo-card {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  animation: ch1BobCard 4s ease-in-out infinite;
+  cursor: grab;
+  text-align: left;
+}
+
+.ch2-memo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ch2-priority-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 50px;
+  background: #fef08a;
+  color: #854d0e;
+}
+
+.ch2-memo-title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.25;
+}
+
+.ch2-memo-routes {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.ch2-btn-route {
+  flex: 1;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 2px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: #f1f5f9;
+  color: #334155;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.ch2-btn-route:active {
+  transform: scale(0.95);
+}
+
+.ch2-btn-route:hover {
+  background: #e2e8f0;
+}
+
+/* ==========================================================================
+   EPISODE 4: PUZZLE REKONSTRUKSI FAKS (Fax Message Strips)
+   ========================================================================== */
+
+.ch2-ep4-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  z-index: 5;
+}
+
+/* Fax machine status header */
+.ch2-fax-machine-box {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1.5px solid rgba(45, 212, 191, 0.3);
+  border-radius: 14px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.ch2-fax-icon {
+  font-size: 2rem;
+}
+
+.ch2-fax-info {
+  flex: 1;
+  text-align: left;
+}
+
+.ch2-fax-status {
+  color: #2dd4bf;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.ch2-fax-hint {
+  color: #cbd5e1;
+  font-size: 0.86rem;
+}
+
+/* Fax Reconstructed Paper Slot */
+.ch2-fax-paper-tray {
+  background: #f8fafc;
+  border: 2px dashed #94a3b8;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.ch2-fax-slot {
+  background: #ffffff;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.ch2-fax-slot.dragover,
+.ch2-fax-slot.hover-target {
+  background: #f0fdfa;
+  border-color: #2dd4bf;
+  box-shadow: 0 0 12px rgba(45, 212, 191, 0.4);
+}
+
+.ch2-fax-slot.filled {
+  background: #f0fdf4;
+  border-style: solid;
+  border-color: #22c55e;
+}
+
+.ch2-slot-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #475569;
+  font-weight: 800;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ch2-fax-slot.filled .ch2-slot-num {
+  background: #22c55e;
+  color: #ffffff;
+}
+
+.ch2-slot-text {
+  flex: 1;
+  text-align: left;
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+/* Floating Fax Paper Strips Pool */
+.ch2-strips-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 8px;
+}
+
+.ch2-fax-strip {
+  background: #ffffff;
+  border: 1.5px solid #ca8a04;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #713f12;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: ch1BobCard 4s ease-in-out infinite;
+}
+
+.ch2-fax-strip:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(234, 179, 8, 0.4);
+}
+
+.ch2-fax-strip.selected {
+  outline: 3px solid #2dd4bf;
+  box-shadow: 0 0 16px rgba(45, 212, 191, 0.8);
+  transform: scale(1.08);
+}
+
+/* ==========================================================================
+   EPISODE 5: BOSS LEVEL - KOMUNIKASI DARURAT 30 DETIK (Signal Jammer)
+   ========================================================================== */
+
+.ch2-ep5-arena {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+.ch2-jammer-bar-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ch2-jammer-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #06b6d4, #2dd4bf, #10b981);
+  border-radius: 50px;
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 14px rgba(45, 212, 191, 0.8);
+}
+
+/* ==========================================================================
+   CHAPTER 3 INTERACTIVE MINI GAMES (EPISODES 1 - 5)
+   Pilar Keuangan & Inventaris — 2D Interactive Engine
+   Color Palette: Warm Gold, Amber Vault, Emerald & Bronze
+   ========================================================================== */
+
+#ch3-minigame-mount {
+  display: block;
+  width: 100%;
+  animation: ch1FadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ch3-game-arena {
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+  background: radial-gradient(circle at 50% 20%, #451a03 0%, #0f172a 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Gold sparks / coin dust particles */
+.ch3-arena-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(2px 2px at 25px 35px, rgba(251, 191, 36, 0.55), transparent),
+    radial-gradient(3px 3px at 150px 90px, rgba(234, 179, 8, 0.45), transparent),
+    radial-gradient(2px 2px at 320px 170px, rgba(245, 158, 11, 0.5), transparent),
+    radial-gradient(3px 3px at 480px 65px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(2px 2px at 620px 230px, rgba(16, 185, 129, 0.4), transparent);
+  background-size: 680px 320px;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+/* Chapter 3 HUD Top Bar (High Contrast on Dark Background) */
+.ch3-hud {
+  position: relative;
+  z-index: 10;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(245, 158, 11, 0.45);
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.ch3-badge-ep {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #ffffff !important;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Shared High Contrast Styles for Chapter 3 & 4 HUD */
+.ch3-hud .ch1-hud-name,
+.ch4-hud .ch1-hud-name {
+  color: #ffffff !important;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.ch1-timer-chip,
+.ch1-progress-chip {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50px;
+  padding: 5px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.ch1-timer-chip span,
+.ch1-progress-chip span {
+  color: #ffffff !important;
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+.ch1-timer-chip strong,
+.ch1-progress-chip strong,
+#ch3-timer-val,
+#ch4-timer-val,
+#ch3-progress-val,
+#ch4-progress-val {
+  color: #ffffff !important;
+  font-size: 0.98rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.ch3-hud .ch1-timer-chip,
+.ch3-hud .ch1-progress-chip {
+  border-color: rgba(245, 158, 11, 0.5);
+}
+.ch3-hud .ch1-timer-chip strong,
+.ch3-hud .ch1-progress-chip strong {
+  color: #fffbeb !important; /* Krem terang bercahaya */
+}
+
+.ch4-hud .ch1-timer-chip,
+.ch4-hud .ch1-progress-chip {
+  border-color: rgba(6, 182, 212, 0.5);
+}
+.ch4-hud .ch1-timer-chip strong,
+.ch4-hud .ch1-progress-chip strong {
+  color: #ffffff !important;
+}
+
+/* Instructions Banner (Teks Panduan Misi: ...) */
+.ch1-hud-instructions {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 4px solid #38bdf8;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: #ffffff !important;
+  line-height: 1.45;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.ch1-hud-instructions span {
+  color: #ffffff !important;
+}
+
+.ch1-hud-instructions strong {
+  color: #fffbeb !important; /* Krem terang untuk label Misi: */
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.ch3-hud .ch1-hud-instructions {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.35);
+}
+.ch3-hud .ch1-hud-instructions span {
+  color: #ffffff !important;
+}
+.ch3-hud .ch1-hud-instructions strong {
+  color: #fef08a !important; /* Krem keemasan terang */
+}
+
+.ch4-hud .ch1-hud-instructions {
+  border-left-color: #06b6d4;
+  background: rgba(6, 182, 212, 0.15);
+  border-color: rgba(6, 182, 212, 0.35);
+}
+.ch4-hud .ch1-hud-instructions span {
+  color: #ffffff !important;
+}
+.ch4-hud .ch1-hud-instructions strong {
+  color: #cffafe !important; /* Cyan-putih terang */
+}
+
+/* Timer Progress Track & Fill */
+.ch1-timer-bar-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ch1-timer-bar-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: 50px;
+  transition: width 0.1s linear, background 0.3s ease;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+}
+
+/* Chapter 3 Boss Header High Contrast */
+.ch3-ep5-arena .ch1-boss-header {
+  background: linear-gradient(135deg, rgba(88, 28, 135, 0.85), rgba(15, 23, 42, 0.95)) !important;
+  border: 1.5px solid rgba(244, 63, 94, 0.6) !important;
+}
+
+.ch3-ep5-arena .ch1-boss-name {
+  color: #ffffff !important;
+  font-weight: 800;
+  text-shadow: 0 0 8px rgba(244, 63, 94, 0.8);
+}
+
+.ch3-ep5-arena .ch1-boss-quote {
+  color: #fffbeb !important;
+  font-style: italic;
+}
+
+.ch3-ep5-arena .ch1-boss-digits,
+#ch3-boss-digits {
+  color: #ffffff !important;
+  font-weight: 800;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+}
+
+.ch3-ep5-arena .ch1-stability-row {
+  color: #ffffff !important;
+}
+
+.ch3-ep5-arena .ch1-stability-row span {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.ch3-ep5-arena .ch1-stability-row strong,
+#ch3-vault-percent {
+  color: #ffffff !important;
+  font-weight: 800;
+  text-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
+}
+
+/* ==========================================================================
+   EPISODE 1: PEMASUKAN & PENGELUARAN KAS
+   ========================================================================== */
+
+.ch3-ep1-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 5;
+}
+
+.ch3-balance-badge {
+  background: rgba(30, 41, 59, 0.9);
+  border: 1.5px solid #f59e0b;
+  border-radius: 50px;
+  padding: 6px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: center;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #fef3c7;
+}
+
+.ch3-ledger-bins-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.ch3-ledger-bin {
+  background: rgba(30, 41, 59, 0.85);
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.ch3-ledger-bin.inflow {
+  border-color: #10b981;
+  background: rgba(6, 78, 59, 0.35);
+}
+
+.ch3-ledger-bin.inflow.dragover,
+.ch3-ledger-bin.inflow.flash {
+  background: rgba(6, 78, 59, 0.7);
+  box-shadow: 0 0 22px rgba(16, 185, 129, 0.8);
+  transform: scale(1.04);
+}
+
+.ch3-ledger-bin.outflow {
+  border-color: #ef4444;
+  background: rgba(127, 29, 29, 0.35);
+}
+
+.ch3-ledger-bin.outflow.dragover,
+.ch3-ledger-bin.outflow.flash {
+  background: rgba(127, 29, 29, 0.7);
+  box-shadow: 0 0 22px rgba(239, 68, 68, 0.8);
+  transform: scale(1.04);
+}
+
+.ch3-bin-amount {
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  margin-top: 4px;
+}
+
+/* Floating Transaction Slip Cards */
+.ch3-coins-conveyor {
+  background: repeating-linear-gradient(
+    45deg,
+    #1e293b,
+    #1e293b 15px,
+    #334155 15px,
+    #334155 30px
+  );
+  border: 2px solid #64748b;
+  border-radius: 16px;
+  padding: 12px 14px;
+  min-height: 220px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.5);
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.ch3-coin-slip {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  border: 1.5px solid #e2e8f0;
+  cursor: grab;
+  animation: ch1BobCard 4s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ch3-coin-slip:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(245, 158, 11, 0.4);
+}
+
+.ch3-slip-nominal {
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ch3-coin-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.ch3-btn-coin {
+  flex: 1;
+  padding: 6px 4px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.ch3-btn-coin.inflow {
+  background: #10b981;
+  color: #ffffff;
+}
+.ch3-btn-coin.inflow:hover {
+  background: #059669;
+}
+
+.ch3-btn-coin.outflow {
+  background: #ef4444;
+  color: #ffffff;
+}
+.ch3-btn-coin.outflow:hover {
+  background: #dc2626;
+}
+
+/* ==========================================================================
+   EPISODE 2: HITUNG KEMBALIAN KASIR
+   ========================================================================== */
+
+.ch3-ep2-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 5;
+}
+
+.ch3-pos-screen {
+  background: #0f172a;
+  border: 2px solid #38bdf8;
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.3);
+}
+
+.ch3-pos-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ch3-pos-label {
+  color: #94a3b8;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.ch3-pos-val {
+  font-family: 'Courier New', monospace;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.ch3-pos-val.change-target {
+  color: #4ade80;
+}
+
+/* Cash Drawer / Money Selector */
+.ch3-cash-drawer {
+  background: rgba(30, 41, 59, 0.85);
+  border: 1.5px solid rgba(245, 158, 11, 0.35);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ch3-drawer-title {
+  color: #fef3c7;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+.ch3-money-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+  gap: 8px;
+}
+
+.ch3-btn-cash {
+  background: #1e293b;
+  border: 1.5px solid #475569;
+  border-radius: 10px;
+  padding: 8px 6px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.ch3-btn-cash:hover {
+  transform: translateY(-2px);
+  border-color: #f59e0b;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+.ch3-btn-cash:active {
+  transform: scale(0.96);
+}
+
+/* Given Cash Counter & Action Buttons */
+.ch3-given-bar {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1.5px solid #4ade80;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.ch3-given-display {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #4ade80;
+}
+
+.ch3-change-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.ch3-btn-submit-change {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.82rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s ease;
+}
+
+.ch3-btn-submit-change:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: scale(1.02);
+}
+
+.ch3-btn-reset-change {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid #ef4444;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #fca5a5;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   EPISODE 3: SORTIR & STIKER KODE BARANG
+   ========================================================================== */
+
+.ch3-ep3-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 5;
+}
+
+.ch3-shelves-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.ch3-shelf-card {
+  background: rgba(30, 41, 59, 0.85);
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.ch3-shelf-card.elk { border-color: #38bdf8; background: rgba(14, 116, 144, 0.25); }
+.ch3-shelf-card.atk { border-color: #fb923c; background: rgba(194, 65, 12, 0.25); }
+.ch3-shelf-card.fur { border-color: #34d399; background: rgba(6, 95, 70, 0.25); }
+.ch3-shelf-card.kbs { border-color: #f472b6; background: rgba(157, 23, 77, 0.25); }
+
+.ch3-shelf-card.dragover,
+.ch3-shelf-card.flash {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.7);
+}
+
+.ch3-shelf-code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.ch3-shelf-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.ch3-items-pool {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.ch3-inv-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  animation: ch1BobCard 4s ease-in-out infinite;
+  transition: transform 0.2s ease;
+}
+
+.ch3-inv-card:hover {
+  transform: translateY(-3px) scale(1.02);
+}
+
+.ch3-inv-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.ch3-btn-shelf {
+  padding: 5px 3px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  transition: opacity 0.2s;
+}
+
+.ch3-btn-shelf.elk { background: #0284c7; }
+.ch3-btn-shelf.atk { background: #ea580c; }
+.ch3-btn-shelf.fur { background: #059669; }
+.ch3-btn-shelf.kbs { background: #db2777; }
+.ch3-btn-shelf:hover { opacity: 0.85; }
+
+/* ==========================================================================
+   EPISODE 4: AUDIT SKALA PRIORITAS
+   ========================================================================== */
+
+.ch3-ep4-arena {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  z-index: 5;
+}
+
+.ch3-priority-bins {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.ch3-prio-bin {
+  background: rgba(30, 41, 59, 0.85);
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.ch3-prio-bin.essential {
+  border-color: #f59e0b;
+  background: rgba(180, 83, 9, 0.25);
+}
+
+.ch3-prio-bin.essential.dragover,
+.ch3-prio-bin.essential.flash {
+  background: rgba(180, 83, 9, 0.6);
+  box-shadow: 0 0 22px rgba(245, 158, 11, 0.8);
+  transform: scale(1.04);
+}
+
+.ch3-prio-bin.secondary {
+  border-color: #a855f7;
+  background: rgba(126, 34, 206, 0.25);
+}
+
+.ch3-prio-bin.secondary.dragover,
+.ch3-prio-bin.secondary.flash {
+  background: rgba(126, 34, 206, 0.6);
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.8);
+  transform: scale(1.04);
+}
+
+.ch3-audit-pool {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ch3-audit-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  border-left: 5px solid #f59e0b;
+  animation: ch1FadeIn 0.3s ease;
+}
+
+.ch3-audit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ch3-audit-title {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ch3-audit-amount {
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #d97706;
+}
+
+.ch3-audit-desc {
+  font-size: 0.8rem;
+  color: #475569;
+  line-height: 1.3;
+}
+
+.ch3-audit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.ch3-btn-audit {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.ch3-btn-audit.essential {
+  background: #f59e0b;
+  color: #78350f;
+}
+.ch3-btn-audit.essential:hover {
+  background: #d97706;
+  color: #ffffff;
+}
+
+.ch3-btn-audit.secondary {
+  background: #a855f7;
+  color: #ffffff;
+}
+.ch3-btn-audit.secondary:hover {
+  background: #9333ea;
+}
+
+/* ==========================================================================
+   EPISODE 5: BOSS LEVEL - KEBUTUHAN KAS & GUDANG 30 DETIK
+   ========================================================================== */
+
+.ch3-ep5-arena {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+.ch3-vault-bar-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ch3-vault-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #f59e0b, #eab308, #10b981);
+  border-radius: 50px;
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.8);
+}
+
+@media (max-width: 640px) {
+  .ch3-shelves-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ch3-ledger-bins-row {
+    grid-template-columns: 1fr;
+  }
+  .ch3-priority-bins {
+    grid-template-columns: 1fr;
+  }
+  .ch3-money-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ==========================================================================
+   CHAPTER 4 INTERACTIVE MINI GAMES (EPISODES 1 - 5)
+   Pilar Manajemen Operasional — High-Tech Office & Bureaucracy Engine
+   Color Palette: Cyber Cyan, Deep Navy, Hologram Blue, Emerald & Amber
+   ========================================================================== */
+
+#ch4-minigame-mount {
+  display: block;
+  width: 100%;
+  animation: ch1FadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ch4-game-arena {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  background: radial-gradient(circle at 50% 15%, #082f49 0%, #0f172a 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(6, 182, 212, 0.45);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+}
+
+.ch4-hud {
+  position: relative;
+  z-index: 10;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(6, 182, 212, 0.45);
+  border-radius: 16px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.ch4-badge-ep {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #0284c7, #0891b2);
+  padding: 3px 12px;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.45);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Animations */
+@keyframes antigravityFloat {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes vortexSpinSubtle {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(2deg) scale(1.02); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+@keyframes stampSlam {
+  0% { transform: scale(3) rotate(-15deg); opacity: 0; }
+  60% { transform: scale(0.9) rotate(-12deg); opacity: 0.95; }
+  100% { transform: scale(1) rotate(-12deg); opacity: 0.9; }
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+@keyframes suctionDrop {
+  0% { transform: scale(1) translateY(0); opacity: 1; }
+  100% { transform: scale(0.2) translateY(80px); opacity: 0; }
+}
+
+.antigravity-float {
+  animation: antigravityFloat 3.2s ease-in-out infinite;
+}
+
+.vortex-spin-subtle {
+  animation: vortexSpinSubtle 2.5s ease-in-out infinite;
+}
+
+.shake-error {
+  animation: shakeError 0.45s ease-in-out;
+}
+
+.suck-into-drawer {
+  animation: suctionDrop 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.penalty-flash {
+  color: #ef4444 !important;
+  transform: scale(1.25);
+  transition: transform 0.2s, color 0.2s;
+}
+
+/* ==========================================================================
+   EPISODE 1: TATA KELOLA DOKUMEN OPERASIONAL
+   ========================================================================== */
+.ch4-ep1-arena {
+  gap: 14px;
+}
+
+.ch4-antigravity-zone {
+  position: relative;
+  min-height: 200px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1.5px dashed rgba(6, 182, 212, 0.35);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.ch4-floating-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ch4-floating-particles .particle {
+  position: absolute;
+  font-size: 1.3rem;
+  opacity: 0.25;
+  animation: antigravityFloat 4s ease-in-out infinite;
+}
+.ch4-floating-particles .p1 { top: 15%; left: 8%; animation-delay: 0.2s; }
+.ch4-floating-particles .p2 { top: 60%; left: 12%; animation-delay: 1.1s; }
+.ch4-floating-particles .p3 { top: 20%; right: 10%; animation-delay: 0.7s; }
+.ch4-floating-particles .p4 { top: 65%; right: 15%; animation-delay: 1.6s; }
+
+.ch4-active-doc-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 580px;
+}
+
+.ch4-doc-floating-card {
+  background: rgba(15, 23, 42, 0.9);
+  border: 2px solid #06b6d4;
+  box-shadow: 0 10px 25px rgba(6, 182, 212, 0.35), 0 0 20px rgba(6, 182, 212, 0.2);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  backdrop-filter: blur(8px);
+}
+
+.ch4-doc-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #38bdf8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ch4-doc-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ch4-doc-icon {
+  font-size: 2.4rem;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+
+.ch4-doc-meta {
+  flex: 1;
+}
+
+.ch4-doc-title {
+  margin: 0 0 4px 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.ch4-doc-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+.ch4-doc-actions-hint {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-top: 4px;
+}
+
+.ch4-doc-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.ch4-btn-classify {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.ch4-btn-classify:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+.ch4-btn-classify:active {
+  transform: translateY(1px);
+}
+
+.ch4-btn-classify.btn-regulasi { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+.ch4-btn-classify.btn-finansial { background: linear-gradient(135deg, #d97706, #b45309); }
+.ch4-btn-classify.btn-sdm { background: linear-gradient(135deg, #059669, #047857); }
+.ch4-btn-classify.btn-logistik { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+
+.ch4-drawers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.ch4-drawer-card {
+  position: relative;
+  background: rgba(30, 41, 59, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.ch4-drawer-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.ch4-drawer-handle {
+  width: 48px;
+  height: 6px;
+  background: #64748b;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+
+.ch4-drawer-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-icon {
+  font-size: 1.8rem;
+}
+
+.drawer-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+
+.drawer-sub {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  display: block;
+}
+
+.ch4-drawer-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: right;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  color: #38bdf8;
+}
+
+.ch4-drawer-card.drawer-regulasi { border-color: rgba(59, 130, 246, 0.6); }
+.ch4-drawer-card.drawer-finansial { border-color: rgba(245, 158, 11, 0.6); }
+.ch4-drawer-card.drawer-sdm { border-color: rgba(16, 185, 129, 0.6); }
+.ch4-drawer-card.drawer-logistik { border-color: rgba(139, 92, 246, 0.6); }
+
+.ch4-drawer-card.flash-correct {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.8) !important;
+  transform: scale(1.04);
+}
+
+.ch4-drawer-card.flash-wrong {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.8) !important;
+}
+
+/* ==========================================================================
+   EPISODE 2: REKONSTRUKSI FLOWCHART SOP
+   ========================================================================== */
+.ch4-ep2-arena {
+  gap: 14px;
+}
+
+.ch4-flowchart-container {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1.5px solid rgba(6, 182, 212, 0.35);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ch4-flowchart-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sop-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #38bdf8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sop-theme {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.ch4-flowchart-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 6px 2px;
+}
+
+.ch4-flow-slot-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.ch4-flow-slot {
+  flex: 1;
+  min-height: 90px;
+  background: rgba(30, 41, 59, 0.5);
+  border: 2px dashed rgba(148, 163, 184, 0.4);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch4-flow-slot:hover {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.slot-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #64748b;
+  text-align: center;
+}
+
+.slot-num {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.slot-hint {
+  font-size: 0.68rem;
+}
+
+.ch4-flow-arrow {
+  font-size: 1.3rem;
+  color: #64748b;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.ch4-slotted-card {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.35), rgba(15, 23, 42, 0.85));
+  border: 1.5px solid #06b6d4;
+  border-radius: 10px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.25);
+}
+
+.slotted-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slotted-num {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.btn-remove-slotted {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.btn-remove-slotted:hover {
+  color: #ef4444;
+}
+
+.slotted-body {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.slotted-icon {
+  font-size: 1.3rem;
+}
+
+.slotted-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #f8fafc;
+  line-height: 1.2;
+}
+
+.flow-success-glow {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.7) !important;
+}
+
+.arrow-glow {
+  color: #10b981 !important;
+  text-shadow: 0 0 10px #10b981;
+}
+
+.ch4-sop-tray-wrapper {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.tray-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.tray-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #cbd5e1;
+}
+
+.ch4-btn-reset-sop {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ch4-btn-reset-sop:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.ch4-sop-tray {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.ch4-sop-tray-card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.ch4-sop-tray-card:hover {
+  transform: translateY(-2px);
+  border-color: #38bdf8;
+  background: rgba(30, 41, 59, 0.95);
+}
+
+.tray-card-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.tray-card-info {
+  flex: 1;
+}
+
+.tray-card-title {
+  margin: 0;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+
+.tray-card-desc {
+  margin: 2px 0 0 0;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  line-height: 1.25;
+}
+
+.btn-place-sop {
+  border: none;
+  background: #0284c7;
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.tray-empty-hint {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #38bdf8;
+  padding: 10px;
+}
+
+.ch4-flow-controls {
+  display: flex;
+  justify-content: center;
+}
+
+.ch4-btn-validate-sop {
+  background: linear-gradient(135deg, #0284c7, #06b6d4);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 32px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(6, 182, 212, 0.4);
+  transition: transform 0.15s, filter 0.15s;
+}
+.ch4-btn-validate-sop:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+.ch4-btn-validate-sop:active {
+  transform: translateY(1px);
+}
+
+/* ==========================================================================
+   EPISODE 3: AUDIT TATA RUANG & FASILITAS KANTOR
+   ========================================================================== */
+.ch4-ep3-arena {
+  gap: 12px;
+}
+
+.ch4-blueprint-container {
+  background: rgba(8, 47, 73, 0.4);
+  border: 1.5px solid rgba(14, 165, 233, 0.4);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ch4-blueprint-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bp-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.05em;
+}
+
+.bp-sub {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+}
+
+.ch4-blueprint-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ch4-bp-zone {
+  min-height: 120px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 2px dashed rgba(56, 189, 248, 0.4);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch4-bp-zone:hover {
+  border-color: #38bdf8;
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.bp-zone-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bp-zone-icon {
+  font-size: 1.4rem;
+}
+
+.bp-zone-title {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.bp-zone-desc {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  display: block;
+}
+
+.bp-zone-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.ch4-placed-item {
+  background: rgba(30, 41, 59, 0.85);
+  border-radius: 8px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 4px solid #38bdf8;
+}
+
+.ch4-placed-item.status-damaged {
+  border-left-color: #f59e0b;
+}
+
+.ch4-placed-item.status-ok {
+  border-left-color: #10b981;
+}
+
+.placed-item-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.placed-icon {
+  font-size: 1.1rem;
+}
+
+.placed-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.placed-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-repair-unit {
+  background: #f59e0b;
+  border: none;
+  color: #1e293b;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  cursor: pointer;
+  animation: pulse 1.5s infinite;
+}
+
+.badge-repaired {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #10b981;
+}
+
+.btn-unplace-unit {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.ch4-facility-tray-section {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.ch4-facility-tray {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.ch4-fac-card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.ch4-fac-card:hover {
+  transform: translateY(-2px);
+  border-color: #38bdf8;
+}
+
+.ch4-fac-card.selected {
+  border-color: #38bdf8;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
+  background: rgba(14, 116, 144, 0.25);
+}
+
+.fac-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fac-card-icon {
+  font-size: 1.5rem;
+}
+
+.fac-alert-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.fac-ready-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: #dcfce7;
+  color: #166534;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.fac-card-title {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.fac-damage-hint {
+  margin: 2px 0 0 0;
+  font-size: 0.68rem;
+  color: #fbbf24;
+}
+
+.fac-ready-hint {
+  margin: 2px 0 0 0;
+  font-size: 0.68rem;
+  color: #94a3b8;
+}
+
+.btn-select-fac {
+  border: none;
+  background: #0284c7;
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   EPISODE 4: VERIFIKASI KEOTENTIKAN STEMPEL & DOKUMEN
+   ========================================================================== */
+.ch4-ep4-arena {
+  gap: 12px;
+}
+
+.ch4-auth-desk-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 14px;
+}
+
+.ch4-auth-guide-panel {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guide-title {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.guide-item {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+.guide-item.valid {
+  border-left: 3px solid #10b981;
+}
+
+.guide-item.fake {
+  border-left: 3px solid #ef4444;
+}
+
+.guide-badge {
+  display: block;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: #f1f5f9;
+}
+
+.guide-item p {
+  margin: 0;
+}
+
+.ch4-doc-desk-viewport {
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ch4-paper-sheet {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  background: #fdfbf7;
+  color: #1e293b;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.paper-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(15, 23, 42, 0.04);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.paper-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.paper-logo-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.paper-logo-icon {
+  font-size: 1.6rem;
+}
+
+.paper-corp-name {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.paper-dept-name {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #0369a1;
+  display: block;
+}
+
+.paper-meta-box {
+  text-align: right;
+  font-size: 0.72rem;
+  color: #475569;
+}
+
+.paper-divider {
+  height: 2px;
+  background: #0f172a;
+  width: 100%;
+}
+
+.paper-subject {
+  font-size: 0.8rem;
+  color: #0f172a;
+}
+
+.subject-text {
+  font-weight: 800;
+}
+
+.paper-body {
+  font-size: 0.82rem;
+  color: #334155;
+  line-height: 1.4;
+  min-height: 40px;
+}
+
+.paper-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  border-top: 1px dashed #cbd5e1;
+  padding-top: 8px;
+}
+
+.hologram-sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.paper-hologram-wrap.authentic .hologram-sticker {
+  background: linear-gradient(135deg, #fef08a, #fde047, #facc15, #fef08a);
+  color: #713f12;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.7);
+}
+
+.paper-hologram-wrap.fake .hologram-sticker {
+  background: #e2e8f0;
+  color: #64748b;
+  border: 1px dashed #94a3b8;
+}
+
+.official-seal-stamp {
+  border: 2px solid #0284c7;
+  color: #0284c7;
+  border-radius: 50%;
+  width: 58px;
+  height: 58px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.45rem;
+  font-weight: 900;
+  line-height: 1.1;
+  transform: rotate(-8deg);
+}
+
+.paper-seal-wrap.fake .official-seal-stamp {
+  border-color: #dc2626;
+  color: #dc2626;
+  border-style: dashed;
+}
+
+.signature-line {
+  font-size: 0.85rem;
+  color: #1e293b;
+  margin-bottom: 2px;
+}
+
+.signature-signee {
+  font-size: 0.65rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.ch4-stamped-stamp-overlay {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  border: 4px solid;
+  border-radius: 12px;
+  padding: 8px 18px;
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 10;
+}
+
+.stamp-approved-ink {
+  border-color: #16a34a;
+  color: #16a34a;
+  background: rgba(220, 252, 231, 0.85);
+  animation: stampSlam 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.stamp-rejected-ink {
+  border-color: #dc2626;
+  color: #dc2626;
+  background: rgba(254, 226, 226, 0.85);
+  animation: stampSlam 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.ch4-stamp-actions-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.ch4-btn-stamp {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.ch4-btn-stamp:hover {
+  transform: translateY(-2px);
+}
+
+.stamp-btn-icon {
+  font-size: 1.8rem;
+}
+
+.stamp-btn-text {
+  text-align: left;
+}
+
+.stamp-btn-text strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.stamp-btn-text small {
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+.btn-stamp-reject {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+}
+
+.btn-stamp-accept {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.4);
+}
+
+/* ==========================================================================
+   EPISODE 5: BOSS LEVEL - PEMULIHAN SISTEM ADMINISTRASI 30 DETIK (EXTREME)
+   ========================================================================== */
+.ch4-ep5-arena {
+  gap: 12px;
+  background: radial-gradient(circle at 50% 20%, #450a0a 0%, #0f172a 100%);
+  border-color: rgba(239, 68, 68, 0.6) !important;
+}
+
+.ch4-boss-siren-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(220, 38, 38, 0.35);
+  border: 1.5px solid rgba(239, 68, 68, 0.8);
+  border-radius: 10px;
+  padding: 8px 14px;
+  animation: pulse 1s infinite;
+}
+
+.siren-txt {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff !important;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.9);
+}
+
+.boss-hud.ch4-hud {
+  border-color: rgba(239, 68, 68, 0.7) !important;
+  background: rgba(24, 10, 10, 0.92) !important;
+}
+
+.boss-hud .boss-badge {
+  background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 2px 10px rgba(220, 38, 38, 0.6) !important;
+}
+
+.boss-timer-chip {
+  background: rgba(220, 38, 38, 0.35) !important;
+  border-color: rgba(239, 68, 68, 0.8) !important;
+}
+
+.boss-timer-chip strong,
+#ch4-boss-digits {
+  color: #ffffff !important;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.9) !important;
+  font-weight: 800;
+}
+
+#ch4-boss-phase-chip {
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+.boss-track {
+  background: rgba(239, 68, 68, 0.15) !important;
+}
+
+.boss-fill {
+  background: linear-gradient(90deg, #ef4444, #f97316) !important;
+}
+
+.ch4-boss-stage-viewport {
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ch4-boss-card-box {
+  width: 100%;
+  max-width: 540px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 2px solid rgba(239, 68, 68, 0.5);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.boss-task-header {
+  text-align: center;
+}
+
+.task-badge {
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #f87171;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.task-desc {
+  margin: 4px 0 0 0;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+}
+
+.boss-floating-target {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1.5px solid #06b6d4;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.target-icon {
+  font-size: 2rem;
+}
+
+.target-info h4 {
+  margin: 0 0 2px 0;
+  font-size: 0.95rem;
+  color: #f8fafc;
+}
+
+.target-info small {
+  color: #94a3b8;
+  font-size: 0.75rem;
+}
+
+.boss-sort-buttons-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-boss-bin {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.btn-boss-bin:hover {
+  transform: translateY(-2px);
+}
+
+.btn-boss-bin.bin-brankas {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+}
+
+.btn-boss-bin.bin-trap {
+  background: rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.boss-rapid-doc-sheet {
+  background: #fdfbf7;
+  color: #0f172a;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rapid-doc-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.rapid-doc-seal {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.rapid-doc-seal.seal-danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.rapid-doc-seal.seal-safe {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.rapid-doc-desc {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #334155;
+}
+
+.boss-rapid-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-boss-reject {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btn-boss-accept {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.ch4-switches-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.ch4-switch-btn {
+  background: rgba(30, 41, 59, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch4-switch-btn:hover {
+  transform: translateY(-2px);
+  border-color: #38bdf8;
+}
+
+.ch4-switch-btn.active {
+  border-color: #10b981;
+  background: rgba(6, 95, 70, 0.4);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.5);
+}
+
+.sw-icon {
+  font-size: 1.6rem;
+}
+
+.sw-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #f8fafc;
+  text-align: center;
+}
+
+.sw-led {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.ch4-switch-btn.active .sw-led {
+  color: #34d399;
+}
+
+.boss-sequence-hint {
+  text-align: center;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+@media (max-width: 640px) {
+  .ch4-drawers-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ch4-doc-quick-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ch4-auth-desk-layout {
+    grid-template-columns: 1fr;
+  }
+  .ch4-blueprint-grid {
+    grid-template-columns: 1fr;
+  }
+  .ch4-switches-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   HIGH CONTRAST ENHANCEMENTS FOR CHAPTER 3 & CHAPTER 4 MINI GAMES
+   Ensures all text, small titles, counters, and instructions are clearly
+   visible and legible on dark backgrounds with white (#ffffff) and bright cream.
+   ========================================================================== */
+
+/* Chapter 3 Mini Games Text Contrast */
+.ch3-game-arena {
+  color: #ffffff;
+}
+
+.ch3-hud,
+.ch3-hud * {
+  -webkit-font-smoothing: antialiased;
+}
+
+.ch3-balance-badge {
+  color: #ffffff !important;
+}
+
+.ch3-ledger-bin .bin-title,
+.ch3-ledger-bin h4 {
+  color: #ffffff !important;
+}
+
+.ch3-ledger-bin .bin-subtitle,
+.ch3-ledger-bin span {
+  color: #f1f5f9 !important;
+}
+
+.ch3-bin-amount {
+  color: #ffffff !important;
+}
+
+.ch3-pos-screen .ch3-pos-label {
+  color: #f1f5f9 !important;
+  font-weight: 700;
+}
+
+.ch3-pos-screen .ch3-pos-val {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+}
+
+.ch3-drawer-title {
+  color: #ffffff !important;
+}
+
+.ch3-shelf-card .shelf-title {
+  color: #ffffff !important;
+}
+
+.ch3-shelf-card .shelf-capacity {
+  color: #f1f5f9 !important;
+}
+
+.ch3-priority-bin .bin-title {
+  color: #ffffff !important;
+}
+
+.ch3-priority-bin .bin-sub {
+  color: #f1f5f9 !important;
+}
+
+.ch3-budget-card .budget-title {
+  color: #ffffff !important;
+}
+
+/* Chapter 4 Mini Games Text Contrast */
+.ch4-game-arena {
+  color: #ffffff;
+}
+
+.ch4-hud,
+.ch4-hud * {
+  -webkit-font-smoothing: antialiased;
+}
+
+.ch4-doc-actions-hint {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.ch4-doc-badge {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.ch4-drawer-card .drawer-title {
+  color: #ffffff !important;
+}
+
+.ch4-drawer-card .drawer-sub {
+  color: #f1f5f9 !important;
+}
+
+.ch4-drawer-card .ch4-drawer-count {
+  color: #ffffff !important;
+  font-weight: 800;
+}
+
+.ch4-flowchart-header .sop-theme {
+  color: #ffffff !important;
+}
+
+.ch4-flowchart-header .sop-tag {
+  color: #cffafe !important;
+  font-weight: 800;
+}
+
+.ch4-sop-tray-wrapper .tray-title {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.slot-placeholder .slot-num {
+  color: #f8fafc !important;
+}
+
+.slot-placeholder .slot-hint {
+  color: #cbd5e1 !important;
+}
+
+.ch4-blueprint-header .bp-title {
+  color: #ffffff !important;
+}
+
+.ch4-blueprint-header .bp-sub {
+  color: #f1f5f9 !important;
+}
+
+.ch4-bp-zone .bp-zone-title {
+  color: #ffffff !important;
+}
+
+.ch4-bp-zone .bp-zone-desc {
+  color: #f1f5f9 !important;
+}
+
+.ch4-facility-tray-section .tray-title {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.ch4-auth-guide-panel .guide-title {
+  color: #ffffff !important;
+}
+
+.ch4-auth-guide-panel .guide-badge {
+  color: #ffffff !important;
+}
+
+.ch4-auth-guide-panel .guide-item p {
+  color: #f8fafc !important;
+}
+
+.ch4-boss-card-box .task-badge {
+  color: #ffffff !important;
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.8);
+}
+
+.ch4-boss-card-box .task-desc {
+  color: #f8fafc !important;
+}
+
+.ch4-boss-card-box .boss-sequence-hint {
+  color: #ffffff !important;
+}
+
+.ch4-boss-card-box .boss-sequence-hint strong {
+  color: #fffbeb !important;
+}
+
+
