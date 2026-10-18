@@ -1985,14 +1985,88 @@ input:checked+.toggle-slider::before {
 }
 
 /* ==========================================================================
-   EPISODE SELECT MODAL & GAME SCREEN STYLES
+   EPISODE SELECT MODAL & CHAPTER POPUP (FULL-SCREEN OVERLAY LAYOUT)
    ========================================================================== */
-.episode-modal-card {
-  max-width: 720px;
+#episode-select-modal,
+#mission-modal,
+#chapter3-modal,
+#chapter4-modal,
+.modal-overlay:has(.chapter-popup-content) {
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.episode-modal-card,
+.chapter-popup-content {
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  max-height: none !important;
+  min-height: 100vh;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  padding: 36px 24px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.modal-overlay.active .episode-modal-card,
+.modal-overlay.active .chapter-popup-content {
+  transform: none !important;
+}
+
+.chapter-popup-content .modal-close,
+.episode-modal-card .modal-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 100;
+  width: 42px;
+  height: 42px;
+  font-size: 1.6rem;
+  background: #F1F5F9;
+  border: 2px solid #CBD5E1;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.chapter-popup-content .modal-close:hover,
+.episode-modal-card .modal-close:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+  border-color: #DC2626;
+  transform: rotate(90deg) scale(1.08);
+}
+
+.chapter-popup-content .modal-header-badge,
+.episode-modal-card .modal-header-badge {
+  max-width: 860px;
   width: 100%;
-  max-height: calc(100vh - 60px);
-  overflow-y: auto;
-  padding: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.chapter-popup-content .episodes-grid,
+.episode-modal-card .episodes-grid {
+  max-width: 1100px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .modal-header-badge {
@@ -2151,6 +2225,13 @@ input:checked+.toggle-slider::before {
   box-shadow: 0 20px 45px rgba(245, 158, 11, 0.15), var(--shadow-modal);
 }
 
+.chapter3-modal-card.chapter-popup-content,
+.chapter3-modal-card.episode-modal-card {
+  border-top: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
 .chapter3-tag {
   display: inline-block;
   font-family: var(--font-heading);
@@ -2203,23 +2284,132 @@ input:checked+.toggle-slider::before {
   box-shadow: 0 12px 24px rgba(239, 68, 68, 0.25);
 }
 
-/* --- GAME SCREEN MODAL (3-PHASE ADVENTURE) --- */
+/* --- GAME SCREEN MODAL (3-PHASE ADVENTURE — FULL SCREEN) --- */
 #episode-game-modal {
-  z-index: 1050; /* Memastikan layar gameplay/misi berada di atas modal pemilihan chapter */
+  z-index: 1050;
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .game-screen-card {
-  max-width: 760px;
-  width: 100%;
-  max-height: calc(100vh - 40px);
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  min-height: 100vh;
+  max-height: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  transform: none !important;
   overflow-y: auto;
-  padding: 24px 28px;
-  background: #FFFFFF;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
 }
 
+.modal-overlay.active .game-screen-card {
+  transform: none !important;
+}
+
+/* Fixed header pinned to top of the full-screen game modal */
+.game-screen-card > .modal-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 200;
+  width: 42px;
+  height: 42px;
+  font-size: 1.6rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  color: #FFFFFF;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-smooth);
+}
+
+.game-screen-card > .modal-close:hover {
+  background: #EF4444;
+  border-color: #DC2626;
+  transform: rotate(90deg) scale(1.08);
+}
+
+/* Sticky top header bar inside game modal */
 .game-screen-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 18px 24px 14px;
   text-align: center;
-  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0;
+}
+
+/* Phase content areas: scrollable, centered, padded */
+.game-screen-phase {
+  flex: 1;
+  padding: 28px 24px 56px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.game-screen-phase.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.game-screen-phase#game-phase-reward {
+  justify-content: center;
+  min-height: 60vh;
+}
+
+/* Game-wide text colour override for dark background */
+.game-screen-card .game-screen-title {
+  color: #F8FAFC;
+}
+
+.game-screen-card .game-screen-chapter-pill {
+  background: linear-gradient(135deg, #6366F1, #4F46E5);
+}
+
+/* Story phase: full width dialog container */
+.game-screen-card .story-dialog-container {
+  width: 100%;
+  max-width: 720px;
+}
+
+.game-screen-card .game-phase-footer {
+  width: 100%;
+  max-width: 480px;
+  margin-top: 20px;
+}
+
+/* Gameplay phase: sorting areas, full width */
+.game-screen-card #legacy-sorting-wrapper,
+.game-screen-card #ch1-minigame-mount,
+.game-screen-card #ch2-minigame-mount,
+.game-screen-card #ch3-minigame-mount,
+.game-screen-card #ch4-minigame-mount {
+  width: 100%;
 }
 
 .game-screen-chapter-pill {
@@ -2303,7 +2493,7 @@ input:checked+.toggle-slider::before {
   background: #6366F1;
 }
 
-/* Phase Panels Switch */
+/* Phase Panels Switch (display toggle — layout in game-screen-card block above) */
 .game-screen-phase {
   display: none;
   animation: phaseFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
@@ -2311,7 +2501,6 @@ input:checked+.toggle-slider::before {
 
 .game-screen-phase.active {
   display: flex;
-  flex-direction: column;
 }
 
 @keyframes phaseFadeIn {
